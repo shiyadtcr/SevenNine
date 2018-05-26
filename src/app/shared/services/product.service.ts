@@ -19,12 +19,32 @@ export class ProductService {
   productsInCart:any = [];
   productsInWishlist:any = [];
   selectedCategory:string = '';
+  selectedProduct:any;
+  redirectionMode:any;
+  selectedQuantity:any;
   constructor(
 	private http: HttpClient,
 	private appService: AppService
   ) { 
   }
-
+   setSelectedProduct(data){
+    this.selectedProduct = data;
+  }
+  getSelectedProduct(){
+    return this.selectedProduct;
+  }
+  setRedirectionMode(data){
+    this.redirectionMode = data;
+  }
+  getRedirectionMode(){
+    return this.redirectionMode;
+  }
+  setSelectedQuantity(data){
+    this.selectedQuantity = data;
+  }
+  getSelectedQuantity(){
+    return this.selectedQuantity;
+  }
    getProductsList(){ 
 	  return this.productsList;
    }

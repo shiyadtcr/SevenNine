@@ -28,18 +28,16 @@
 			<i class="fa fa-user-circle-o" (click)="openMyMenu()" [matMenuTriggerFor]="menu"></i>			
 			<mat-menu #menu="matMenu" class="profile-menu" xPosition="after" [overlapTrigger]="false">
 				<ng-template matMenuContent>
-					<a *ngIf="authGuard.canActivate()" [routerLink]="['/dashboard','myaccount']" mat-menu-item><i class="fa fa-user"></i>Account</a>
-					<a [routerLink]="['/dashboard','addressbook']" mat-menu-item><i class="fa fa-address-book"></i>Address Book</a>
-					<a [routerLink]="['/dashboard','mywishlist']" mat-menu-item><i class="fa fa-heart"></i>Wishlist</a>
-					<a [routerLink]="['/dashboard','mycart']" mat-menu-item><i class="fa fa-shopping-cart green"></i>My Cart</a>
-					<a [routerLink]="['/dashboard','checkout']" mat-menu-item><i class="fa fa-check-circle"></i>Checkout</a>
-					<a [routerLink]="['/dashboard','orderhistory']" mat-menu-item><i class="fa fa-history"></i>Order History</a>
-					<a [routerLink]="['/dashboard','myreturns']" mat-menu-item><i class="fa fa-undo"></i>My Return</a>
-					<a [routerLink]="['/dashboard','rewardpoints']" mat-menu-item><i class="fa fa-gift"></i>Reward Points</a>
-				</ng-template>
-				<ng-template matMenuContent *ngIf="loginService.IsLoggedIn != 'true'">
-					<a [routerLink]="['/login']" mat-menu-item><i class="fa fa-sign-in"></i>Login</a>
-					<a mat-menu-item><i class="fa fa-user"></i>Register</a>
+					<a *ngIf="IsLoggedIn" [routerLink]="['/dashboard','myaccount']" mat-menu-item><i class="fa fa-user"></i>Account</a>
+					<a *ngIf="hasUserLoggedIn" [routerLink]="['/dashboard','addressbook']" mat-menu-item><i class="fa fa-address-book"></i>Address Book</a>
+					<a *ngIf="hasUserLoggedIn" [routerLink]="['/dashboard','mywishlist']" mat-menu-item><i class="fa fa-heart"></i>Wishlist</a>
+					<a *ngIf="hasUserLoggedIn" [routerLink]="['/dashboard','mycart']" mat-menu-item><i class="fa fa-shopping-cart green"></i>My Cart</a>
+					<a *ngIf="hasUserLoggedIn" [routerLink]="['/dashboard','checkout']" mat-menu-item><i class="fa fa-check-circle"></i>Checkout</a>
+					<a *ngIf="hasUserLoggedIn" [routerLink]="['/dashboard','orderhistory']" mat-menu-item><i class="fa fa-history"></i>Order History</a>
+					<a *ngIf="hasUserLoggedIn" [routerLink]="['/dashboard','myreturns']" mat-menu-item><i class="fa fa-undo"></i>My Return</a>
+					<a *ngIf="hasUserLoggedIn" [routerLink]="['/dashboard','rewardpoints']" mat-menu-item><i class="fa fa-gift"></i>Reward Points</a>
+					<a *ngIf="!hasUserLoggedIn" [routerLink]="['/login']" mat-menu-item><i class="fa fa-sign-in"></i>Login</a>
+					<a *ngIf="!hasUserLoggedIn" mat-menu-item><i class="fa fa-user"></i>Register</a>
 				</ng-template>
 			</mat-menu>
 		</span> 

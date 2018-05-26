@@ -1,11 +1,23 @@
-import { Injectable } from '@angular/core';
-
+import { Injectable, EventEmitter } from '@angular/core';
+import { AppService } from '../../app.service';
 @Injectable()
 export class LoginService {
-  IsLoggedIn:string = 'false';
-  constructor() { 
-    localStorage.setItem('isLoggedin','true');
-	this.IsLoggedIn = localStorage.getItem('isLoggedin');
+  IsLoggedIn:any;
+  onSuccessLogin : EventEmitter<any> = new EventEmitter<any>();  
+  onSuccessLogout : EventEmitter<any> = new EventEmitter<any>();  
+  onSuccessSignup : EventEmitter<any> = new EventEmitter<any>();  
+  constructor(
+	private appService: AppService
+  ) { 
+    //localStorage.setItem('isLoggedin','true');
   }
+  setLoggedInStatus(status){
+	  localStorage.setItem('hasUserLoggedIn',status);
+	  this.onSuccessLogin.emit(status);
+  }
+  getLoggedInStatus(){
+	  return localStorage.getItem('hasUserLoggedIn');
+  }
+  
 
 }

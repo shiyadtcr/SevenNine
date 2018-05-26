@@ -51,6 +51,22 @@ export class ProductListingComponent implements OnInit {
 		} else {
 			this.productsList = this.productService.getProductsList();
 		}
+		if(this.productService.getSelectedProduct()){
+			switch(this.productService.getRedirectionMode()){
+				case 'cart':
+					this.productService.addToCart(this.productService.getSelectedProduct().id,this.productService.getSelectedQuantity());
+					//alert(this.productService.getSelectedProduct().title + ' ' + this.productService.getSelectedQuantity() + ' item(s) added to the cart!');
+					break;
+				case 'wishlist':
+					this.productService.addToWishlist(this.productService.getSelectedProduct().id);
+					alert(this.productService.getSelectedProduct().title + ' has been added to the wishlist!' )
+					break;
+			}
+			this.appService.setRedirectionUrl(null);
+			this.productService.setSelectedProduct(null);
+			this.productService.setSelectedQuantity(null);
+			this.productService.setRedirectionMode(null);
+		}
 		
     });
 	this.onAddToWishlistSub = this.productService.onAddToWishlist.subscribe((data) => {        
@@ -67,5 +83,8 @@ export class ProductListingComponent implements OnInit {
   }
   ngOnDestroy() {
     this.sub.unsubscribe();
+	this.onAddToWishlistSub.unsubscribe;
+	this.onRemoveFromWishlistSub.unsubscribe;
+	this.onRemoveFromCartSub.unsubscribe;
   }
 }

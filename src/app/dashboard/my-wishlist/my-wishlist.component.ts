@@ -22,4 +22,7 @@ export class MyWishlistComponent implements OnInit {
 		this.productsInWishlist = data;
 	  });
   }
+  ngOnDestroy() {
+    this.onRemoveFromWishlistSub.unsubscribe();
+  }
 }

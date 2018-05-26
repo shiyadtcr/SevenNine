@@ -2,6 +2,8 @@ import { Component, OnInit, Input, EventEmitter  } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { ProductService } from '../../shared';
 import { AppService } from '../../app.service';
+import { LoginService } from '../../shared';
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-product',
   templateUrl: './product.component.html',
@@ -11,15 +13,15 @@ export class ProductComponent implements OnInit {
   @Input() product;
   @Input() categoryId:string = '';
   quantity:number = 1;
-  private onRemoveFromCartSub: Subscription;
   constructor(
 	private productService: ProductService,
-	private appService:AppService
-) { }
+	private appService:AppService,
+	private router: Router
+	private loginService: LoginService
+  ) { }
 
   ngOnInit() {
-	  console.log(this.product);
-	  
+	  console.log(this.product);	  
   }
   incQuantity(){	  
 	this.quantity++;
@@ -32,12 +34,27 @@ export class ProductComponent implements OnInit {
 	  }
   }
   addToCart(){
-	  this.productService.addToCart(this.product.id,this.quantity);
-	  //this.productService.addToCart(this.product,this.quantity);
+	  if(this.loginService.getLoggedInStatus()){
+		this.productService.addToCart(this.product.id,this.quantity);  
+	  } else {
+		this.appService.setRedirectionUrl(this.router.url);
+		this.productService.setSelectedProduct(this.product);
+		this.productService.setSelectedQuantity(this.quantity);
+		this.productService.setRedirectionMode('cart');
+		this.router.navigate(['/login']);
+	  }
   }
-  addToWishlist(){
-	  this.productService.addToWishlist(this.product.id);
-	  //this.productService.addToWishlist(this.product);
+  addToWishlist(){	  
+	  if(this.loginService.getLoggedInStatus()){
+		this.productService.addToWishlist(this.product.id);  
+	  } else {
+		this.appService.setRedirectionUrl(this.router.url);
+		this.productService.setSelectedProduct(this.product);
+		this.productService.setRedirectionMode('wishlist');
+		this.router.navigate(['/login']);
+	  }
+  }
+  ngOnDestroy() {
   }
   
 }

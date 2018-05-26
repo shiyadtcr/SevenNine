@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
-import {ProductService} from '../shared';
+import { ProductService } from '../shared';
+import { AppService } from '../app.service';
 import { routerTransitionTop } from '../router.animations';
-import {RatingModule} from "ngx-rating";
+import { RatingModule } from "ngx-rating";
 @Component({
   selector: 'app-product-details',
   templateUrl: './product-details.component.html',
@@ -17,7 +18,8 @@ export class ProductDetailsComponent implements OnInit {
   quantity:number = 1;
   constructor(
 	private route: ActivatedRoute,
-	private productService: ProductService
+	private productService: ProductService,
+	private appService: AppService
   ) { }
 
   ngOnInit() {
@@ -33,6 +35,22 @@ export class ProductDetailsComponent implements OnInit {
 			title:'Home Style Ganapathi Gift FU99',
 			rating:3
 		};
+		if(this.productService.getSelectedProduct()){
+			switch(this.productService.getRedirectionMode()){
+				case 'cart':
+					this.productService.addToCart(this.productService.getSelectedProduct().id,this.productService.getSelectedQuantity());
+					alert(this.productService.getSelectedProduct().title + ' ' + this.productService.getSelectedQuantity() + ' items added to the cart!');
+					break;
+				case 'wishlist':
+					this.productService.addToWishlist(this.productService.getSelectedProduct().id);
+					alert(this.productService.getSelectedProduct().title + ' has been added to the wishlist!' )
+					break;
+			}
+			this.appService.setRedirectionUrl(null);
+			this.productService.setSelectedProduct(null);
+			this.productService.setSelectedQuantity(null);
+			this.productService.setRedirectionMode(null);
+		}
        // In a real app: dispatch action to load the details here.
     });
 	  

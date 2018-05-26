@@ -26,6 +26,8 @@ export class AppComponent implements OnInit, OnDestroy{
 	private onRemoveFromCartSub: Subscription;
 	private onShowPreloaderSub: Subscription;
 	private onCategoryUpdateSub: Subscription;
+	private onSuccessLoginSub: Subscription;
+	hasUserLoggedIn:boolean = this.loginService.getLoggedInStatus('hasUserLoggedIn');
 	constructor(
 		private dataService:DataService,
 		private productService:ProductService,
@@ -50,6 +52,9 @@ export class AppComponent implements OnInit, OnDestroy{
 	  this.onRemoveFromCartSub = this.productService.onRemoveFromCart.subscribe((data) => {        
 		this.productsInCart = data;
 	  });
+	  this.onSuccessLoginSub = this.loginService.onSuccessLogin.subscribe((data) => {        
+		this.hasUserLoggedIn = data;
+	  });
 	  //this.productsInCart = this.dataService.getProductsInCart();
 	  //this.productsInWishlist = this.dataService.getProductsInWishlist();
 	 
@@ -65,6 +70,10 @@ export class AppComponent implements OnInit, OnDestroy{
 	  }
 	ngOnDestroy(){
       //this.subscription.unsubscribe();
+	    this.onAddToCartSub.unsubscribe;
+		this.onRemoveFromCartSub.unsubscribe;
+		this.onShowPreloaderSub.unsubscribe;
+		this.onCategoryUpdateSub.unsubscribe;
     }
 	
 	openMyMenu() {

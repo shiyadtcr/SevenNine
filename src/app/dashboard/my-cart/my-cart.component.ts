@@ -22,5 +22,8 @@ export class MyCartComponent implements OnInit {
 		this.productsInCart = data;
 	  });
   }
+  ngOnDestroy() {
+    this.onRemoveFromCartSub.unsubscribe();
+  }
 
 }
