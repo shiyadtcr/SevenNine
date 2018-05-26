@@ -5,7 +5,7 @@
 		<span class="nav-icon"><i (click)="_toggleLeftSidebar()" class="fa fa-bars"></i></span>
 		<app-sidebar [defaultStyles]="true" [(open)]="_openLeft" [sidebarClass]="'app-sidebar left'" [closeOnClickOutside]="true" [position]="'left'" [showOverlay]="true">
 			  <ul class="side-nav">
-				<li><a (click)="_toggleLeftSidebar()" href="#"><i class="fa fa-home"></i>Home</a></li>
+				<li><a (click)="_toggleLeftSidebar()" [routerLink]="['/']"><i class="fa fa-home"></i>Home</a></li>
 				<li [ngClass]="menuOpen ? 'open' : ''"><span class="parent-item" (click)="toggleMenu($event)"><i class="fa fa-list-ul"></i>Categories<i class="fa float-right" [ngClass]="menuOpen ? 'fa-angle-down' : 'fa-angle-right'"></i></span>
 					<ul class="subnav" [ngStyle]="{'height.px':categoryListHeight}">
 						<li *ngFor="let category of categoryList"><a (click)="_toggleLeftSidebar()" [routerLink]="['/products',category.id]" >{{category.title}}</a></li>

@@ -12,11 +12,13 @@ export class ProductService {
   onRemoveFromWishlist : EventEmitter<any> = new EventEmitter<any>();
   onIncQuantity : EventEmitter<any> = new EventEmitter<any>();
   onDecQuantity : EventEmitter<any> = new EventEmitter<any>();  
+  onChangeQuantity : EventEmitter<any> = new EventEmitter<any>();  
   notifyCartItem:boolean = false;
   productTotal:number = 0;
   productsList:any = [];
   productsInCart:any = [];
   productsInWishlist:any = [];
+  selectedCategory:string = '';
   constructor(
 	private http: HttpClient,
 	private appService: AppService
@@ -35,7 +37,7 @@ export class ProductService {
    getProductsInWishlist(){ 
 		return this.productsInWishlist;
    } 
-  getProductsByCategory(id){
+  getNewProductsByCategory(id){
 	   let productUrl = "http://13.232.42.90/service/?/Masters/products/" + id;
 	   this.appService.onShowPreloader.emit(true);
 	   return this.http.get(productUrl);
@@ -44,6 +46,7 @@ export class ProductService {
 		});
 		return product; */
    }
+   
   updateProductTotal(){
 	this.productTotal = 0;
 	this.productsInCart.forEach((val) => {
@@ -56,8 +59,15 @@ export class ProductService {
 	});		
 	if(productExisting.length != 0){
 		productExisting[0].quantity = quantity;
-	}
+	}	
 	this.updateProductTotal();
+	this.onChangeQuantity.emit(this.productsInCart);
+  }
+  setSelectedCategory(cat){
+	  this.selectedCategory = cat;
+  }
+  getSelectedCategory(){
+	  return this.selectedCategory;
   }
   addToCart(id,quantity){
 	let productExisting = this.productsList.filter(function(item){
@@ -66,7 +76,10 @@ export class ProductService {
 	if(productExisting.length != 0){
 		productExisting[0].quantity += quantity;
 		productExisting[0].addedToCart = true;
-		this.productsInCart.push(productExisting[0]);
+		if(this.productsInCart.filter(function(v){return v.id == id}).length == 0){
+			this.productsInCart.push(productExisting[0]);
+		}		
+		this.onAddToCart.emit(this.productsInCart);
 	}
 	this.notifyCartItem = true;
 	setTimeout(()=>{
@@ -79,18 +92,29 @@ export class ProductService {
 		return item.id == id;
 	});		
 	if(productExisting.length != 0){
-		productExisting[0].isFavorate = true;
-		this.productsInWishlist.push(productExisting);
+		productExisting[0].isFavorate = !productExisting[0].isFavorate;
+		if(productExisting[0].isFavorate == false){
+			this.productsInWishlist = this.productsInWishlist.filter(function(v){
+				return v.id != id;
+			});
+			this.onRemoveFromWishlist.emit(this.productsInWishlist);
+		} else {
+			this.productsInWishlist.push(productExisting[0]);
+			this.onAddToWishlist.emit(this.productsInWishlist);
+		}		
 	}
   }
   removeCartItem(id){
+	let productExisting = this.productsList.filter(function(item){
+		return item.id == id;
+	});	
+	if(productExisting.length != 0){
+		productExisting[0].quantity = 0;
+	}
 	this.productsInCart = this.productsInCart.filter(function(item){
 		return item.id != id;
 	});
+	this.onRemoveFromCart.emit(this.productsInCart); 
   }
-  removeWishlistItem(id){
-	this.productsInWishlist = this.productsInWishlist.filter(function(item){
-		return item.id != id;
-	});
-  }
+  
 }

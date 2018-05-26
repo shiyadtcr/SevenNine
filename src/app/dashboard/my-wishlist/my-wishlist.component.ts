@@ -18,11 +18,8 @@ export class MyWishlistComponent implements OnInit {
   ngOnInit() {
 	  this.dashboardService.pageTitle = "My Wishlist";
 	  this.productsInWishlist = this.productService.getProductsInWishlist();
-	  this.onRemoveFromWishlistSub = this.productService.onRemoveFromWishlist.subscribe((id) => {        
-		this.productService.removeWishlistItem(id);
-		this.productsInWishlist = this.productService.getProductsInWishlist();
-		console.log("product service: ",this.productService.productsList);
-		console.log("my cart: ",this.productsInWishlist);
-      });
+	  this.onRemoveFromWishlistSub = this.productService.onRemoveFromWishlist.subscribe((data) => {        
+		this.productsInWishlist = data;
+	  });
   }
 }

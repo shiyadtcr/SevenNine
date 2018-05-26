@@ -18,12 +18,9 @@ export class MyCartComponent implements OnInit {
   ngOnInit() {
 	  this.dashboardService.pageTitle = 'My Cart'
 	  this.productsInCart = this.productService.getProductsInCart();
-	  this.onRemoveFromCartSub = this.productService.onRemoveFromCart.subscribe((id) => {        
-		this.productService.removeCartItem(id);
-		this.productsInCart = this.productService.getProductsInCart();
-		console.log("product service: ",this.productService.productsList);
-		console.log("my cart: ",this.productsInCart);
-      });
+	  this.onRemoveFromCartSub = this.productService.onRemoveFromCart.subscribe((data) => {        
+		this.productsInCart = data;
+	  });
   }
 
 }

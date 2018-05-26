@@ -18,10 +18,10 @@ export class WishedProductComponent implements OnInit {
   }
   
   addToCart(){
-	  this.productService.onAddToCart.emit([this.product.id,this.quantity]);
+	  this.productService.addToCart(this.product.id,this.quantity);
   }
   removeWishlistItem(id){
-	 this.productService.onRemoveFromWishlist.emit(this.product.id); 
+	 this.productService.addToWishlist(this.product.id); 
   }
   incQuantity(){	  
 	this.quantity++;

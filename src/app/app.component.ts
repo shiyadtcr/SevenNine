@@ -23,8 +23,7 @@ export class AppComponent implements OnInit, OnDestroy{
 	categoryList:any = [];
 	categoryListHeight:number = 0;
 	private onAddToCartSub: Subscription;
-	private onDecQuantitySub: Subscription;
-	private onIncQuantitySub: Subscription;
+	private onRemoveFromCartSub: Subscription;
 	private onShowPreloaderSub: Subscription;
 	private onCategoryUpdateSub: Subscription;
 	constructor(
@@ -44,24 +43,12 @@ export class AppComponent implements OnInit, OnDestroy{
 	  });
 	  this.onCategoryUpdateSub = this.dataService.onCategoryUpdate.subscribe((data) => {        
 		this.categoryList = data;
-	  });	  
-      this.onAddToCartSub = this.productService.onAddToCart.subscribe((data) => {        
-		this.productService.addToCart(data[0],data[1]);
-		this.productsInCart = this.productService.getProductsInCart();
-		console.log("product service: ",this.productService.productsList);
-		console.log("my cart: ",this.productsInCart);
 	  });
-	  this.onIncQuantitySub = this.productService.onIncQuantity.subscribe((data) => {        
-		this.productService.changeQuanity(data[0],data[1]);
-		this.productsInCart = this.productService.getProductsInCart();
-		console.log("product service: ",this.productService.productsList);
-		console.log("my cart: ",this.productsInCart);
+	  this.onAddToCartSub = this.productService.onAddToCart.subscribe((data) => {        
+		this.productsInCart = data;
 	  });
-	  this.onDecQuantitySub = this.productService.onDecQuantity.subscribe((data) => {        
-		this.productService.changeQuanity(data[0],data[1]);
-		this.productsInCart = this.productService.getProductsInCart();
-		console.log("product service: ",this.productService.productsList);
-		console.log("my cart: ",this.productsInCart);
+	  this.onRemoveFromCartSub = this.productService.onRemoveFromCart.subscribe((data) => {        
+		this.productsInCart = data;
 	  });
 	  //this.productsInCart = this.dataService.getProductsInCart();
 	  //this.productsInWishlist = this.dataService.getProductsInWishlist();

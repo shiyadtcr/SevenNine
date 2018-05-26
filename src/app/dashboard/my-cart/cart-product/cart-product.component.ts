@@ -18,16 +18,16 @@ export class CartProductComponent implements OnInit {
   ngOnInit() {
   }
   incQuantity(){	  
-	this.quantity++;
-	this.productService.onIncQuantity.emit([this.product.id,this.quantity]);
+	this.product.quantity++;
+	this.productService.changeQuanity(this.product.id,this.product.quantity);
   }
   decQuantity(){
-	  if(this.quantity > 1){
-		this.quantity--;
-		this.productService.onDecQuantity.emit([this.product.id,this.quantity]);
+	  if(this.product.quantity > 1){
+		this.product.quantity--;
+		this.productService.changeQuanity(this.product.id,this.product.quantity);
 	  }
   }
   removeCartItem(id){
-	 this.productService.onRemoveFromCart.emit(this.product.id); 
+	 this.productService.removeCartItem(this.product.id); 
   }
 }

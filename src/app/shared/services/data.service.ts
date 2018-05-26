@@ -99,21 +99,18 @@ export class DataService{
   saveAddress(address){
 	this.addressList.additionalAddress.push(address);  
   }
-  getCategoryList(){ 
-	if(this.categoryList.length == 0){
-		this.appService.onShowPreloader.emit(true);
-		let categoyUrl = "http://13.232.42.90/service/?/Masters/categories";
-      return this.http.get(categoyUrl);
-	} else {
-		return this.categoryList; 
-	}
+  getNewCategoryList(){ 
+    let categoyUrl = "http://13.232.42.90/service/?/Masters/categories";
+	var categoryPromise = this.http.get(categoyUrl);
+	this.appService.onShowPreloader.emit(true);
+    return categoryPromise;
    } 
+   getCategoryList(){
+	   return this.categoryList;
+   }
    setCategoryList(data){ 
 	  this.categoryList = data; 
    } 
-   getProductList(){ 
-		return this.productList
-   }
    getCategoryById(id){
 	   let category = this.categoryList.filter(function(item){
 			return item.id == id;

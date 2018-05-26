@@ -1,4 +1,5 @@
 import { Component, OnInit, Input, EventEmitter  } from '@angular/core';
+import { Subscription } from 'rxjs';
 import { ProductService } from '../../shared';
 import { AppService } from '../../app.service';
 @Component({
@@ -10,6 +11,7 @@ export class ProductComponent implements OnInit {
   @Input() product;
   @Input() categoryId:string = '';
   quantity:number = 1;
+  private onRemoveFromCartSub: Subscription;
   constructor(
 	private productService: ProductService,
 	private appService:AppService
@@ -30,11 +32,12 @@ export class ProductComponent implements OnInit {
 	  }
   }
   addToCart(){
-	  this.productService.onAddToCart.emit([this.product.id,this.quantity]);
+	  this.productService.addToCart(this.product.id,this.quantity);
 	  //this.productService.addToCart(this.product,this.quantity);
   }
   addToWishlist(){
-	  this.productService.onAddToWishlist.emit(this.product.id);
+	  this.productService.addToWishlist(this.product.id);
 	  //this.productService.addToWishlist(this.product);
   }
+  
 }

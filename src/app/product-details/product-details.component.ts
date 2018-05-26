@@ -24,7 +24,7 @@ export class ProductDetailsComponent implements OnInit {
 	  this.sub = this.route.params.subscribe(params => {
         this.productId = params['productid'];
 		this.productData = {
-			id : 1,
+			id : "1",
 			categoryId:1,
 			imageUrl:"alleppey.jpg",
 			isFavorate:false,
@@ -48,12 +48,15 @@ export class ProductDetailsComponent implements OnInit {
 	  }
   }
   addToCart(){
-	  this.productService.onAddToCart.emit([this.productData.id,this.quantity]);
+	  this.productService.addToCart(this.productData.id,this.quantity);
 	  //this.productService.addToCart(this.product,this.quantity);
   }
   addToWishlist(){
-	  this.productService.onAddToWishlist.emit(this.productData.id);
-	  //this.productService.addToWishlist(this.product);
+	  this.productService.addToWishlist(this.productData.id);
+	  this.productData.isFavorate = !this.productData.isFavorate;
+	  /* if(this.productData.isFavorate == false){
+		this.productService.removeWishlistItem(this.productData.id);
+	  }	   */
   }
 
 }

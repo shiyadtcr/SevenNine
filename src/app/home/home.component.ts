@@ -31,7 +31,8 @@ export class HomeComponent implements OnInit {
 	  
   }
   ngOnInit() {	  
-	  this.dataService.getCategoryList()
+	if(this.dataService.getCategoryList().length == 0){
+		this.dataService.getNewCategoryList()
 		.subscribe((data: any) => {
 			this.categoryList = data;
 			this.dataService.setCategoryList(data);
@@ -40,6 +41,10 @@ export class HomeComponent implements OnInit {
 		},(data: any) => {
 			this.appService.onShowPreloader.emit(false);
 		});
+	} else {
+		this.categoryList = this.dataService.getCategoryList();
+	}
+	  
   }
 
 }
