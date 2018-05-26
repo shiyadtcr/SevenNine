@@ -1,0 +1,8 @@
+<squeezebox>
+    <sb-item  *ngFor="let order of orderHistory">
+        <sb-item-head><div class="row title"><div class="col-8"> <p class="ord-title">Order # <span>{{order.orderNo}}</span> {{order.totalAmount}}</p><p class="order-desc">Ordered at {{order.time}}</div><div class="ord-status col-4">Pending</div></div></sb-item-head>
+        <sb-item-body>
+			
+		</sb-item-body>
+    </sb-item>
+</squeezebox>

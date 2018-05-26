@@ -1,0 +1,4 @@
+<div class="row product-list-wrp" *ngIf="productsInWishlist.length > 0">
+	<app-wished-product class="col-12 product-wrp" [product]="product" *ngFor="let product of productsInWishlist"></app-wished-product>
+</div>
+<div *ngIf="productsInWishlist.length == 0">Your wish list is empty !!</div>

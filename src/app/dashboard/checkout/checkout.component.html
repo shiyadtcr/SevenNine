@@ -1,0 +1,122 @@
+<div class="row">
+	<div class="col-12 address-list-wrp">
+		<div class="address-wrp">
+			<div class="address">
+				<h6 class="title">
+					<span>Billing Address</span>
+				</h6>
+				<p>{{billingAddr.streetAddr}}</p>
+				<ul>
+					<li>{{billingAddr.streetAddr2}}</li>
+					<li>{{billingAddr.city}}, {{billingAddr.state}}</li>
+					<li>{{billingAddr.country}}</li>
+					<li>Phone No: {{billingAddr.telephone}}</li>
+				</ul>
+				<!-- <h6 class="change-addr">Change Address</h6> -->
+			</div>
+			<div class="change-addr">
+				<h6 class="title">
+					<span>Change Billing Address</span>
+				</h6>
+				<select (change)="changeBillingAddr($event)" class="custom-select custom-select-lg">
+					<option [value]="i" *ngFor="let addr of additionalAddr;let i = index;">{{addr.streetAddr}} - {{addr.streetAddr2}} - {{addr.city}} - {{addr.state}} - {{addr.country}} - {{addr.postorzip}}</option>
+				</select>
+			</div>
+		</div>
+		<div class="address-wrp">
+			<div class="address">
+				<h6 class="title">
+					<span>Shipping Address</span>
+				</h6>
+				<p>{{shippingAddr.streetAddr}}</p>
+				<ul>
+					<li>{{shippingAddr.streetAddr2}}</li>
+					<li>{{shippingAddr.city}}, {{shippingAddr.state}}</li>
+					<li>{{shippingAddr.country}}</li>
+					<li>Phone No: {{shippingAddr.telephone}}</li>
+				</ul>
+				<!-- <h6 class="change-addr">Change Address</h6> -->
+			</div>
+			<div class="change-addr">
+				<h6 class="title">
+					<span>Change Shipping Address</span>
+				</h6>
+				<select (change)="changeShippingAddr($event)" class="custom-select custom-select-lg">
+					<option [value]="i" *ngFor="let addr of additionalAddr;let i = index;">{{addr.streetAddr}} - {{addr.streetAddr2}} - {{addr.city}} - {{addr.state}} - {{addr.country}} - {{addr.postorzip}}</option>
+				</select>
+			</div>
+		</div>
+		<div class="address-wrp">
+			<div class="address">
+				<h6 class="title">
+					<span>Shipping Method</span>
+				</h6>
+				<label class="custom-control custom-radio">
+				  <input id="ShippingMethod" name="ShippingMethod" type="radio" class="custom-control-input">
+				  <span class="custom-control-indicator"></span>
+				  <span class="custom-control-description">Free Shipping</span>
+				</label>
+			</div>
+		</div>
+		<div class="address-wrp">
+			<div class="address">
+				<h6 class="title">
+					<span>Delivery Info</span>
+				</h6>
+				<div class="form-group">
+					<label for="DeliveryDate">Delivery Date</label>
+					<div class="input-group ctrl-grp">						
+						<label class="form-group has-float-label">
+							<input class="form-control" type="text" placeholder="Delivery Date"/>							
+							<span>Delivery Date</span>
+						  </label>
+						  <span class="input-group-addon"><!-- <span class="star-mandatory">*</span> --><i class="fa fa-calendar"></i></span>
+						  <input class="form-control calendar-ctrl" type="date" placeholder="Delivery Date"/>
+					</div>
+					<small id="dateHelp" class="form-text text-muted">Please select your convinient delivery date</small>
+				</div>
+				<div class="form-group">
+					<label for="DeliveryDate">Delivery Time</label>
+					<select class="custom-select custom-select-lg">
+						<option>9.30 am to 12 pm</option>
+						<option>5.00 pm to 7.00 pm</option>
+						<option>7.30 pm to 10.00 pm</option>
+						
+					</select>
+					<small id="dateHelp" class="form-text text-muted">Please select your convinient delivery time</small>
+				</div>  
+			</div>
+		</div>
+		<div class="address-wrp">
+			<div class="address">
+				<h6 class="title">
+					<span>Payment Method</span>
+				</h6>
+				<label class="custom-control custom-radio">
+				  <input id="PaymentMethod" name="PaymentMethod" type="radio" class="custom-control-input">
+				  <span class="custom-control-indicator"></span>
+				  <span class="custom-control-description">COD</span>
+				</label>
+			</div>
+		</div>
+		<div class="address-wrp">
+			<div class="address cart-summary">
+				<h6 class="title">
+					<span>Item Summary</span>
+				</h6>
+				<div class="cart-content">
+				  <div class="cart-list" *ngFor="let product of productsInCart">
+					<img src="../assets/images/logo.png" />
+					<p class="prod-title">{{product.title}}</p>
+					<p>{{product.quantity}} x {{product.price}} = {{product.quantity * product.price}}</p>						
+				  </div>
+			  </div>
+				<div class="other-wrp">					
+					<div class="row"><p class="col-8 text-right">Sub Total:</p><p class="col-4">{{productService.productTotal}}</p></div>
+					<div class="row"><p class="col-8 text-right">Discount (0 points used):</p><p class="col-4">-{{discount}}.00</p></div>
+					<div class="row title"><p class="col-8 text-right font-weight-bold">Total:</p><p class="col-4 font-weight-bold">{{productService.productTotal - discount}}</p></div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

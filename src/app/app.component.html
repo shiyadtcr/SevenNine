@@ -1,0 +1,91 @@
+<div class="container main-wrapper" id="MainWrapper">
+  <div class="top-navbar">	
+	
+	<div class="top-navbar-left">
+		<span class="nav-icon"><i (click)="_toggleLeftSidebar()" class="fa fa-bars"></i></span>
+		<app-sidebar [defaultStyles]="true" [(open)]="_openLeft" [sidebarClass]="'app-sidebar left'" [closeOnClickOutside]="true" [position]="'left'" [showOverlay]="true">
+			  <ul class="side-nav">
+				<li><a (click)="_toggleLeftSidebar()" href="#"><i class="fa fa-home"></i>Home</a></li>
+				<li [ngClass]="menuOpen ? 'open' : ''"><span class="parent-item" (click)="toggleMenu($event)"><i class="fa fa-list-ul"></i>Categories<i class="fa float-right" [ngClass]="menuOpen ? 'fa-angle-down' : 'fa-angle-right'"></i></span>
+					<ul class="subnav" [ngStyle]="{'height.px':categoryListHeight}">
+						<li *ngFor="let category of categoryList"><a (click)="_toggleLeftSidebar()" [routerLink]="['/products',category.id]" >{{category.title}}</a></li>
+					</ul>
+				</li>
+				<li><a (click)="_toggleLeftSidebar()" href="#"><i class="fa fa-edit"></i>Terms & Conditions</a></li>
+				<li><a (click)="_toggleLeftSidebar()" href="#"><i class="fa fa-lock"></i>Privacy Policy</a></li>
+				<li><a (click)="_toggleLeftSidebar()" href="#"><i class="fa fa-user"></i>About Us</a></li>
+				<li><a (click)="_toggleLeftSidebar()" href="#"><i class="fa fa-envelope"></i>Contact Us</a></li>
+			  </ul>
+		</app-sidebar>
+		  
+	</div>
+	
+	<div class="site-title">
+		<!-- <img style="border-radius:5px;margin-left:6px;" src="assets/images/header_logo.png" alt="SevenNine Logo"> -->
+     </div>	 
+	<div class="top-navbar-right"> 
+		<span class="nav-icon">
+			<i class="fa fa-user-circle-o" (click)="openMyMenu()" [matMenuTriggerFor]="menu"></i>			
+			<mat-menu #menu="matMenu" class="profile-menu" xPosition="after" [overlapTrigger]="false">
+				<ng-template matMenuContent>
+					<a *ngIf="authGuard.canActivate()" [routerLink]="['/dashboard','myaccount']" mat-menu-item><i class="fa fa-user"></i>Account</a>
+					<a [routerLink]="['/dashboard','addressbook']" mat-menu-item><i class="fa fa-address-book"></i>Address Book</a>
+					<a [routerLink]="['/dashboard','mywishlist']" mat-menu-item><i class="fa fa-heart"></i>Wishlist</a>
+					<a [routerLink]="['/dashboard','mycart']" mat-menu-item><i class="fa fa-shopping-cart green"></i>My Cart</a>
+					<a [routerLink]="['/dashboard','checkout']" mat-menu-item><i class="fa fa-check-circle"></i>Checkout</a>
+					<a [routerLink]="['/dashboard','orderhistory']" mat-menu-item><i class="fa fa-history"></i>Order History</a>
+					<a [routerLink]="['/dashboard','myreturns']" mat-menu-item><i class="fa fa-undo"></i>My Return</a>
+					<a [routerLink]="['/dashboard','rewardpoints']" mat-menu-item><i class="fa fa-gift"></i>Reward Points</a>
+				</ng-template>
+				<ng-template matMenuContent *ngIf="loginService.IsLoggedIn != 'true'">
+					<a [routerLink]="['/login']" mat-menu-item><i class="fa fa-sign-in"></i>Login</a>
+					<a mat-menu-item><i class="fa fa-user"></i>Register</a>
+				</ng-template>
+			</mat-menu>
+		</span> 
+		<span id="headermyaccount_div"></span> 
+		<span class="nav-icon ui-link">
+			<span class="cart-badge" [ngClass]="productService.notifyCartItem ? 'animated':''" (click)="_toggleRightSidebar()">
+				<span id="cartcount_div">{{productsInCart.length}}</span>
+			</span>
+			<i class="fa fa-shopping-basket" (click)="_toggleRightSidebar()"></i>
+			<app-sidebar [defaultStyles]="true" [(open)]="_openRight" [closeOnClickOutside]="true" [sidebarClass]="'app-sidebar right'" [position]="'right'" [showOverlay]="true">
+				  <h3>Your Cart</h3>
+				  <div class="cart-content">
+					  <div class="cart-list" *ngFor="let product of productsInCart">
+						<img src="../assets/images/logo.png" />
+						<p class="prod-title">{{product.title}}<span class="remove-item" (click)="removeCartItem(product.id)">x</span></p>
+						<p>{{product.quantity}} x {{product.price}} = {{product.quantity * product.price}}</p>						
+					  </div>
+					  <p>Sub Total: 0</p>
+					  <p class="total">Total: {{productService.productTotal}}</p>
+					  <button *ngIf="productsInCart.length > 0" (click)="navigateTo('dashboard/mycart')" class="btn btn-success btn-lg btn-block cart-btn">Go to Cart</button>
+					  <button *ngIf="productsInCart.length > 0" (click)="navigateTo('dashboard/checkout')" class="btn btn-success btn-lg btn-block cart-btn">Checkout</button>
+				  </div>
+			</app-sidebar>
+		</span>
+	</div>
+	
+    
+  </div>	
+  <router-outlet></router-outlet>
+</div>
+<div class="overlay" *ngIf="showPreloader"></div>
+<div class="spinner" *ngIf="showPreloader">
+	<div class="bounce1"></div>
+	<div class="bounce2"></div>
+	<div class="bounce3"></div>
+</div>
+
+<!-- Start your project here-->
+<!-- <div style="height: 100vh">
+    <div class="flex-center flex-column">
+      <h1 class="animated fadeIn mb-4">Material Design for Bootstrap (Angular)</h1>
+  
+      <h5 class="animated fadeIn mb-3">Thank you for using our product. We're glad you're with us.</h5>
+      <h6 class="animated fadeIn mb-3">Start browsing <a href="https://mdbootstrap.com/angular">documentation</a>.</h6>
+  
+      <p class="animated fadeIn text-muted">MDB Team</p>
+    </div>
+  </div> -->
+  <!-- /Start your project here-->

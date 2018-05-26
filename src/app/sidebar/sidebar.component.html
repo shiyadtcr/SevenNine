@@ -1,0 +1,19 @@
+<aside #sidebar
+  [@visibleSidebarState]="_visibleSidebarState"
+  (@visibleSidebarState.start)="_animationStarted($event)"
+  (@visibleSidebarState.done)="_animationDone($event)"
+  role="complementary"
+  [attr.aria-hidden]="!open"
+  [attr.aria-label]="ariaLabel"
+  class="app-sidebar app-sidebar--{{position}}"
+  [class.app-sidebar--style]="defaultStyles"
+  [ngClass]="sidebarClass">
+  <ng-content></ng-content>
+</aside>
+
+<div *ngIf="showOverlay"
+  [@visibleOverlayState]="_visibleOverlayState"
+  aria-hidden="true"
+  class="app-sidebar__overlay"
+  [class.app-sidebar__overlay--style]="open && defaultStyles"
+  [ngClass]="overlayClass"></div>

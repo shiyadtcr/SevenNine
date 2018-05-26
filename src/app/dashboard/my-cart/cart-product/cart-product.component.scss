@@ -1,0 +1,17 @@
+.product{
+	text-align:left;
+	position:relative;
+	img{
+		float:left;
+		margin-right:1rem;
+	}
+	.remove-item{
+		padding: 0px 5px;
+		right: 0.5rem;
+	}
+	.subtotal{
+		color:red;
+		font-size:0.9rem;
+		margin-bottom:0;
+	}
+}

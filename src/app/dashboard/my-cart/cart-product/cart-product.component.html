@@ -1,0 +1,11 @@
+<div class="product col-12">
+	<img class="img-fluid" src="../../assets/images/logo.png" />
+	<p class="title" >{{product.title}} <br /> <span class="price">Rs. {{product.price}}</span></p>
+	<p class="wrp">
+		<span class="decinc" [ngClass]="product.quantity == 1 ? 'disabled' : ''" (click)="decQuantity(product)">-</span>
+		<input type="text" value="1" [(ngModel)]="product.quantity" class="quantity" />
+		<span class="decinc" (click)="incQuantity(product)">+</span>
+	</p>	
+	<p class="subtotal">Sub Total: Rs. {{product.price * product.quantity}}</p>
+	<span class="remove-item" (click)="removeCartItem(product.id)">x</span>
+</div>	

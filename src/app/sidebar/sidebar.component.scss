@@ -1,0 +1,79 @@
+$brand-color: #5f1f60;
+.app-sidebar {
+  overflow: auto;
+  pointer-events: none;
+  position: fixed;
+  z-index: 99999999;
+  width:19rem;
+  background:#fff;  
+}
+
+  .app-sidebar--left {
+	bottom: 0;
+	left: 0;
+	top: 0;
+  }
+
+  .app-sidebar--right {
+	bottom: 0;
+	right: 0;
+	top: 0;
+	text-align:center;
+	h3{
+		background:$brand-color;
+		color:#fff;
+		padding:0.5em 0;
+		margin:0;
+		font-weight:500;
+		font-size:0.8181818181818182em;
+	}
+	.cart-content{
+		padding:0 0.6818181818181818em;
+		p{
+			font-size:0.7272727272727273em;
+			color:#000;
+			font-weight:normal;
+			border-bottom:1px solid #d6dade;		
+			padding: 0.5em 0;
+			margin:0 0 0 0;
+		}
+		p.total{
+			font-size:0.9090909090909091em;
+			font-weight:500;
+			margin: 0;
+		}		
+	}
+	
+  }
+
+  .app-sidebar--top {
+	left: 0;
+	right: 0;
+	top: 0;
+  }
+
+  .app-sidebar--bottom {
+	bottom: 0;
+	left: 0;
+	right: 0;
+  }
+
+  .app-sidebar--style {
+	background: #fff;
+	box-shadow: 0 0 2.5em rgba(85, 85, 85, 0.5);
+  }
+
+.app-sidebar__overlay {
+  height: 100%;
+  left: 0;
+  pointer-events: none;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 99999998;
+}
+
+  .app-sidebar__overlay--style {
+	background: #000;
+	opacity: 1;
+  }

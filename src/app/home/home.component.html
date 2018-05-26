@@ -1,0 +1,31 @@
+<ngx-carousel
+        [inputs]="carouselOne"
+        (carouselLoad)="onCarouselLoad($event)">
+          <ngx-item NgxCarouselItem>
+            <img src="../../assets/images/1.png" />
+          </ngx-item>
+          <ngx-item NgxCarouselItem>
+            <img src="../../assets/images/2.png" />
+          </ngx-item>
+          <ngx-item NgxCarouselItem>
+            <img src="../../assets/images/3.png" />
+          </ngx-item>
+          <ngx-item NgxCarouselItem>
+            <img src="../../assets/images/4.png" />
+          </ngx-item>
+          <ngx-item NgxCarouselItem>
+            <img src="../../assets/images/5.png" />
+          </ngx-item>
+          <i NgxCarouselPrev class='fa fa-chevron-circle-left leftRs'></i>
+          <i NgxCarouselNext class='fa fa-chevron-circle-right rightRs'></i>
+    </ngx-carousel>	
+	<div class="row product-row" [@routerTransitionTop]>
+		<div class="col-6 product-wrp" *ngFor="let caregory of categoryList">
+			<a [routerLink]="['/products',caregory.id]">
+		  <img class="img-fluid" src="{{appService.baseImageUrl + 'category/' + caregory.imageUrl}}" /> 
+		  <p class="product-title">{{caregory.title}}</p>
+			</a>
+		</div>
+	  </div>
+	  
+	  

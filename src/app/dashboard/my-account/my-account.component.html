@@ -1,0 +1,35 @@
+<div class="frm-wrp">
+<label class="form-group has-float-label">
+	<input class="form-control" type="email" placeholder="First Name"/>
+	<span>First Name</span>
+  </label>
+  <label class="form-group has-float-label">
+	<input class="form-control" type="email" placeholder="Last Name"/>
+	<span>Last Name</span>
+  </label>
+  <label class="form-group has-float-label">
+	<input class="form-control" type="email" placeholder="Email"/>
+	<span>Email</span>
+  </label>
+  </div>
+  <div class="custom-control custom-checkbox">
+	  <input type="checkbox" [(ngModel)]="changePassword" class="custom-control-input" id="customCheck1">
+	  <label class="custom-control-label" for="customCheck1">Change Password</label>
+	</div>
+	<div class="change-pwd-wrp" *ngIf="changePassword == true">
+	  <label class="form-group has-float-label">
+		<input class="form-control" type="email" placeholder="Current Password"/>
+		<span>Current Password</span>
+	  </label>
+	  <label class="form-group has-float-label">
+		<input class="form-control" type="email" placeholder="New Password"/>
+		<span>New Password</span>
+	  </label>
+	  <label class="form-group has-float-label">
+		<input class="form-control" type="email" placeholder="Confirm Password"/>
+		<span>Confirm Password</span>
+	  </label>
+	</div>
+	<div class="change-pwd-wrp">
+		<button type="submit" class="btn btn-success save-btn"><i class="fa fa-save"></i>Save</button>
+	</div>

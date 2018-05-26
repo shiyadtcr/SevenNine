@@ -1,0 +1,13 @@
+<div class="row product-list-wrp" *ngIf="productsInCart.length > 0">
+	<app-cart-product class="col-12 product-wrp" [product]="product" *ngFor="let product of productsInCart"></app-cart-product>	
+</div>
+<div *ngIf="productsInCart.length == 0">Your cart is empty !!</div>
+<div class="other-wrp">
+	<div class="btn-group">
+	  <button type="button" class="btn btn-primary">Continue Shopping</button>
+	  <!-- <button type="button" *ngIf="productsInCart.length > 0" class="btn btn-primary">Update</button> -->
+	  <button type="button" *ngIf="productsInCart.length > 0" class="btn btn-primary">Clear All</button>
+	</div>
+	<p>Sub Total: <span class="float-right">{{productService.productTotal}}</span></p>
+	<p>Grand Total: <span class="float-right">{{productService.productTotal}}</span></p>
+</div>

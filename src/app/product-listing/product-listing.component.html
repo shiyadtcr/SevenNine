@@ -1,0 +1,8 @@
+<h6>{{categoryData && categoryData[0] ? categoryData[0].title : ''}}</h6>
+<div class="container">	
+	<div class="row product-list-wrp"  [@routerTransitionTop]>
+		<app-product *ngFor="let product of productsList" [product]="product" [categoryId]="categoryId" class="col-6 product-wrp">
+			
+		</app-product>
+	</div>
+</div>

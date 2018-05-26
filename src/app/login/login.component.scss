@@ -1,0 +1,11 @@
+.login-wrp{
+	padding-top: 15px;	
+	input.form-control:focus{
+		outline:0;
+		&:focus{
+			outline:0;
+			border:1px solid #ccc;
+			box-shadow:none;
+		}
+	}
+}

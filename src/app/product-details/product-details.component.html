@@ -1,0 +1,41 @@
+<h6>{{productData.title}}</h6>
+<div class="container">	
+	<div class="row product-list-wrp"  [@routerTransitionTop]>
+		<div class="product col-12">
+			<img class="img-fluid large-img" src="../../assets/images/logo.png" />
+			<p class="overview-title">Quick Overview</p>
+			<p class="title">{{productData.title}}</p>
+			<p class="price">Rs. {{productData.price}}</p>
+			<p class="wrp">
+				<span class="heart" (click)="addToWishlist()"><i class="fa fa-heart faa-pulse" [ngClass]="productData.isFavorate?'animated':''"></i></span>				
+				<span class="decinc" [ngClass]="productData.quantity == 1 ? 'disabled' : ''" (click)="decQuantity(productData)">-</span>
+				<input type="text" value="1" [(ngModel)]="quantity" class="quantity" />
+				<span class="decinc" (click)="incQuantity(productData)">+</span>
+				<span class="cart" (click)="addToCart()"><i class="fa fa-shopping-basket"></i></span>
+			</p>
+			<div class="detail-block">
+				<p class="details-title">Product Details</p>
+				
+				
+			</div>
+			<div class="detail-block product-rating">
+				<p class="details-title">Product Rating</p>
+				<rating [(ngModel)]="productData.rating"></rating>
+				<div class="form-group">
+				  <label for="comment">Comment:</label>
+				  <textarea [(ngModel)]="productData.comment" placeholder="Enter comment" class="form-control" rows="3" id="comment"></textarea>
+				</div>
+				<button class="btn btn-success save-rating-btn">Save Rating</button>
+			</div>
+			<div class="detail-block">
+				<p class="details-title">Reviews</p>
+				<div class="reviews-wrp">
+					<p><span>Priya</span><rating [readonly]="true" [(ngModel)]="productData.rating"></rating></p>
+					<p>Good</p>
+				</div>
+				
+			</div>
+		</div>
+	</div>
+	
+</div>

@@ -1,0 +1,96 @@
+import { Injectable, EventEmitter  } from '@angular/core';
+import {Observable} from 'rxjs/Observable';
+import { HttpClient } from '@angular/common/http';
+
+import { AppService } from '../../app.service';
+
+@Injectable()
+export class ProductService {
+  onAddToCart : EventEmitter<any> = new EventEmitter<any>();
+  onAddToWishlist : EventEmitter<any> = new EventEmitter<any>();
+  onRemoveFromCart : EventEmitter<any> = new EventEmitter<any>();
+  onRemoveFromWishlist : EventEmitter<any> = new EventEmitter<any>();
+  onIncQuantity : EventEmitter<any> = new EventEmitter<any>();
+  onDecQuantity : EventEmitter<any> = new EventEmitter<any>();  
+  notifyCartItem:boolean = false;
+  productTotal:number = 0;
+  productsList:any = [];
+  productsInCart:any = [];
+  productsInWishlist:any = [];
+  constructor(
+	private http: HttpClient,
+	private appService: AppService
+  ) { 
+  }
+
+   getProductsList(){ 
+	  return this.productsList;
+   }
+   setProductList(data){ 
+		this.productsList = data;
+   }
+  getProductsInCart(){
+	return this.productsInCart;
+   } 
+   getProductsInWishlist(){ 
+		return this.productsInWishlist;
+   } 
+  getProductsByCategory(id){
+	   let productUrl = "http://13.232.42.90/service/?/Masters/products/" + id;
+	   this.appService.onShowPreloader.emit(true);
+	   return this.http.get(productUrl);
+	   /* let product = this.productList.filter(function(item){
+			return item.id == id;
+		});
+		return product; */
+   }
+  updateProductTotal(){
+	this.productTotal = 0;
+	this.productsInCart.forEach((val) => {
+		this.productTotal += (val.price * val.quantity);
+	});  
+  }  
+  changeQuanity(id,quantity){
+	let productExisting = this.productsInCart.filter(function(item){
+		return item.id == id;
+	});		
+	if(productExisting.length != 0){
+		productExisting[0].quantity = quantity;
+	}
+	this.updateProductTotal();
+  }
+  addToCart(id,quantity){
+	let productExisting = this.productsList.filter(function(item){
+		return item.id == id;
+	});		
+	if(productExisting.length != 0){
+		productExisting[0].quantity += quantity;
+		productExisting[0].addedToCart = true;
+		this.productsInCart.push(productExisting[0]);
+	}
+	this.notifyCartItem = true;
+	setTimeout(()=>{
+		this.notifyCartItem = false;
+	},1000);		
+	this.updateProductTotal();
+  }
+  addToWishlist(id){
+	let productExisting = this.productsList.filter(function(item){
+		return item.id == id;
+	});		
+	if(productExisting.length != 0){
+		productExisting[0].isFavorate = true;
+		this.productsInWishlist.push(productExisting);
+	}
+  }
+  removeCartItem(id){
+	this.productsInCart = this.productsInCart.filter(function(item){
+		return item.id != id;
+	});
+  }
+  removeWishlistItem(id){
+	this.productsInWishlist = this.productsInWishlist.filter(function(item){
+		return item.id != id;
+	});
+  }
+}

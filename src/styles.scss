@@ -1,0 +1,108 @@
+@import "~@angular/material/prebuilt-themes/indigo-pink.css";
+$brand-color: #5f1f60;
+html{overflow-x:hidden;}
+body{
+	margin: 0;
+    font-family: Hind, sans-serif;
+    background: #fff;
+    line-height: 1.5;
+    font-size: 15px;
+    color: rgba(0,0,0,.87);
+}
+
+/* carousel */
+.banner{
+	height:217px;
+	margin-bottom:10px;
+	overflow:hidden;
+}
+.ngxcarousel{
+	.ngxcarousel-inner{
+		.ngxcarousel-items{
+			.item img{
+				width: 100%;
+			}
+		}
+	}
+	.leftRs {
+		position: absolute;
+		margin: auto;
+		top: 0;
+		bottom: 0;
+		width: 40px;
+		height: 50px;
+		font-size:2em;
+		line-height:50px;
+		left: 0;
+		text-align:center;
+		text-align:center;
+	}
+	.rightRs {
+		position: absolute;
+		margin: auto;
+		top: 0;
+		bottom: 0;
+		width: 40px;
+		height: 50px;
+		font-size:2em;
+		line-height:50px;
+		right: 0;
+		text-align:center;
+		text-align:center;
+	}
+}
+.ngxcarousel > .ngxcarousel-inner > .ngxcarousel-items > .item{
+	max-height:350px;
+}
+.ngxcarouselPointDefault .ngxcarouselPoint li.active[_ngcontent-c4]{
+	background:#0095DA !important;
+}
+.ngxcarouselPointDefault .ngxcarouselPoint li{
+	background:#ddd !important;
+}
+.ngxcarouselPointDefault{
+	position:relative;
+	top:-50px;
+}
+.form-control:focus{
+	outline:0;
+	border:1px solid #ced4da;
+	box-shadow:none;
+}
+.btn-success{
+	font-size:0.9rem;
+	text-transform:uppercase;
+	background:#f0ad4e;
+	border-color:#f0ad4e;
+	padding:0.55rem 1rem;
+	a{
+		font-size:0.9rem;
+	}
+}
+.product-rating{
+	.star-icon{
+		font-size:4em !important;
+	}
+	.star-icon:before{
+		color:#f0ad4e !important;
+	}
+	span.rating{
+		width: 100%;
+		display: inline-block;
+		text-align:center;
+	}
+}
+.detail-block{
+	.reviews-wrp{
+		.star-icon{
+			font-size:1.4em !important;
+		}
+		.star-icon:before{
+			color:#f0ad4e !important;
+		}
+		p{
+			margin-bottom:5px;
+		}
+	}
+}
+
