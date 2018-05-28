@@ -16,7 +16,7 @@ export class ProductComponent implements OnInit {
   constructor(
 	private productService: ProductService,
 	private appService:AppService,
-	private router: Router
+	private router: Router,
 	private loginService: LoginService
   ) { }
 
