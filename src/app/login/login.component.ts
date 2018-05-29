@@ -30,15 +30,15 @@ export class LoginComponent implements OnInit {
 	  return field.invalid && field.touched;
   }
   navigateTo(){
-	if(this.appService.getRedirectionUrl()){
-	  this.router.navigate([this.appService.getRedirectionUrl()]);
-	} else {
-		let _login = {
+    let _login = {
 			uname:this._uname.value,
 			pwd:this._pwd.value
 		  }
 		this.appService.setCurrentUser(_login.uname);
-		this.loginService.setLoggedInStatus(true);		
+		this.loginService.setLoggedInStatus(true);
+	if(this.appService.getRedirectionUrl()){
+	  this.router.navigate([this.appService.getRedirectionUrl()]);
+	} else {
 		 this.router.navigate(['/']);
 	}
   }
