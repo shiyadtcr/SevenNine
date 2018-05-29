@@ -1,5 +1,4 @@
 import { Injectable, EventEmitter  } from '@angular/core';
-import {Observable} from 'rxjs/Observable';
 import { HttpClient } from '@angular/common/http';
 
 import { AppService } from '../../app.service';

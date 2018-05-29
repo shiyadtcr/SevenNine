@@ -1,5 +1,4 @@
 import { Injectable, EventEmitter } from '@angular/core';
-import { AppService } from '../../app.service';
 @Injectable()
 export class LoginService {
   IsLoggedIn:any;
@@ -7,7 +6,6 @@ export class LoginService {
   onSuccessLogout : EventEmitter<any> = new EventEmitter<any>();  
   onSuccessSignup : EventEmitter<any> = new EventEmitter<any>();  
   constructor(
-	private appService: AppService
   ) { 
     //localStorage.setItem('isLoggedin','true');
   }

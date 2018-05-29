@@ -34,7 +34,6 @@ export class AppComponent implements OnInit, OnDestroy{
 		private loginService:LoginService,
 		private appService:AppService,
 		private cdRef:ChangeDetectorRef,
-		private authGuard:AuthGuard,
 		private router:Router
 	) { }
 	ngOnInit(){
