@@ -8,7 +8,7 @@
 		<span class="decinc" (click)="incQuantity()">+</span>
 	</p>
 	<p class="wrp btn-wrp">
-		<span class="heart" (click)="addToWishlist()"><i class="fa fa-heart faa-pulse" [ngClass]="product.isFavorate?'animated':''"></i></span>
+		<span class="heart" (click)="addToWishlist()"><i class="fa fa-heart faa-pulse" [ngClass]="{animated: product.isFavorate, normal: !product.isFavorate}"></i></span>
 		<span class="cart" (click)="addToCart()"><i class="fa fa-shopping-basket"></i></span>
 	</p>
 	<p class="cart-add-info">Added to cart <b>({{product.addedToCart ? product.quantity : 0}})</b>

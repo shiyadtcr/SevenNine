@@ -10,10 +10,11 @@ import { LoginService } from '../shared';
   encapsulation: ViewEncapsulation.None,
 })
 export class LoginComponent implements OnInit {
+	loginFormGroup:FormGroup;
   constructor(
 	private appService: AppService,
 	private router: Router,
-	private loginForm: FormBuilder
+	private loginForm: FormBuilder,
 	private loginService: LoginService
   ) {
 	this.loginFormGroup = this.loginForm.group({
@@ -26,7 +27,7 @@ export class LoginComponent implements OnInit {
   ngOnInit() {
   }
   isError(field){
-	  return field.invalid && (field.dirty || field.touched);
+	  return field.invalid && field.touched;
   }
   navigateTo(){
 	if(this.appService.getRedirectionUrl()){

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
 import { ProductService } from '../shared';
+import { LoginService } from '../shared';
 import { AppService } from '../app.service';
 import { routerTransitionTop } from '../router.animations';
 import { RatingModule } from "ngx-rating";
@@ -19,7 +20,8 @@ export class ProductDetailsComponent implements OnInit {
   constructor(
 	private route: ActivatedRoute,
 	private productService: ProductService,
-	private appService: AppService
+	private appService: AppService,
+	private loginService: LoginService
   ) { }
 
   ngOnInit() {
@@ -35,7 +37,7 @@ export class ProductDetailsComponent implements OnInit {
 			title:'Home Style Ganapathi Gift FU99',
 			rating:3
 		};
-		if(this.productService.getSelectedProduct()){
+		if(this.loginService.getLoggedInStatus() && this.productService.getSelectedProduct()){
 			switch(this.productService.getRedirectionMode()){
 				case 'cart':
 					this.productService.addToCart(this.productService.getSelectedProduct().id,this.productService.getSelectedQuantity());

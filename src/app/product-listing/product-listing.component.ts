@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 import { Subscription } from 'rxjs';
 import {ProductService} from '../shared';
+import {LoginService} from '../shared';
 import {DataService} from '../shared';
 import { CategoryFilterPipe } from '../shared';
 import { routerTransitionTop } from '../router.animations';
@@ -28,7 +29,8 @@ export class ProductListingComponent implements OnInit {
 	private route: ActivatedRoute,
 	private productService:ProductService,
 	private dataService:DataService,
-	private appService:AppService
+	private appService:AppService,
+	private loginService:LoginService
   ) { }
   ngOnInit() {
 	this.sub = this.route.params.subscribe(params => {
@@ -51,7 +53,7 @@ export class ProductListingComponent implements OnInit {
 		} else {
 			this.productsList = this.productService.getProductsList();
 		}
-		if(this.productService.getSelectedProduct()){
+		if(this.loginService.getLoggedInStatus() && this.productService.getSelectedProduct()){
 			switch(this.productService.getRedirectionMode()){
 				case 'cart':
 					this.productService.addToCart(this.productService.getSelectedProduct().id,this.productService.getSelectedQuantity());

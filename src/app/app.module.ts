@@ -1,10 +1,8 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { NgxCarouselModule } from 'ngx-carousel';
-import 'hammerjs';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatMenuModule } from '@angular/material';
-import { CategoryFilterPipe } from './shared';
 import { DataService } from './shared';
 import { FormsModule } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -52,7 +50,6 @@ import { CartProductComponent } from './dashboard/my-cart/cart-product/cart-prod
     ProductListingComponent,
     ProductComponent,    
     MyAccountComponent,
-	CategoryFilterPipe,
 	DashboardComponent,
 	AddressBookComponent,
 	MyWishlistComponent,

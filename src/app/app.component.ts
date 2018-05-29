@@ -27,7 +27,7 @@ export class AppComponent implements OnInit, OnDestroy{
 	private onShowPreloaderSub: Subscription;
 	private onCategoryUpdateSub: Subscription;
 	private onSuccessLoginSub: Subscription;
-	hasUserLoggedIn:boolean = this.loginService.getLoggedInStatus('hasUserLoggedIn');
+	hasUserLoggedIn:any = this.loginService.getLoggedInStatus();
 	constructor(
 		private dataService:DataService,
 		private productService:ProductService,
