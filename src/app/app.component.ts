@@ -51,7 +51,10 @@ export class AppComponent implements OnInit, OnDestroy{
 	  });
 	  this.onAddToCartSub = this.productService.onAddToCart.subscribe((data) => {        
 		this.productsInCart = data;
-		this.notifyCartItem = this.productService.notifyCartItem;
+		this.notifyCartItem = true;
+		setTimeout(()=>{
+			this.notifyCartItem = false;
+		},1000);
 		this.productTotal = this.productService.productTotal;
 	  });
 	  this.onRemoveFromCartSub = this.productService.onRemoveFromCart.subscribe((data) => {        

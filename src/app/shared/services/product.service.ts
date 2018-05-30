@@ -12,7 +12,6 @@ export class ProductService {
   onIncQuantity : EventEmitter<any> = new EventEmitter<any>();
   onDecQuantity : EventEmitter<any> = new EventEmitter<any>();  
   onChangeQuantity : EventEmitter<any> = new EventEmitter<any>();  
-  notifyCartItem:boolean = false;
   productTotal:number = 0;
   productsList:any = [];
   productsInCart:any = [];
@@ -114,10 +113,7 @@ export class ProductService {
 		this.updateProductTotal();	
 		this.onAddToCart.emit(this.productsInCart);
 	}
-	this.notifyCartItem = true;
-	setTimeout(()=>{
-		this.notifyCartItem = false;
-	},1000);		
+			
 	this.updateProductTotal();
   }
   addToWishlist(id){

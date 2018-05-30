@@ -35,7 +35,25 @@ export class ProductDetailsComponent implements OnInit {
 			price:259,
 			quantity:0,
 			title:'Home Style Ganapathi Gift FU99',
-			rating:3
+			rating:0,
+			reviews:[{
+				commentBy:'Priya',
+				comment:'Good',
+				rating:4
+			},
+			{
+				commentBy:'Laya',
+				comment:'Not Bad',
+				rating:2
+			},{
+				commentBy:'Shekhar',
+				comment:'Okay',
+				rating:3
+			},{
+				commentBy:'Ahmed',
+				comment:'Bad',
+				rating:1
+			}]
 		};
 		if(this.loginService.getLoggedInStatus() && this.productService.getSelectedProduct()){
 			switch(this.productService.getRedirectionMode()){

@@ -28,8 +28,11 @@ var app = {
     // Bind any cordova events here. Common events are:
     // 'pause', 'resume', etc.
     onDeviceReady: function() {
-        
-    }
+		navigator.splashscreen.show();
+		window.setTimeout(function () {
+			navigator.splashscreen.hide();
+		}, 3000);
+    },
 	onBackbutton: function() {
 		alert('current url: ' + window.location.href);
         if(window.location.href == 'file:///android_assets/www/'){

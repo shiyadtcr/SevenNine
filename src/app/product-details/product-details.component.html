@@ -29,9 +29,9 @@
 			</div>
 			<div class="detail-block">
 				<p class="details-title">Reviews</p>
-				<div class="reviews-wrp">
-					<p><span>Priya</span><rating [readonly]="true" [(ngModel)]="productData.rating"></rating></p>
-					<p>Good</p>
+				<div class="reviews-wrp" *ngFor="let review of productData.reviews">
+					<p><span>{{review.commentBy}}</span><rating [readonly]="true" [(ngModel)]="review.rating"></rating></p>
+					<p>{{review.comment}}</p>
 				</div>
 				
 			</div>
