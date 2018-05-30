@@ -52,7 +52,7 @@
 				  <h3>Your Cart</h3>
 				  <div class="cart-content">
 					  <div class="cart-list" *ngFor="let product of productsInCart">
-						<img src="../assets/images/logo.png" />
+						<img src="assets/images/logo.png" />
 						<p class="prod-title">{{product.title}}<span class="remove-item" (click)="removeCartItem(product.id)">x</span></p>
 						<p>{{product.quantity}} x {{product.price}} = {{product.quantity * product.price}}</p>						
 					  </div>

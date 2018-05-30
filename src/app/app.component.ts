@@ -39,6 +39,7 @@ export class AppComponent implements OnInit, OnDestroy{
 		private router:Router
 	) { }
 	ngOnInit(){
+		
 	  this.productsInCart = this.productService.getProductsInCart();
 		this.productTotal = this.productService.productTotal;
 	  this.onShowPreloaderSub = this.appService.onShowPreloader.subscribe((isVisible) => {        
