@@ -53,8 +53,21 @@ export class ProductService {
   getProductsInCart(){
 	return this.productsInCart;
    } 
+	 setProductsInCart(data){
+		this.productsInCart = data;
+		if(data.length == 0){
+			this.updateProductTotal();
+			this.onAddToCart.emit(this.productsInCart);
+		 }
+   } 
    getProductsInWishlist(){ 
 		return this.productsInWishlist;
+   } 
+	 setProductsInWishlist(data){ 		 
+		this.productsInWishlist = data;
+		if(data.length == 0){
+			this.onAddToWishlist.emit(this.productsInWishlist);
+		 }		
    } 
   getNewProductsByCategory(id){
 	   let productUrl = "http://13.232.42.90/service/?/Masters/products/" + id;
@@ -97,7 +110,8 @@ export class ProductService {
 		productExisting[0].addedToCart = true;
 		if(this.productsInCart.filter(function(v){return v.id == id}).length == 0){
 			this.productsInCart.push(productExisting[0]);
-		}		
+		}	
+		this.updateProductTotal();	
 		this.onAddToCart.emit(this.productsInCart);
 	}
 	this.notifyCartItem = true;
@@ -133,6 +147,7 @@ export class ProductService {
 	this.productsInCart = this.productsInCart.filter(function(item){
 		return item.id != id;
 	});
+	this.updateProductTotal();
 	this.onRemoveFromCart.emit(this.productsInCart); 
   }
   

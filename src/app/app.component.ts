@@ -22,6 +22,8 @@ export class AppComponent implements OnInit, OnDestroy{
 	productsInCart:any = {};
 	categoryList:any = [];
 	categoryListHeight:number = 0;
+	productTotal:number = 0;
+	notifyCartItem:boolean = false;
 	private onAddToCartSub: Subscription;
 	private onRemoveFromCartSub: Subscription;
 	private onShowPreloaderSub: Subscription;
@@ -38,6 +40,7 @@ export class AppComponent implements OnInit, OnDestroy{
 	) { }
 	ngOnInit(){
 	  this.productsInCart = this.productService.getProductsInCart();
+		this.productTotal = this.productService.productTotal;
 	  this.onShowPreloaderSub = this.appService.onShowPreloader.subscribe((isVisible) => {        
 		this.showPreloader = isVisible;
 		this.cdRef.detectChanges();
@@ -47,12 +50,25 @@ export class AppComponent implements OnInit, OnDestroy{
 	  });
 	  this.onAddToCartSub = this.productService.onAddToCart.subscribe((data) => {        
 		this.productsInCart = data;
+		this.notifyCartItem = this.productService.notifyCartItem;
+		this.productTotal = this.productService.productTotal;
 	  });
 	  this.onRemoveFromCartSub = this.productService.onRemoveFromCart.subscribe((data) => {        
 		this.productsInCart = data;
+		this.productTotal = this.productService.productTotal;
 	  });
 	  this.onSuccessLoginSub = this.loginService.onSuccessLogin.subscribe((data) => {        
-		this.hasUserLoggedIn = data;
+			if(data == 'true'){
+				this.hasUserLoggedIn = true;
+			}  else {
+				this.hasUserLoggedIn = false;
+				this.appService.setCurrentUser(null);
+				this.productService.setProductList([]);
+				this.productService.setRedirectionMode(null);
+				this.productService.setSelectedProduct(null);
+				this.productService.setProductsInCart([]);
+				this.productService.setProductsInWishlist([]);
+			}
 	  });
 	  //this.productsInCart = this.dataService.getProductsInCart();
 	  //this.productsInWishlist = this.dataService.getProductsInWishlist();
@@ -98,4 +114,8 @@ export class AppComponent implements OnInit, OnDestroy{
 		this.categoryListHeight = 0;
 	}
   }
+	logout(){
+		this.loginService.setLoggedInStatus(false);		
+		this.router.navigate(['/']);
+	}
 }

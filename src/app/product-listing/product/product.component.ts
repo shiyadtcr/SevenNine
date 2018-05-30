@@ -45,7 +45,7 @@ export class ProductComponent implements OnInit {
 	  }
   }
   addToWishlist(){	  
-	  if(this.loginService.getLoggedInStatus()){
+	  if(this.loginService.getLoggedInStatus() == 'true'){
 		this.productService.addToWishlist(this.product.id);  
 	  } else {
 		this.appService.setRedirectionUrl(this.router.url);

@@ -34,8 +34,9 @@
 					<a *ngIf="hasUserLoggedIn" [routerLink]="['/dashboard','mycart']" mat-menu-item><i class="fa fa-shopping-cart green"></i>My Cart</a>
 					<a *ngIf="hasUserLoggedIn" [routerLink]="['/dashboard','checkout']" mat-menu-item><i class="fa fa-check-circle"></i>Checkout</a>
 					<a *ngIf="hasUserLoggedIn" [routerLink]="['/dashboard','orderhistory']" mat-menu-item><i class="fa fa-history"></i>Order History</a>
-					<a *ngIf="hasUserLoggedIn" [routerLink]="['/dashboard','myreturns']" mat-menu-item><i class="fa fa-undo"></i>My Return</a>
-					<a *ngIf="hasUserLoggedIn" [routerLink]="['/dashboard','rewardpoints']" mat-menu-item><i class="fa fa-gift"></i>Reward Points</a>
+					<a *ngIf="hasUserLoggedIn" (click)="logout()" mat-menu-item><i class="fa fa-sign-out"></i>Logout</a>
+					<!--<a *ngIf="hasUserLoggedIn" [routerLink]="['/dashboard','myreturns']" mat-menu-item><i class="fa fa-undo"></i>My Return</a>
+					<a *ngIf="hasUserLoggedIn" [routerLink]="['/dashboard','rewardpoints']" mat-menu-item><i class="fa fa-gift"></i>Reward Points</a>-->
 					<a *ngIf="!hasUserLoggedIn" [routerLink]="['/login']" mat-menu-item><i class="fa fa-sign-in"></i>Login</a>
 					<a *ngIf="!hasUserLoggedIn" mat-menu-item><i class="fa fa-user"></i>Register</a>
 				</ng-template>
@@ -43,7 +44,7 @@
 		</span> 
 		<span id="headermyaccount_div"></span> 
 		<span class="nav-icon ui-link">
-			<span class="cart-badge" [ngClass]="productService.notifyCartItem ? 'animated':''" (click)="_toggleRightSidebar()">
+			<span class="cart-badge" [ngClass]="{animated: notifyCartItem, normal: !notifyCartItem}" (click)="_toggleRightSidebar()">
 				<span id="cartcount_div">{{productsInCart.length}}</span>
 			</span>
 			<i class="fa fa-shopping-basket" (click)="_toggleRightSidebar()"></i>
@@ -56,7 +57,7 @@
 						<p>{{product.quantity}} x {{product.price}} = {{product.quantity * product.price}}</p>						
 					  </div>
 					  <p>Sub Total: 0</p>
-					  <p class="total">Total: {{productService.productTotal}}</p>
+					  <p class="total">Total: {{productTotal}}</p>
 					  <button *ngIf="productsInCart.length > 0" (click)="navigateTo('dashboard/mycart')" class="btn btn-success btn-lg btn-block cart-btn">Go to Cart</button>
 					  <button *ngIf="productsInCart.length > 0" (click)="navigateTo('dashboard/checkout')" class="btn btn-success btn-lg btn-block cart-btn">Checkout</button>
 				  </div>

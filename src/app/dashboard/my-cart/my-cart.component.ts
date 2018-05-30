@@ -10,6 +10,7 @@ import {ProductService} from '../../shared';
 export class MyCartComponent implements OnInit {
   productsInCart:any = {};
   private onRemoveFromCartSub: Subscription;
+  productTotal:number = 0;
   constructor(
 	private dashboardService:DashboardService,
 	private productService:ProductService
@@ -20,6 +21,12 @@ export class MyCartComponent implements OnInit {
 	  this.productsInCart = this.productService.getProductsInCart();
 	  this.onRemoveFromCartSub = this.productService.onRemoveFromCart.subscribe((data) => {        
 		this.productsInCart = data;
+    this.productTotal = this.productService.productTotal;
+	  });
+   
+	  this.onRemoveFromCartSub = this.productService.onRemoveFromCart.subscribe((data) => {        
+		this.productsInCart = data;
+    this.productTotal = this.productService.productTotal;
 	  });
   }
   ngOnDestroy() {

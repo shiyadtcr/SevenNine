@@ -7,7 +7,7 @@ export class AppService {
   redirectionUrl:string;
   constructor() { }
   setCurrentUser(user){
-	localStorage.setItem('currentUser',user);  
+    if(user == null) localStorage.removeItem('currentUser'); else localStorage.setItem('currentUser',user);	  
   }
   getCurrentUser(){
 	localStorage.getItem('currentUser');  

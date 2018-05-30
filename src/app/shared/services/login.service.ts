@@ -10,8 +10,12 @@ export class LoginService {
     //localStorage.setItem('isLoggedin','true');
   }
   setLoggedInStatus(status){
-	  localStorage.setItem('hasUserLoggedIn',status);
-	  this.onSuccessLogin.emit(status);
+    if(status == true){
+      localStorage.setItem('hasUserLoggedIn',status);
+    } else {
+      localStorage.removeItem('hasUserLoggedIn');
+    }	  
+	  this.onSuccessLogin.emit(this.getLoggedInStatus());
   }
   getLoggedInStatus(){
 	  return localStorage.getItem('hasUserLoggedIn');
