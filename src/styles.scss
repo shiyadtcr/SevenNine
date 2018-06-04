@@ -84,7 +84,7 @@ body{
 		font-size:4em !important;
 	}
 	.star-icon:before{
-		color:#f0ad4e !important;
+		/*color:#f0ad4e !important;*/
 	}
 	span.rating{
 		width: 100%;
@@ -98,7 +98,7 @@ body{
 			font-size:1.4em !important;
 		}
 		.star-icon:before{
-			color:#f0ad4e !important;
+			/*color:#f0ad4e !important;*/
 		}
 		p{
 			margin-bottom:5px;
@@ -111,4 +111,18 @@ body{
 }
 .input-group-addon.error{
   border:1px solid red;
+}
+
+.notifyjs-corner{
+	margin: 0 !important;
+    width: 100%;
+	top:50px !important;	
+}
+.notifyjs-bootstrap-base{
+	border-radius:0 !important;
+	border:0 !important;
+	white-space: normal !important;
+}
+.notifyjs-corner .notifyjs-wrapper, .notifyjs-corner .notifyjs-container{
+	margin:0 !important;
 }

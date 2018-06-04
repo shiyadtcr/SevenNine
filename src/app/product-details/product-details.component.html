@@ -7,7 +7,7 @@
 			<p class="title">{{productData.title}}</p>
 			<p class="price">Rs. {{productData.price}}</p>
 			<p class="wrp">
-				<span class="heart" (click)="addToWishlist()"><i class="fa fa-heart faa-pulse" [ngClass]="productData.isFavorate?'animated':''"></i></span>				
+				<span class="heart" (click)="addToWishlist()"><i class="fa fa-heart faa-pulse" [ngClass]="{animated: productData.isFavorate, normal: !productData.isFavorate}"></i></span>				
 				<span class="decinc" [ngClass]="productData.quantity == 1 ? 'disabled' : ''" (click)="decQuantity(productData)">-</span>
 				<input type="text" value="1" [(ngModel)]="quantity" class="quantity" />
 				<span class="decinc" (click)="incQuantity(productData)">+</span>

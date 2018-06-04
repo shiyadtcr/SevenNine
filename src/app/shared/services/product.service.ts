@@ -18,6 +18,38 @@ export class ProductService {
   productsInWishlist:any = [];
   selectedCategory:string = '';
   selectedProduct:any;
+  selectedDetailedProduct:any = {
+		id : 1,
+		categoryId:1,
+		imageUrl:"alleppey.jpg",
+		isFavorate:false,
+		price:259,
+		quantity:0,
+		title:'Home Style Ganapathi Gift FU99',
+		rating:0,
+		reviews:[{
+			commentBy:'Priya',
+			comment:'Good',
+			rating:4
+		},
+		{
+			commentBy:'Laya',
+			comment:'Not Bad',
+			rating:2
+		},{
+			commentBy:'Shekhar',
+			comment:'Okay',
+			rating:3
+		},{
+			commentBy:'Ahmed',
+			comment:'Bad',
+			rating:1
+		},{
+			commentBy:'Shiyad',
+			comment:'Great',
+			rating:5
+		}]
+	};
   redirectionMode:any;
   selectedQuantity:any;
   constructor(
@@ -25,11 +57,17 @@ export class ProductService {
 	private appService: AppService
   ) { 
   }
-   setSelectedProduct(data){
+  setSelectedProduct(data){
     this.selectedProduct = data;
   }
   getSelectedProduct(){
     return this.selectedProduct;
+  }
+  setSelectedDetailedProduct(data){
+    this.selectedDetailedProduct = data;
+  }
+  getSelectedDetailedProduct(){
+    return this.selectedDetailedProduct;
   }
   setRedirectionMode(data){
     this.redirectionMode = data;
@@ -100,6 +138,11 @@ export class ProductService {
   getSelectedCategory(){
 	  return this.selectedCategory;
   }
+  addToCartService(id,quantity){
+	  let addtoCartUrl = "http://13.232.42.90/service/?/Masters/cart/" + 1 + "/" + id + "/" + quantity;
+	   this.appService.onShowPreloader.emit(true);
+	   return this.http.get(addtoCartUrl);
+  }
   addToCart(id,quantity){
 	let productExisting = this.productsList.filter(function(item){
 		return item.id == id;
@@ -115,6 +158,11 @@ export class ProductService {
 	}
 			
 	this.updateProductTotal();
+  }
+  addToWishlistService(id){
+	  let addtoWishlistUrl = "http://13.232.42.90/service/?/Masters/wishlist/" + 1 + "/" + id;
+	   this.appService.onShowPreloader.emit(true);
+	   return this.http.get(addtoWishlistUrl);
   }
   addToWishlist(id){
 	let productExisting = this.productsList.filter(function(item){

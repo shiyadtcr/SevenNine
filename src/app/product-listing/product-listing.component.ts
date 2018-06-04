@@ -13,7 +13,6 @@ import { AppService } from '../app.service';
   templateUrl: './product-listing.component.html',
   styleUrls: ['./product-listing.component.scss'],
   encapsulation: ViewEncapsulation.None,
-  providers: [CategoryFilterPipe],
   animations: [routerTransitionTop()]
 })
 export class ProductListingComponent implements OnInit {
@@ -53,17 +52,48 @@ export class ProductListingComponent implements OnInit {
 		} else {
 			this.productsList = this.productService.getProductsList();
 		}
-		if(this.loginService.getLoggedInStatus() && this.productService.getSelectedProduct()){
-			switch(this.productService.getRedirectionMode()){
-				case 'cart':
-					this.productService.addToCart(this.productService.getSelectedProduct().id,this.productService.getSelectedQuantity());
-					//alert(this.productService.getSelectedProduct().title + ' ' + this.productService.getSelectedQuantity() + ' item(s) added to the cart!');
-					break;
-				case 'wishlist':
-					this.productService.addToWishlist(this.productService.getSelectedProduct().id);
-					alert(this.productService.getSelectedProduct().title + ' has been added to the wishlist!' )
-					break;
-			}
+		if(this.loginService.getLoggedInStatus()){
+			if(this.productService.getSelectedProduct()){
+				switch(this.productService.getRedirectionMode()){
+					case 'cart':
+						this.productService.addToCartService(this.productService.getSelectedProduct().id,this.productService.getSelectedQuantity())
+						.subscribe((data: any) => {
+							if(data.cartID){
+								this.productService.addToCart(this.productService.getSelectedProduct().id,this.productService.getSelectedQuantity());  
+								this.appService.onShowPreloader.emit(false);
+								$.notify(data.message,'success');
+							} else {
+								$.notify('Product adding to wishlist failed due to an error. Try after some time.','error');
+							}
+						},(data: any) => {
+							this.appService.onShowPreloader.emit(false);
+							alert('Product adding to cart failed due to an error. Try after some time.');
+						});	
+						//alert(this.productService.getSelectedProduct().title + ' ' + this.productService.getSelectedQuantity() + ' item(s) added to the cart!');
+						break;
+					case 'wishlist':
+						this.productService.addToWishlistService(this.productService.getSelectedProduct().id)
+						.subscribe((data: any) => {
+							if(data.wishID){
+								this.productService.addToWishlist(this.productService.getSelectedProduct().id);
+								this.appService.onShowPreloader.emit(false);
+								$.notify(data.message,'success');
+							} else {
+								$.notify('Product adding to wishlist failed due to an error. Try after some time.','error');
+							}
+						},(data: any) => {
+							this.appService.onShowPreloader.emit(false);
+							$.notify('Product adding to cart failed due to an error. Try after some time.','error');
+						});	
+						//alert(this.productService.getSelectedProduct().title + ' has been added to the wishlist!' )
+						break;
+				}
+				this.appService.setRedirectionUrl(null);
+				this.productService.setSelectedProduct(null);
+				this.productService.setSelectedQuantity(null);
+				this.productService.setRedirectionMode(null);
+			}	
+		} else {
 			this.appService.setRedirectionUrl(null);
 			this.productService.setSelectedProduct(null);
 			this.productService.setSelectedQuantity(null);
