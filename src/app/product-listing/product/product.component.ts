@@ -24,8 +24,12 @@ export class ProductComponent implements OnInit {
   ngOnInit() {
 	  console.log(this.product);	  
   }
-  incQuantity(){	  
-	this.quantity++;
+  incQuantity(){
+	if(this.quantity < this.product.stockCount){
+		this.quantity++;
+	} else {
+		alert('Max limit reached!');
+	}
 	//this.productService.onIncQuantity.emit([this.product.id,this.quantity]);
   }
   decQuantity(){

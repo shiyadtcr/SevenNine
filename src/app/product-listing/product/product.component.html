@@ -2,14 +2,22 @@
 	<a [routerLink]="['/products',product.categoryId,product.id]"><img class="img-fluid" src="assets/images/logo.png" /></a>
 	<p class="title">{{product.title}}</p>
 	<p class="price">Rs. {{product.price}}</p>
-	<p class="wrp">		
-		<span class="decinc" [ngClass]="quantity == 1 ? 'disabled' : ''" (click)="decQuantity()">-</span>
-		<input type="text" value="1" [(ngModel)]="quantity" class="quantity" />
-		<span class="decinc" (click)="incQuantity()">+</span>
-	</p>
-	<p class="wrp btn-wrp">
-		<span class="heart" (click)="addToWishlist()"><i class="fa fa-heart faa-pulse" [ngClass]="{animated: product.isFavorate, normal: !product.isFavorate}"></i></span>
-		<span class="cart" (click)="addToCart()"><i class="fa fa-shopping-basket"></i></span>
-	</p>
-	<p class="cart-add-info">Added to cart <b>({{product.addedToCart ? product.quantity : 0}})</b>
+	
+	<div *ngIf="product.stockCount && product.stockCount > 0; else noStock">
+		<p class="wrp">		
+			<span class="decinc" [ngClass]="quantity == 1 ? 'disabled' : ''" (click)="decQuantity()">-</span>
+			<input type="text" value="1" [(ngModel)]="quantity" class="quantity" />
+			<span class="decinc" (click)="incQuantity()">+</span>
+		</p>
+		<p class="wrp btn-wrp">
+			<span class="heart" (click)="addToWishlist()"><i class="fa fa-heart faa-pulse" [ngClass]="{animated: product.isFavorate, normal: !product.isFavorate}"></i></span>
+			<span class="cart" (click)="addToCart()"><i class="fa fa-shopping-basket"></i></span>
+		</p>
+		<p class="cart-add-info">Added to cart <b>({{product.addedToCart ? product.quantity : 0}})</b></p>
+	</div>
+	<ng-template #noStock>
+		<p class="btn-wrp nostock-wrp">
+			Out of stock
+		</p>
+	</ng-template>
 </div>
