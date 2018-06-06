@@ -147,7 +147,7 @@ app-root > .container{
 	top:50px !important;
 }
 .mat-menu-item{
- font-size:1.2em;
+ font-size:0.9375rem;
  i{
 	margin-right:10px;
 	color:red;
@@ -243,12 +243,10 @@ app-root > .container{
 			overflow:hidden;
 			white-space:nowrap;
 			text-overflow:ellipsis;
-			font-size:1.2em;
 		}
 		.price{
 			color:green;
 			font-weight:bold;
-			font-size:1.2em;
 		}
 		.wrp{
 			*{
