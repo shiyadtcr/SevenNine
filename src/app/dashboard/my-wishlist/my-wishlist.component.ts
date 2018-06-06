@@ -23,7 +23,7 @@ export class MyWishlistComponent implements OnInit {
 		.subscribe((data: any) => {
 			if(data && data.length > 0){
 				this.productsInWishlist = data;
-				this.productService.setProductsInWishlist(data);
+				//this.productService.setProductsInWishlist(data);
 				this.appService.onShowPreloader.emit(false);
 				//$.notify(data.message,'success');
 			} else {

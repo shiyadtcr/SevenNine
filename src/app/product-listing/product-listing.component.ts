@@ -1,6 +1,5 @@
 import { Component, OnInit, Input, ViewEncapsulation  } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Location } from '@angular/common';
 import { Subscription } from 'rxjs';
 import {ProductService} from '../shared';
 import {LoginService} from '../shared';

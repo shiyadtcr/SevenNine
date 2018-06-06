@@ -13,9 +13,8 @@ import { AddNewAddressComponent } from './dashboard/address-book/add-new-address
 import { MyWishlistComponent } from './dashboard/my-wishlist/my-wishlist.component';
 import { MyCartComponent } from './dashboard/my-cart/my-cart.component';
 import { CheckoutComponent } from './dashboard/checkout/checkout.component';
+import { PlaceOrderComponent } from './dashboard/checkout/place-order.component';
 import { OrderHistoryComponent } from './dashboard/order-history/order-history.component';
-import { MyReturnsComponent } from './dashboard/my-returns/my-returns.component';
-import { RewardPointsComponent } from './dashboard/reward-points/reward-points.component';
 import { AuthGuard } from './shared';
 
 const routes: Routes = [
@@ -34,11 +33,10 @@ const routes: Routes = [
 		{ path: 'addressbook', component: AddressBookComponent},
 		{ path:'addnewaddress',component:AddNewAddressComponent},
 		{ path: 'mywishlist', component: MyWishlistComponent},
-		{ path: 'mycart', component: MyCartComponent},
+		{ path: 'mycart', component: MyCartComponent},		
 		{ path: 'checkout', component: CheckoutComponent},
-		{ path: 'orderhistory', component: OrderHistoryComponent},
-		{ path: 'myreturns', component: MyReturnsComponent},
-		{ path: 'rewardpoints', component: RewardPointsComponent}
+		{ path: 'checkout/:orderid', component: PlaceOrderComponent},
+		{ path: 'orderhistory', component: OrderHistoryComponent}		
 	]
   },
   { path: '**', redirectTo: '' }

@@ -32,12 +32,11 @@ import { MyWishlistComponent } from './dashboard/my-wishlist/my-wishlist.compone
 import { MyCartComponent } from './dashboard/my-cart/my-cart.component';
 import { CheckoutComponent } from './dashboard/checkout/checkout.component';
 import { OrderHistoryComponent } from './dashboard/order-history/order-history.component';
-import { MyReturnsComponent } from './dashboard/my-returns/my-returns.component';
-import { RewardPointsComponent } from './dashboard/reward-points/reward-points.component';
 import { DashboardService } from './shared';
 import { AddNewAddressComponent } from './dashboard/address-book/add-new-address/add-new-address.component';
 import { WishedProductComponent } from './dashboard/my-wishlist/wished-product/wished-product.component';
 import { CartProductComponent } from './dashboard/my-cart/cart-product/cart-product.component';
+import { PlaceOrderComponent } from './dashboard/checkout/place-order.component';
 
 
 
@@ -57,12 +56,11 @@ import { CartProductComponent } from './dashboard/my-cart/cart-product/cart-prod
 	MyCartComponent,
 	CheckoutComponent,
 	OrderHistoryComponent,
-	MyReturnsComponent,
-	RewardPointsComponent,
 	DashboardHomeComponent,
 	AddNewAddressComponent,
 	WishedProductComponent,
-	CartProductComponent
+	CartProductComponent,
+	PlaceOrderComponent
   ],
   imports: [
     BrowserModule,

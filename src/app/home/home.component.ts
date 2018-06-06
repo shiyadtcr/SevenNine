@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { routerTransitionTop } from '../router.animations';
 import {DataService} from '../shared';
+import {ProductService} from '../shared';
 import { AppService } from '../app.service';
 @Component({
   selector: 'app-home',
@@ -25,7 +26,8 @@ export class HomeComponent implements OnInit {
 	categoryList:any = [];
   constructor(
 	private dataService:DataService,
-	private appService:AppService
+	private appService:AppService,
+	private productService:ProductService
   ) { }
   onCarouselLoad(){
 	  
@@ -41,10 +43,24 @@ export class HomeComponent implements OnInit {
 		},(data: any) => {
 			this.appService.onShowPreloader.emit(false);
 		});
+		this.productService.getProductsInCartService()
+		.subscribe((data: any) => {
+			if(data && data.length > 0){
+				this.productService.setProductsInCart(data || []);
+				this.appService.onShowPreloader.emit(false);
+				//$.notify(data.message,'success');
+			} else {
+				this.productService.setProductsInCart([]);
+				this.appService.onShowPreloader.emit(false);
+				//$.notify('Product adding to wishlist failed due to an error. Try after some time.','error');
+			}
+		},(data: any) => {
+			this.appService.onShowPreloader.emit(false);
+			//$.notify('Product adding to wishlist failed due to an error. Try after some time.','error');
+		});	
 	} else {
 		this.categoryList = this.dataService.getCategoryList();
-	}
-	  
+	}	
   }
 
 }

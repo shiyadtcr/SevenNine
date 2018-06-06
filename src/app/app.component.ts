@@ -19,7 +19,7 @@ export class AppComponent implements OnInit, OnDestroy{
 	@ViewChild(MatMenuTrigger) trigger: MatMenuTrigger;
 	showPreloader: boolean = false;
 	menuOpen: boolean = false;
-	productsInCart:any = {};
+	productsInCart:any = [];
 	categoryList:any = [];
 	categoryListHeight:number = 0;
 	productTotal:number = 0;
@@ -39,9 +39,6 @@ export class AppComponent implements OnInit, OnDestroy{
 		private router:Router
 	) { }
 	ngOnInit(){
-		
-	  this.productsInCart = this.productService.getProductsInCart();
-		this.productTotal = this.productService.productTotal;
 	  this.onShowPreloaderSub = this.appService.onShowPreloader.subscribe((isVisible) => {        
 		this.showPreloader = isVisible;
 		this.cdRef.detectChanges();
@@ -55,11 +52,11 @@ export class AppComponent implements OnInit, OnDestroy{
 		setTimeout(()=>{
 			this.notifyCartItem = false;
 		},1000);
-		this.productTotal = this.productService.productTotal;
+		this.productTotal = this.productService.getCartProductsTotal();
 	  });
 	  this.onRemoveFromCartSub = this.productService.onRemoveFromCart.subscribe((data) => {        
 		this.productsInCart = data;
-		this.productTotal = this.productService.productTotal;
+		this.productTotal = this.productService.getCartProductsTotal();
 	  });
 	  this.onSuccessLoginSub = this.loginService.onSuccessLogin.subscribe((data) => {        
 			if(data == 'true'){

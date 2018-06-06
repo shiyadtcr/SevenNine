@@ -1,5 +1,6 @@
 <div class="row">
 	<div class="col-12 address-list-wrp">
+		<form [formGroup]="checkoutFormGroup">
 		<div class="address-wrp">
 			<div class="address">
 				<h6 class="title">
@@ -18,7 +19,7 @@
 				<h6 class="title">
 					<span>Change Billing Address</span>
 				</h6>
-				<select (change)="changeBillingAddr($event)" class="custom-select custom-select-lg">
+				<select (change)="changeBillingAddr($event)" formControlName="billingaddr" class="custom-select custom-select-lg">
 					<option [value]="i" *ngFor="let addr of additionalAddr;let i = index;">{{addr.streetAddr}} - {{addr.streetAddr2}} - {{addr.city}} - {{addr.state}} - {{addr.country}} - {{addr.postorzip}}</option>
 				</select>
 			</div>
@@ -41,7 +42,7 @@
 				<h6 class="title">
 					<span>Change Shipping Address</span>
 				</h6>
-				<select (change)="changeShippingAddr($event)" class="custom-select custom-select-lg">
+				<select (change)="changeShippingAddr($event)" formControlName="shippingaddr" class="custom-select custom-select-lg">
 					<option [value]="i" *ngFor="let addr of additionalAddr;let i = index;">{{addr.streetAddr}} - {{addr.streetAddr2}} - {{addr.city}} - {{addr.state}} - {{addr.country}} - {{addr.postorzip}}</option>
 				</select>
 			</div>
@@ -52,7 +53,7 @@
 					<span>Shipping Method</span>
 				</h6>
 				<label class="custom-control custom-radio">
-				  <input id="ShippingMethod" name="ShippingMethod" type="radio" class="custom-control-input">
+				  <input id="ShippingMethod" value="Free Shipping" name="shippingmethod" formControlName="shippingmethod" type="radio" class="custom-control-input">
 				  <span class="custom-control-indicator"></span>
 				  <span class="custom-control-description">Free Shipping</span>
 				</label>
@@ -71,17 +72,16 @@
 							<span>Delivery Date</span>
 						  </label>
 						  <span class="input-group-addon"><!-- <span class="star-mandatory">*</span> --><i class="fa fa-calendar"></i></span>
-						  <input class="form-control calendar-ctrl" type="date" placeholder="Delivery Date"/>
+						  <input class="form-control calendar-ctrl" formControlName="deiverydate" type="date" placeholder="Delivery Date"/>
 					</div>
 					<small id="dateHelp" class="form-text text-muted">Please select your convinient delivery date</small>
 				</div>
 				<div class="form-group">
 					<label for="DeliveryDate">Delivery Time</label>
-					<select class="custom-select custom-select-lg">
+					<select formControlName="deiverytime" class="custom-select custom-select-lg">
 						<option>9.30 am to 12 pm</option>
 						<option>5.00 pm to 7.00 pm</option>
 						<option>7.30 pm to 10.00 pm</option>
-						
 					</select>
 					<small id="dateHelp" class="form-text text-muted">Please select your convinient delivery time</small>
 				</div>  
@@ -93,7 +93,7 @@
 					<span>Payment Method</span>
 				</h6>
 				<label class="custom-control custom-radio">
-				  <input id="PaymentMethod" name="PaymentMethod" type="radio" class="custom-control-input">
+				  <input formControlName="paymentmethod" value="COD" id="PaymentMethod" name="paymentmethod" type="radio" class="custom-control-input">
 				  <span class="custom-control-indicator"></span>
 				  <span class="custom-control-description">COD</span>
 				</label>
@@ -112,11 +112,15 @@
 				  </div>
 			  </div>
 				<div class="other-wrp">					
-					<div class="row"><p class="col-8 text-right">Sub Total:</p><p class="col-4">{{productService.productTotal}}</p></div>
+					<div class="row"><p class="col-8 text-right">Sub Total:</p><p class="col-4">{{productTotal}}</p></div>
 					<div class="row"><p class="col-8 text-right">Discount (0 points used):</p><p class="col-4">-{{discount}}.00</p></div>
-					<div class="row title"><p class="col-8 text-right font-weight-bold">Total:</p><p class="col-4 font-weight-bold">{{productService.productTotal - discount}}</p></div>
+					<div class="row title"><p class="col-8 text-right font-weight-bold">Total:</p><p class="col-4 font-weight-bold">{{productTotal - discount}}</p></div>
 				</div>
 			</div>
 		</div>
+		<div class="address-wrp">
+			<button *ngIf="productsInCart.length > 0" (click)="placeOrder()" class="btn btn-success btn-lg btn-block cart-btn">Place Order</button>
+		</div>
+		</form>
 	</div>
 </div>

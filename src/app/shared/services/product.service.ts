@@ -25,8 +25,14 @@ export class ProductService {
 		isFavorate:false,
 		price:259,
 		quantity:0,
-		title:'Home Style Ganapathi Gift FU99',
+		title:'Home Style Ganapathi Gift FU99',		
 		rating:0,
+		description:"testing desc",
+		details:{
+			"Description" : "Testing Description Testing Description Testing Description Testing Description ",
+			"Features & Details" : "Testing Features & Details Testing Features & Details Testing Features & Details Testing Features & Details ",
+			"Other Information" : "Testing Other Information Testing Other Information Testing Other Information Testing Other Information "
+		},
 		reviews:[{
 			commentBy:'Priya',
 			comment:'Good',
@@ -97,10 +103,8 @@ export class ProductService {
    } 
 	 setProductsInCart(data){
 		this.productsInCart = data;
-		if(data.length == 0){
-			this.updateProductTotal();
-			this.onAddToCart.emit(this.productsInCart);
-		 }
+		this.updateProductTotal();
+		this.onAddToCart.emit(this.productsInCart);
    } 
    resetRedirectionData(){
 		this.appService.setRedirectionUrl(null);
@@ -127,7 +131,10 @@ export class ProductService {
 	   this.appService.onShowPreloader.emit(true);
 	   return this.http.get(productUrl);
    }
-   
+   getCartProductsTotal(){
+	   this.updateProductTotal();
+	   return this.productTotal;
+   }
   updateProductTotal(){
 	this.productTotal = 0;
 	this.productsInCart.forEach((val) => {
