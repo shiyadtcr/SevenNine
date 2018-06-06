@@ -143,9 +143,11 @@ app-root > .container{
 		}
 	}
 }
-
+.cdk-overlay-pane{
+	top:50px !important;
+}
 .mat-menu-item{
- font-size:13px;
+ font-size:1.1em;
  i{
 	margin-right:10px;
 	color:red;
@@ -170,7 +172,7 @@ app-root > .container{
     > div {
         width: 18px;
         height: 18px;
-        background-color: #fff;
+        background-color: #000;
 
         border-radius: 100%;
         display: inline-block;
@@ -203,7 +205,7 @@ app-root > .container{
     }
 }
 .overlay{
-	background:#000;
+	background:transparent;
 	opacity:0.4;
 	width:100%;
 	height:100%;

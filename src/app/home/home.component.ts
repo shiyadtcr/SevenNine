@@ -32,6 +32,23 @@ export class HomeComponent implements OnInit {
   onCarouselLoad(){
 	  
   }
+  getProducinCart(){
+	this.productService.getProductsInCartService()
+	.subscribe((data: any) => {
+		if(data && data.length > 0){
+			this.productService.setProductsInCart(data || []);
+			this.appService.onShowPreloader.emit(false);
+			//$.notify(data.message,'success');
+		} else {
+			this.productService.setProductsInCart([]);
+			this.appService.onShowPreloader.emit(false);
+			//$.notify('Product adding to wishlist failed due to an error. Try after some time.','error');
+		}
+	},(data: any) => {
+		this.appService.onShowPreloader.emit(false);
+		//$.notify('Product adding to wishlist failed due to an error. Try after some time.','error');
+	});	
+  }
   ngOnInit() {	  
 	if(this.dataService.getCategoryList().length == 0){
 		this.dataService.getNewCategoryList()
@@ -43,23 +60,10 @@ export class HomeComponent implements OnInit {
 		},(data: any) => {
 			this.appService.onShowPreloader.emit(false);
 		});
-		this.productService.getProductsInCartService()
-		.subscribe((data: any) => {
-			if(data && data.length > 0){
-				this.productService.setProductsInCart(data || []);
-				this.appService.onShowPreloader.emit(false);
-				//$.notify(data.message,'success');
-			} else {
-				this.productService.setProductsInCart([]);
-				this.appService.onShowPreloader.emit(false);
-				//$.notify('Product adding to wishlist failed due to an error. Try after some time.','error');
-			}
-		},(data: any) => {
-			this.appService.onShowPreloader.emit(false);
-			//$.notify('Product adding to wishlist failed due to an error. Try after some time.','error');
-		});	
+		this.getProducinCart();
 	} else {
 		this.categoryList = this.dataService.getCategoryList();
+		this.getProducinCart();
 	}	
   }
 
