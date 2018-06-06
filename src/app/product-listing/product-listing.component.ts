@@ -60,10 +60,12 @@ export class ProductListingComponent implements OnInit {
 						.subscribe((data: any) => {
 							if(data.cartID){
 								this.productService.addToCart(this.productService.getSelectedProduct().id,this.productService.getSelectedQuantity());  
+								this.productService.resetRedirectionData();
 								this.appService.onShowPreloader.emit(false);
-								$.notify(data.message,'success');
+								//$.notify(data.message,'success');
 							} else {
-								$.notify('Product adding to wishlist failed due to an error. Try after some time.','error');
+								this.appService.onShowPreloader.emit(false);
+								//$.notify('Product adding to wishlist failed due to an error. Try after some time.','error');
 							}
 						},(data: any) => {
 							this.appService.onShowPreloader.emit(false);
@@ -76,28 +78,24 @@ export class ProductListingComponent implements OnInit {
 						.subscribe((data: any) => {
 							if(data.wishID){
 								this.productService.addToWishlist(this.productService.getSelectedProduct().id);
+								this.productService.resetRedirectionData();
 								this.appService.onShowPreloader.emit(false);
-								$.notify(data.message,'success');
+								//$.notify(data.message,'success');
 							} else {
-								$.notify('Product adding to wishlist failed due to an error. Try after some time.','error');
+								this.appService.onShowPreloader.emit(false);
+								//$.notify('Product adding to wishlist failed due to an error. Try after some time.','error');
 							}
 						},(data: any) => {
 							this.appService.onShowPreloader.emit(false);
-							$.notify('Product adding to cart failed due to an error. Try after some time.','error');
+							//$.notify('Product adding to cart failed due to an error. Try after some time.','error');
 						});	
 						//alert(this.productService.getSelectedProduct().title + ' has been added to the wishlist!' )
 						break;
 				}
-				this.appService.setRedirectionUrl(null);
-				this.productService.setSelectedProduct(null);
-				this.productService.setSelectedQuantity(null);
-				this.productService.setRedirectionMode(null);
+				
 			}	
 		} else {
-			this.appService.setRedirectionUrl(null);
-			this.productService.setSelectedProduct(null);
-			this.productService.setSelectedQuantity(null);
-			this.productService.setRedirectionMode(null);
+			this.productService.resetRedirectionData();
 		}
 		
     });

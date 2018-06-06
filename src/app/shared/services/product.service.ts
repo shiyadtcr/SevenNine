@@ -90,6 +90,11 @@ export class ProductService {
   getProductsInCart(){
 	return this.productsInCart;
    } 
+   getProductsInCartService(){
+	let cartlistUrl = this.appService.getBaseServiceUrl() + "cartlist/" + this.appService.getCurrentUser();
+	   this.appService.onShowPreloader.emit(true);
+	   return this.http.get(cartlistUrl);
+   } 
 	 setProductsInCart(data){
 		this.productsInCart = data;
 		if(data.length == 0){
@@ -97,9 +102,20 @@ export class ProductService {
 			this.onAddToCart.emit(this.productsInCart);
 		 }
    } 
+   resetRedirectionData(){
+		this.appService.setRedirectionUrl(null);
+		this.setSelectedProduct(null);
+		this.setSelectedQuantity(null);
+		this.setRedirectionMode(null);
+	}
    getProductsInWishlist(){ 
 		return this.productsInWishlist;
-   } 
+   }
+	getProductsInWishlistService(){ 
+		let wishlistUrl = this.appService.getBaseServiceUrl() + "wishlists/" + this.appService.getCurrentUser();
+	   this.appService.onShowPreloader.emit(true);
+	   return this.http.get(wishlistUrl);
+   }   
 	 setProductsInWishlist(data){ 		 
 		this.productsInWishlist = data;
 		if(data.length == 0){
@@ -107,13 +123,9 @@ export class ProductService {
 		 }		
    } 
   getNewProductsByCategory(id){
-	   let productUrl = "http://13.232.42.90/service/?/Masters/products/" + id;
+	   let productUrl = this.appService.getBaseServiceUrl() + "products/" + id;
 	   this.appService.onShowPreloader.emit(true);
 	   return this.http.get(productUrl);
-	   /* let product = this.productList.filter(function(item){
-			return item.id == id;
-		});
-		return product; */
    }
    
   updateProductTotal(){
@@ -139,7 +151,7 @@ export class ProductService {
 	  return this.selectedCategory;
   }
   addToCartService(id,quantity){
-	  let addtoCartUrl = "http://13.232.42.90/service/?/Masters/cart/" + 1 + "/" + id + "/" + quantity;
+	  let addtoCartUrl = this.appService.getBaseServiceUrl() + "cart/" + this.appService.getCurrentUser() + "/" + id + "/" + quantity;
 	   this.appService.onShowPreloader.emit(true);
 	   return this.http.get(addtoCartUrl);
   }
@@ -160,7 +172,7 @@ export class ProductService {
 	this.updateProductTotal();
   }
   addToWishlistService(id){
-	  let addtoWishlistUrl = "http://13.232.42.90/service/?/Masters/wishlist/" + 1 + "/" + id;
+	  let addtoWishlistUrl = this.appService.getBaseServiceUrl() + "wishlist/" + this.appService.getCurrentUser() + "/" + id;
 	   this.appService.onShowPreloader.emit(true);
 	   return this.http.get(addtoWishlistUrl);
   }

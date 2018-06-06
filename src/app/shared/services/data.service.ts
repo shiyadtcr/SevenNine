@@ -100,7 +100,7 @@ export class DataService{
 	this.addressList.additionalAddress.push(address);  
   }
   getNewCategoryList(){ 
-    let categoyUrl = "http://13.232.42.90/service/?/Masters/categories";
+    let categoyUrl = this.appService.getBaseServiceUrl() + "categories";
 	var categoryPromise = this.http.get(categoyUrl);
 	this.appService.onShowPreloader.emit(true);
     return categoryPromise;

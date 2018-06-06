@@ -34,8 +34,8 @@ var app = {
 		}, 3000);
     },
 	onBackbutton: function() {
-		alert('current url: ' + window.location.href);
-        if(window.location.href == 'file:///android_assets/www/'){
+		//alert('current url: ' + window.location.href);
+        if(window.location.href == 'file:///android_asset/www/'){
 			navigator.notification.confirm(
 				'Are you sure to exit?',  // message
 				function(buttonIndex){

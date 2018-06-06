@@ -18,7 +18,7 @@ export class LoginComponent implements OnInit {
 	private loginService: LoginService
   ) {
 	this.loginFormGroup = this.loginForm.group({
-      uname: ['', [Validators.required, Validators.email] ],
+      uname: ['', [Validators.required] ],
       pwd: ['', Validators.required ]
     });
   }
@@ -30,16 +30,34 @@ export class LoginComponent implements OnInit {
 	  return field.invalid && field.touched;
   }
   navigateTo(){
-    let _login = {
+    let _signinData = {
 			uname:this._uname.value,
 			pwd:this._pwd.value
 		  }
-		this.appService.setCurrentUser(_login.uname);
-		this.loginService.setLoggedInStatus(true);
-	if(this.appService.getRedirectionUrl()){
-	  this.router.navigate([this.appService.getRedirectionUrl()]);
-	} else {
-		 this.router.navigate(['/']);
-	}
+	this.loginService.signinUser(_signinData)
+	.subscribe((data: any) => {
+		if(data.custID){
+			//this.productService.addToWishlist(this.productService.getSelectedProduct().id);
+			this.appService.onShowPreloader.emit(false);
+			this.appService.setCurrentUser(data.custID);
+			this.loginService.setLoggedInStatus(true);
+			if(this.appService.getRedirectionUrl()){
+			  this.router.navigate([this.appService.getRedirectionUrl()]);
+			} else {
+				 this.router.navigate(['/']);
+			}
+			//$.notify(data.message,'success');
+		} else {
+			this.appService.onShowPreloader.emit(false);
+			//$.notify('User signup failed due to an error. Try after some time.','error');
+		}
+	},(data: any) => {
+		this.appService.onShowPreloader.emit(false);
+		//$.notify('User signup failed due to an error. Try after some time.','error');
+	});	
+	
+  }
+  OnInit(){
+	  
   }
 }

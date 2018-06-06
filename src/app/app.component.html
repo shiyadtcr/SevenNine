@@ -38,7 +38,7 @@
 					<!--<a *ngIf="hasUserLoggedIn" [routerLink]="['/dashboard','myreturns']" mat-menu-item><i class="fa fa-undo"></i>My Return</a>
 					<a *ngIf="hasUserLoggedIn" [routerLink]="['/dashboard','rewardpoints']" mat-menu-item><i class="fa fa-gift"></i>Reward Points</a>-->
 					<a *ngIf="!hasUserLoggedIn" [routerLink]="['/login']" mat-menu-item><i class="fa fa-sign-in"></i>Login</a>
-					<a *ngIf="!hasUserLoggedIn" mat-menu-item><i class="fa fa-user"></i>Register</a>
+					<a *ngIf="!hasUserLoggedIn" [routerLink]="['/signup']" mat-menu-item><i class="fa fa-user"></i>Register</a>
 				</ng-template>
 			</mat-menu>
 		</span> 

@@ -1,8 +1,8 @@
 /* SystemJS module definition */
 declare var module: NodeModule;
 interface NodeModule {
-  id: string;
+  id: string
 };
 interface JQuery {
-  notify(options?: any): any;
+  notify(options?: any): any
 };

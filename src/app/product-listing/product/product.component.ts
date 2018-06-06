@@ -41,13 +41,14 @@ export class ProductComponent implements OnInit {
 			if(data.cartID){
 				this.productService.addToCart(this.product.id,this.quantity); 
 				this.appService.onShowPreloader.emit(false);
-				$.notify(data.message,"success");
+				//$.notify(data.message,"success");
 			} else {
-				$.notify('Product adding to cart failed due to an error. Try after some time.',"error");
+				this.appService.onShowPreloader.emit(false);
+				//$.notify('Product adding to cart failed due to an error. Try after some time.',"error");
 			}
 		},(data: any) => {
 			this.appService.onShowPreloader.emit(false);
-			$.notify('Product adding to cart failed due to an error. Try after some time.',"error");
+			//$.notify('Product adding to cart failed due to an error. Try after some time.',"error");
 		});		
 	  } else {
 		this.appService.setRedirectionUrl(this.router.url);
@@ -64,14 +65,15 @@ export class ProductComponent implements OnInit {
 			if(data.wishID){
 				this.productService.addToWishlist(this.product.id);
 				this.appService.onShowPreloader.emit(false);
-				$.notify(data.message,"success");
+				//$.notify(data.message,"success");
 			} else {
-				$.notify('Product adding to wishlist failed due to an error. Try after some time.','error');
+				this.appService.onShowPreloader.emit(false);
+				//$.notify('Product adding to wishlist failed due to an error. Try after some time.','error');
 			}
 			
 		},(data: any) => {
 			this.appService.onShowPreloader.emit(false);
-			$.notify('Product adding to cart failed due to an error. Try after some time.','error');
+			//$.notify('Product adding to cart failed due to an error. Try after some time.','error');
 		});	
 	  } else {
 		this.appService.setRedirectionUrl(this.router.url);

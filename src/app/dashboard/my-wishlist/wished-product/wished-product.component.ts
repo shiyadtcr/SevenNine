@@ -1,5 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import {ProductService} from '../../../shared';
+import {AppService} from '../../../app.service';
 @Component({
   selector: 'app-wished-product',
   templateUrl: './wished-product.component.html',
@@ -11,6 +12,7 @@ export class WishedProductComponent implements OnInit {
   quantity:number = 1;
   constructor(
 	private productService:ProductService,
+	private appService:AppService
   ) { }
 
   ngOnInit() {
@@ -18,10 +20,37 @@ export class WishedProductComponent implements OnInit {
   }
   
   addToCart(){
-	  this.productService.addToCart(this.product.id,this.quantity);
+	  this.productService.addToCartService(this.product.id,this.quantity)
+		.subscribe((data: any) => {
+			if(data.cartID){
+				this.productService.addToCart(this.product.id,this.quantity); 
+				this.appService.onShowPreloader.emit(false);
+				//$.notify(data.message,"success");
+			} else {
+				this.appService.onShowPreloader.emit(false);
+				//$.notify('Product adding to cart failed due to an error. Try after some time.',"error");
+			}
+		},(data: any) => {
+			this.appService.onShowPreloader.emit(false);
+			//$.notify('Product adding to cart failed due to an error. Try after some time.',"error");
+		});	
   }
   removeWishlistItem(id){
-	 this.productService.addToWishlist(this.product.id); 
+	 this.productService.addToWishlistService(this.product.id)
+	.subscribe((data: any) => {
+		if(data.wishID){
+			this.productService.addToWishlist(this.product.id);
+			this.appService.onShowPreloader.emit(false);
+			//$.notify(data.message,"success");
+		} else {
+			this.appService.onShowPreloader.emit(false);
+			//$.notify('Product adding to wishlist failed due to an error. Try after some time.','error');
+		}
+		
+	},(data: any) => {
+		this.appService.onShowPreloader.emit(false);
+		//$.notify('Product adding to cart failed due to an error. Try after some time.','error');
+	});	
   }
   incQuantity(){	  
 	this.quantity++;

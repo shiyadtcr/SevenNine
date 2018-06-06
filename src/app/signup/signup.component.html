@@ -1,3 +1,36 @@
-<p>
-  signup works!
-</p>
+<div class="container">
+	<div class="signup-wrp">
+		<form [formGroup]="signupFormGroup">
+			<div class="input-group ctrl-grp">
+			<span class="input-group-addon" [ngClass]="isError(_mob)?'error':''"><span class="star-mandatory">*</span><i class="fa fa-user"></i></span>
+			<label class="form-group has-float-label">
+				<input class="form-control" formControlName="mob" type="number" placeholder="Mobile Number"/>
+				<span>Mobile</span>
+			  </label>
+			</div>
+			<div class="input-group ctrl-grp">
+			<span class="input-group-addon" [ngClass]="isError(_name)?'error':''"><span class="star-mandatory">*</span><i class="fa fa-user"></i></span>
+			<label class="form-group has-float-label">
+				<input class="form-control" formControlName="name" type="text" placeholder="Name"/>
+				<span>Name</span>
+			  </label>
+			</div>
+			<div class="input-group ctrl-grp">
+			<span class="input-group-addon" [ngClass]="isError(_email)?'error':''"><span class="star-mandatory">*</span><i class="fa fa-user"></i></span>
+			<label class="form-group has-float-label">
+				<input class="form-control" formControlName="email" type="email" placeholder="E-mail"/>
+				<span>E-mail</span>
+			  </label>
+			</div>
+			<div class="input-group ctrl-grp">
+			<span class="input-group-addon" [ngClass]="isError(_pwd)?'error':''"><span class="star-mandatory">*</span><i class="fa fa-user"></i></span>
+			<label class="form-group has-float-label">
+				<input class="form-control" type="password" formControlName="pwd" placeholder="Password"/>
+				<span>Password</span>
+			  </label>
+			</div>
+			<button class="btn btn-success btn-lg btn-block save-addr-btn ctrl-grp" (click)="navigateToLogin()">Login</button>
+			<button (click)="navigateTo()" class="btn btn-success btn-lg btn-block cart-btn" [disabled]="!signupFormGroup.valid">Signup</button>
+		</form>
+	</div>
+</div>
