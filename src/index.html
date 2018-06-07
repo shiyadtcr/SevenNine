@@ -31,22 +31,22 @@ var app = {
 		
     },
 	onBackbutton: function() {
-		alert('current url: ' + window.location.href);
+		//alert('current url: ' + window.location.href);
         if(window.location.href == 'file:///android_asset/www/'){
-			alert('yes');
+			//alert('yes');
 			navigator.notification.confirm(
-				'Are you sure to exit?',  // message
+				'Are you sure to exit now?',  // message
 				function(buttonIndex){
-					if(buttonIndex == 0){
+					if(buttonIndex == 2){
 						navigator.app.exitApp();
 					}
 				},              // callback to invoke with index of button pressed
-				'Exit',            // title
-				['Yes','No']          // buttonLabels
+				'SevenNine - Mobile Super Market',            // title
+				['No','Yes']          // buttonLabels
 			);				
 		} else {
-			alert('no');
-			window.history.go(0);
+			//alert('no');
+			window.history.back();
 		}		
     }
 };
