@@ -28,7 +28,9 @@ var app = {
     // Bind any cordova events here. Common events are:
     // 'pause', 'resume', etc.
     onDeviceReady: function() {
-		
+		setTimeout(function() {
+			navigator.splashscreen.hide();
+		}, 3000);
     },
 	onBackbutton: function() {
 		//alert('current url: ' + window.location.href);
