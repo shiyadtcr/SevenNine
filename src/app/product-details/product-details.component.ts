@@ -7,6 +7,7 @@ import { LoginService } from '../shared';
 import { AppService } from '../app.service';
 import { routerTransitionTop } from '../router.animations';
 import { RatingModule } from "ngx-rating";
+declare var $: any;
 @Component({
   selector: 'app-product-details',
   templateUrl: './product-details.component.html',
@@ -42,14 +43,14 @@ export class ProductDetailsComponent implements OnInit {
 								this.productService.addToCart(this.productService.getSelectedProduct().id,this.productService.getSelectedQuantity());  
 								this.productService.resetRedirectionData();
 								this.appService.onShowPreloader.emit(false);
-								//$.notify(data.message,"success");
+								$.notify(data.message,"success");
 							} else {
 								this.appService.onShowPreloader.emit(false);
-								//$.notify('Product adding to cart failed due to an error. Try after some time.',"error");
+								$.notify('Product adding to cart failed due to an error. Try after some time.',"error");
 							}
 						},(data: any) => {
 							this.appService.onShowPreloader.emit(false);
-							//$.notify('Product adding to cart failed due to an error. Try after some time.',"error");
+							$.notify('Product adding to cart failed due to an error. Try after some time.',"error");
 						});	
 						//alert(this.productService.getSelectedProduct().title + ' ' + this.productService.getSelectedQuantity() + ' item(s) added to the cart!');
 						break;
@@ -60,14 +61,14 @@ export class ProductDetailsComponent implements OnInit {
 								this.productService.addToWishlist(this.productService.getSelectedProduct().id);
 								this.productService.resetRedirectionData();
 								this.appService.onShowPreloader.emit(false);
-								//$.notify(data.message,"success");
+								$.notify(data.message,"success");
 							} else {
 								this.appService.onShowPreloader.emit(false);
-								//$.notify('Product adding to wishlist failed due to an error. Try after some time.',"error");
+								$.notify('Product adding to wishlist failed due to an error. Try after some time.',"error");
 							}
 						},(data: any) => {
 							this.appService.onShowPreloader.emit(false);
-							//$.notify('Product adding to cart failed due to an error. Try after some time.',"error");
+							$.notify('Product adding to cart failed due to an error. Try after some time.',"error");
 						});	
 						//alert(this.productService.getSelectedProduct().title + ' has been added to the wishlist!' )
 						break;
@@ -100,14 +101,14 @@ export class ProductDetailsComponent implements OnInit {
 			if(data.cartID){
 				this.productService.addToCart(this.productData.id,this.quantity);  
 				this.appService.onShowPreloader.emit(false);
-				//$.notify(data.message,'success');
+				$.notify(data.message,'success');
 			} else {
 				this.appService.onShowPreloader.emit(false);
-				//$.notify('Product adding to cart failed due to an error. Try after some time.','error');
+				$.notify('Product adding to cart failed due to an error. Try after some time.','error');
 			}
 		},(data: any) => {
 			this.appService.onShowPreloader.emit(false);
-			//$.notify('Product adding to cart failed due to an error. Try after some time.','error');
+			$.notify('Product adding to cart failed due to an error. Try after some time.','error');
 		});	
 	  } else {
 		this.appService.setRedirectionUrl(this.router.url);
@@ -125,14 +126,14 @@ export class ProductDetailsComponent implements OnInit {
 			if(data.wishID){
 				this.productService.setSelectedDetailedProduct(this.productData);
 				this.productService.addToWishlist(this.productData.id);  
-				//$.notify(data.message,'success');
+				$.notify(data.message,'success');
 			} else {
 				this.appService.onShowPreloader.emit(false);
-				//$.notify('Product adding to wishlist failed due to an error. Try after some time.','error');
+				$.notify('Product adding to wishlist failed due to an error. Try after some time.','error');
 			}
 		},(data: any) => {
 			this.appService.onShowPreloader.emit(false);
-			//$.notify('Product adding to wishlist failed due to an error. Try after some time.','error');
+			$.notify('Product adding to wishlist failed due to an error. Try after some time.','error');
 		});	
 	  } else {
 		this.appService.setRedirectionUrl(this.router.url);

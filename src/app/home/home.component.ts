@@ -1,13 +1,15 @@
 import { Component, OnInit } from '@angular/core';
-import { routerTransitionTop } from '../router.animations';
+import { routerTransitionLeft } from '../router.animations';
 import {DataService} from '../shared';
 import {ProductService} from '../shared';
 import { AppService } from '../app.service';
+import { LoginService } from '../shared';
+//declare var $: any;
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss'],
-  animations: [routerTransitionTop()]
+  animations: [routerTransitionLeft()]
 })
 export class HomeComponent implements OnInit {
   carouselOne: any = {
@@ -27,32 +29,38 @@ export class HomeComponent implements OnInit {
   constructor(
 	private dataService:DataService,
 	private appService:AppService,
-	private productService:ProductService
+	private productService:ProductService,
+	private loginService: LoginService
   ) { }
   onCarouselLoad(){
 	  
   }
   getProducinCart(){
-	this.productService.getProductsInCartService()
-	.subscribe((data: any) => {
-		if(data && data.length > 0){
-			this.productService.setProductsInCart(data || []);
-			this.appService.onShowPreloader.emit(false);
-			//$.notify(data.message,'success');
-		} else {
-			this.productService.setProductsInCart([]);
+	if(this.loginService.getLoggedInStatus()){
+		this.productService.getProductsInCartService()
+		.subscribe((data: any) => {
+			if(data && data.length > 0){
+				this.productService.setProductsInCart(data || []);
+				this.appService.onShowPreloader.emit(false);
+				//$.notify(data.message,'success');
+			} else {
+				this.productService.setProductsInCart([]);
+				this.appService.onShowPreloader.emit(false);
+				//$.notify('Product adding to wishlist failed due to an error. Try after some time.','error');
+			}
+		},(data: any) => {
 			this.appService.onShowPreloader.emit(false);
 			//$.notify('Product adding to wishlist failed due to an error. Try after some time.','error');
-		}
-	},(data: any) => {
-		this.appService.onShowPreloader.emit(false);
-		//$.notify('Product adding to wishlist failed due to an error. Try after some time.','error');
-	});	
+		});	
+	}
   }
   ngOnInit() {	  
 	if(this.dataService.getCategoryList().length == 0){
 		this.dataService.getNewCategoryList()
 		.subscribe((data: any) => {
+			data.forEach(obj => {
+				obj.imageUrl = this.appService.baseImageUrl + 'category/' + obj.imageUrl;
+			});
 			this.categoryList = data;
 			this.dataService.setCategoryList(data);
 			this.dataService.onCategoryUpdate.emit(data);

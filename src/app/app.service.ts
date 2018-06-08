@@ -5,6 +5,7 @@ export class AppService {
   onShowPreloader : EventEmitter<any> = new EventEmitter<any>();
   baseImageUrl:string = 'http://13.232.42.90/seven9/assets/';
   baseServiceUrl:string = 'http://13.232.42.90/service/?/Masters/';
+  defaultImageUrl:string = 'assets/images/logo.png';
   redirectionUrl:string;
   constructor() { }
   setBaseServiceUrl(url){

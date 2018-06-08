@@ -14,6 +14,7 @@ import { AuthGuard} from './shared';
 import {SqueezeBoxModule} from 'squeezebox/dist';
 import { HttpClientModule } from '@angular/common/http';
 import {RatingModule} from "ngx-rating";
+import { LazyLoadImageModule } from 'ng-lazyload-image';
 
 import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
@@ -73,7 +74,8 @@ import { PlaceOrderComponent } from './dashboard/checkout/place-order.component'
 	ReactiveFormsModule,
 	SqueezeBoxModule,
 	HttpClientModule,
-	RatingModule
+	RatingModule,
+	LazyLoadImageModule
   ],
   providers: [DataService, ProductService, LoginService, AppService, AuthGuard, DashboardService],
   bootstrap: [AppComponent]

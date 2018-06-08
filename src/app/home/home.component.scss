@@ -10,6 +10,7 @@ $brand-color: #5f1f60;
 		overflow:hidden;
 		padding-right:0;
 		padding-left:10px;
+		height:150px;
 		a{
 			display:block;
 		}
@@ -17,11 +18,11 @@ $brand-color: #5f1f60;
 			background:$brand-color;
 			color:#ffffff;
 			width:100%;
-			font-size:1em;
+			font-size:0.9em;
 			margin:0;
 			position: absolute;
 			bottom: 0;
-			line-height:25px;
+			line-height:22px;
 		}
 		img{
 			

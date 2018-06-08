@@ -4,6 +4,8 @@ import { ProductService } from '../../shared';
 import { AppService } from '../../app.service';
 import { LoginService } from '../../shared';
 import { Router } from '@angular/router';
+declare var $: any;
+declare var navigator: any;
 
 @Component({
   selector: 'app-product',
@@ -24,11 +26,20 @@ export class ProductComponent implements OnInit {
   ngOnInit() {
 	  console.log(this.product);	  
   }
+  alertDismissed(){
+	  
+  }
   incQuantity(){
 	if(this.quantity < this.product.stockCount){
 		this.quantity++;
 	} else {
-		alert('Max limit reached!');
+		//alert('Max limit reached!');
+		navigator.notification.alert(
+			'Max limit reached!',  // message
+			this.alertDismissed,         // callback
+			'SevenNine - Mobile Super Market',            // title
+			'OK'             // buttonName
+		);
 	}
 	//this.productService.onIncQuantity.emit([this.product.id,this.quantity]);
   }
@@ -45,14 +56,14 @@ export class ProductComponent implements OnInit {
 			if(data.cartID){
 				this.productService.addToCart(this.product.id,this.quantity); 
 				this.appService.onShowPreloader.emit(false);
-				//$.notify(data.message,"success");
+				$.notify(data.message,"success");
 			} else {
 				this.appService.onShowPreloader.emit(false);
-				//$.notify('Product adding to cart failed due to an error. Try after some time.',"error");
+				$.notify('Product adding to cart failed due to an error. Try after some time.',"error");
 			}
 		},(data: any) => {
 			this.appService.onShowPreloader.emit(false);
-			//$.notify('Product adding to cart failed due to an error. Try after some time.',"error");
+			$.notify('Product adding to cart failed due to an error. Try after some time.',"error");
 		});		
 	  } else {
 		this.appService.setRedirectionUrl(this.router.url);
@@ -69,15 +80,15 @@ export class ProductComponent implements OnInit {
 			if(data.wishID){
 				this.productService.addToWishlist(this.product.id);
 				this.appService.onShowPreloader.emit(false);
-				//$.notify(data.message,"success");
+				$.notify(data.message,"success");
 			} else {
 				this.appService.onShowPreloader.emit(false);
-				//$.notify('Product adding to wishlist failed due to an error. Try after some time.','error');
+				$.notify('Product adding to wishlist failed due to an error. Try after some time.','error');
 			}
 			
 		},(data: any) => {
 			this.appService.onShowPreloader.emit(false);
-			//$.notify('Product adding to cart failed due to an error. Try after some time.','error');
+			$.notify('Product adding to cart failed due to an error. Try after some time.','error');
 		});	
 	  } else {
 		this.appService.setRedirectionUrl(this.router.url);

@@ -3,6 +3,7 @@ import { AppService } from '../app.service';
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { LoginService } from '../shared';
+declare var $: any;
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -46,14 +47,14 @@ export class LoginComponent implements OnInit {
 			} else {
 				 this.router.navigate(['/']);
 			}
-			//$.notify(data.message,'success');
+			$.notify(data.message,'success');
 		} else {
 			this.appService.onShowPreloader.emit(false);
-			//$.notify('User signup failed due to an error. Try after some time.','error');
+			$.notify('User signup failed due to an error. Try after some time.','error');
 		}
 	},(data: any) => {
 		this.appService.onShowPreloader.emit(false);
-		//$.notify('User signup failed due to an error. Try after some time.','error');
+		$.notify('User signup failed due to an error. Try after some time.','error');
 	});	
 	
   }

@@ -5,6 +5,7 @@ import {DataService} from '../../shared';
 import {AppService} from '../../app.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+declare var $: any;
 @Component({
   selector: 'app-checkout',
   templateUrl: './checkout.component.html',
@@ -63,15 +64,15 @@ export class CheckoutComponent implements OnInit {
 			//this.productService.setProductsInCart(data);
 			this.productTotal = this.productService.getCartProductsTotal();
 			this.appService.onShowPreloader.emit(false);
-			//$.notify(data.message,'success');
+			$.notify(data.message,'success');
 		} else {
 			this.productsInCart = [];
 			this.appService.onShowPreloader.emit(false);
-			//$.notify('Product adding to wishlist failed due to an error. Try after some time.','error');
+			$.notify('Product adding to wishlist failed due to an error. Try after some time.','error');
 		}
 	},(data: any) => {
 		this.appService.onShowPreloader.emit(false);
-		//$.notify('Product adding to wishlist failed due to an error. Try after some time.','error');
+		$.notify('Product adding to wishlist failed due to an error. Try after some time.','error');
 	});	
   }
   changeBillingAddr(event){

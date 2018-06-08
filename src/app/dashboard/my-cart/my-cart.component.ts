@@ -3,6 +3,7 @@ import { DashboardService } from '../../shared';
 import { Subscription } from 'rxjs';
 import {ProductService} from '../../shared';
 import { AppService } from '../../app.service';
+declare var $: any;
 @Component({
   selector: 'app-my-cart',
   templateUrl: './my-cart.component.html',
@@ -23,19 +24,26 @@ export class MyCartComponent implements OnInit {
 	  this.productService.getProductsInCartService()
 		.subscribe((data: any) => {
 			if(data && data.length > 0){
+				data.forEach(obj => {
+					if(obj.imageUrl){
+						obj.imageUrl = this.appService.baseImageUrl + 'item/' + obj.imageUrl;
+					} else {
+						obj.imageUrl = this.appService.defaultImageUrl;
+					}
+				});
 				this.productsInCart = data;
 				//this.productService.setProductsInCart(data);
 				this.productTotal = this.productService.getCartProductsTotal();
 				this.appService.onShowPreloader.emit(false);
-				//$.notify(data.message,'success');
+				$.notify(data.message,'success');
 			} else {
 				this.productsInCart = [];
 				this.appService.onShowPreloader.emit(false);
-				//$.notify('Product adding to wishlist failed due to an error. Try after some time.','error');
+				$.notify('Product adding to wishlist failed due to an error. Try after some time.','error');
 			}
 		},(data: any) => {
 			this.appService.onShowPreloader.emit(false);
-			//$.notify('Product adding to wishlist failed due to an error. Try after some time.','error');
+			$.notify('Product adding to wishlist failed due to an error. Try after some time.','error');
 		});	
 	  this.onRemoveFromCartSub = this.productService.onRemoveFromCart.subscribe((data) => {        
 		this.productsInCart = data;

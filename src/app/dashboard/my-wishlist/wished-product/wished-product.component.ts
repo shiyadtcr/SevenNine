@@ -1,6 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import {ProductService} from '../../../shared';
 import {AppService} from '../../../app.service';
+declare var $: any;
 @Component({
   selector: 'app-wished-product',
   templateUrl: './wished-product.component.html',
@@ -25,14 +26,14 @@ export class WishedProductComponent implements OnInit {
 			if(data.cartID){
 				this.productService.addToCart(this.product.id,this.quantity); 
 				this.appService.onShowPreloader.emit(false);
-				//$.notify(data.message,"success");
+				$.notify(data.message,"success");
 			} else {
 				this.appService.onShowPreloader.emit(false);
-				//$.notify('Product adding to cart failed due to an error. Try after some time.',"error");
+				$.notify('Product adding to cart failed due to an error. Try after some time.',"error");
 			}
 		},(data: any) => {
 			this.appService.onShowPreloader.emit(false);
-			//$.notify('Product adding to cart failed due to an error. Try after some time.',"error");
+			$.notify('Product adding to cart failed due to an error. Try after some time.',"error");
 		});	
   }
   removeWishlistItem(id){
@@ -41,15 +42,15 @@ export class WishedProductComponent implements OnInit {
 		if(data.wishID){
 			this.productService.addToWishlist(this.product.id);
 			this.appService.onShowPreloader.emit(false);
-			//$.notify(data.message,"success");
+			$.notify(data.message,"success");
 		} else {
 			this.appService.onShowPreloader.emit(false);
-			//$.notify('Product adding to wishlist failed due to an error. Try after some time.','error');
+			$.notify('Product adding to wishlist failed due to an error. Try after some time.','error');
 		}
 		
 	},(data: any) => {
 		this.appService.onShowPreloader.emit(false);
-		//$.notify('Product adding to cart failed due to an error. Try after some time.','error');
+		$.notify('Product adding to cart failed due to an error. Try after some time.','error');
 	});	
   }
   incQuantity(){	  

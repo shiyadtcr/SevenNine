@@ -1,3 +1,4 @@
+<div [@routerTransitionLeft]>
 <ngx-carousel
         [inputs]="carouselOne"
         (carouselLoad)="onCarouselLoad($event)">
@@ -19,13 +20,13 @@
           <i NgxCarouselPrev class='fa fa-chevron-circle-left leftRs'></i>
           <i NgxCarouselNext class='fa fa-chevron-circle-right rightRs'></i>
     </ngx-carousel>	
-	<div class="row product-row" [@routerTransitionTop]>
+	<div class="row product-row">
 		<div class="col-6 product-wrp" *ngFor="let caregory of categoryList">
 			<a [routerLink]="['/products',caregory.id]">
-		  <img class="img-fluid" src="{{appService.baseImageUrl + 'category/' + caregory.imageUrl}}" /> 
+		  <img class="img-fluid" [defaultImage]="appService.defaultImageUrl" [lazyLoad]="caregory.imageUrl" /> 
 		  <p class="product-title">{{caregory.title}}</p>
 			</a>
 		</div>
 	  </div>
 	  
-	  
+</div>

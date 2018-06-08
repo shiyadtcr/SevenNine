@@ -7,6 +7,7 @@ import {DataService} from '../shared';
 import { CategoryFilterPipe } from '../shared';
 import { routerTransitionTop } from '../router.animations';
 import { AppService } from '../app.service';
+declare var $: any;
 @Component({
   selector: 'app-product-listing',
   templateUrl: './product-listing.component.html',
@@ -18,6 +19,7 @@ export class ProductListingComponent implements OnInit {
   categoryId:string;
   categoryData:any = {};
   productsList:any = [];
+  
   
   private sub: any;
   private onRemoveFromCartSub: Subscription;
@@ -42,6 +44,13 @@ export class ProductListingComponent implements OnInit {
 		if(this.productService.getProductsList().length == 0){
 			this.productService.getNewProductsByCategory(this.categoryId)
 			.subscribe((data: any) => {
+				data.forEach(obj => {
+					if(obj.imageUrl){
+						obj.imageUrl = this.appService.baseImageUrl + 'item/' + obj.imageUrl;
+					} else {
+						obj.imageUrl = this.appService.defaultImageUrl;
+					}
+				});
 				this.productsList = data;
 				this.productService.setProductList(data);
 				this.appService.onShowPreloader.emit(false);
@@ -61,14 +70,14 @@ export class ProductListingComponent implements OnInit {
 								this.productService.addToCart(this.productService.getSelectedProduct().id,this.productService.getSelectedQuantity());  
 								this.productService.resetRedirectionData();
 								this.appService.onShowPreloader.emit(false);
-								//$.notify(data.message,'success');
+								$.notify(data.message,'success');
 							} else {
 								this.appService.onShowPreloader.emit(false);
-								//$.notify('Product adding to wishlist failed due to an error. Try after some time.','error');
+								$.notify('Product adding to wishlist failed due to an error. Try after some time.','error');
 							}
 						},(data: any) => {
 							this.appService.onShowPreloader.emit(false);
-							alert('Product adding to cart failed due to an error. Try after some time.');
+							$.notify('Product adding to cart failed due to an error. Try after some time.',"error");
 						});	
 						//alert(this.productService.getSelectedProduct().title + ' ' + this.productService.getSelectedQuantity() + ' item(s) added to the cart!');
 						break;
@@ -79,14 +88,14 @@ export class ProductListingComponent implements OnInit {
 								this.productService.addToWishlist(this.productService.getSelectedProduct().id);
 								this.productService.resetRedirectionData();
 								this.appService.onShowPreloader.emit(false);
-								//$.notify(data.message,'success');
+								$.notify(data.message,'success');
 							} else {
 								this.appService.onShowPreloader.emit(false);
-								//$.notify('Product adding to wishlist failed due to an error. Try after some time.','error');
+								$.notify('Product adding to wishlist failed due to an error. Try after some time.','error');
 							}
 						},(data: any) => {
 							this.appService.onShowPreloader.emit(false);
-							//$.notify('Product adding to cart failed due to an error. Try after some time.','error');
+							$.notify('Product adding to cart failed due to an error. Try after some time.','error');
 						});	
 						//alert(this.productService.getSelectedProduct().title + ' has been added to the wishlist!' )
 						break;
