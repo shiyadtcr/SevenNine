@@ -53,10 +53,10 @@ export class SignupComponent implements OnInit {
 			this.appService.onShowPreloader.emit(false);
 			this.appService.setCurrentUser(data.custID);
 			this.loginService.setLoggedInStatus(true);
+			this.productService.setProductList([]);
 			if(this.appService.getRedirectionUrl()){
 			  this.router.navigate([this.appService.getRedirectionUrl()]);
 			} else {
-				this.productService.setProductList([]);
 				 this.router.navigate(['/']);
 			}
 			$.notify(data.message,'success');
