@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { LoginService } from '../shared';
 import { AppService } from '../app.service';
 import { Router } from '@angular/router';
+import { ProductService } from '../shared';
 declare var $: any;
 @Component({
   selector: 'app-signup',
@@ -16,7 +17,8 @@ export class SignupComponent implements OnInit {
 	private appService: AppService,
 	private router: Router,
 	private signupForm: FormBuilder,
-	private loginService: LoginService
+	private loginService: LoginService,
+	private productService: ProductService
   ) {
 	this.signupFormGroup = this.signupForm.group({
       mob: ['', [Validators.required] ],
@@ -54,6 +56,7 @@ export class SignupComponent implements OnInit {
 			if(this.appService.getRedirectionUrl()){
 			  this.router.navigate([this.appService.getRedirectionUrl()]);
 			} else {
+				this.productService.setProductList([]);
 				 this.router.navigate(['/']);
 			}
 			$.notify(data.message,'success');

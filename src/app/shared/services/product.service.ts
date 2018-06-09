@@ -129,7 +129,7 @@ export class ProductService {
 		 }		
    } 
   getNewProductsByCategory(id){
-	   let productUrl = this.appService.getBaseServiceUrl() + "products/" + id;
+	   let productUrl = this.appService.getBaseServiceUrl() + "products/" + id + "/0";
 	   if(this.loginService.getLoggedInStatus()){
 		   productUrl = this.appService.getBaseServiceUrl() + "products/" + id + '/' + this.appService.getCurrentUser();
 	   }
