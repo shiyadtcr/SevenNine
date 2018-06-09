@@ -15,8 +15,8 @@
 				<span>Password</span>
 			  </label>
 			</div>
-			<button class="btn btn-success btn-lg btn-block save-addr-btn ctrl-grp" [disabled]="!loginFormGroup.valid" (click)="navigateTo()">Login</button>
-			<button (click)="navigateTo()" class="btn btn-success btn-lg btn-block cart-btn">Signup</button>
+			<button class="btn btn-success btn-lg btn-block" [disabled]="!loginFormGroup.valid" (click)="navigateTo()">Login</button>
+			<button (click)="navigateToSignup()" class="btn btn-success btn-lg btn-block cart-btn">Signup</button>
 		</form>
 	</div>
 </div>

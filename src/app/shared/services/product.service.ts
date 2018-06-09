@@ -2,6 +2,7 @@ import { Injectable, EventEmitter  } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
 import { AppService } from '../../app.service';
+import { LoginService } from './login.service';
 
 @Injectable()
 export class ProductService {
@@ -60,7 +61,8 @@ export class ProductService {
   selectedQuantity:any;
   constructor(
 	private http: HttpClient,
-	private appService: AppService
+	private appService: AppService,
+	private loginService: LoginService
   ) { 
   }
   setSelectedProduct(data){
@@ -128,6 +130,9 @@ export class ProductService {
    } 
   getNewProductsByCategory(id){
 	   let productUrl = this.appService.getBaseServiceUrl() + "products/" + id;
+	   if(this.loginService.getLoggedInStatus()){
+		   productUrl = this.appService.getBaseServiceUrl() + "products/" + id + '/' + this.appService.getCurrentUser();
+	   }
 	   this.appService.onShowPreloader.emit(true);
 	   return this.http.get(productUrl);
    }

@@ -28,9 +28,9 @@
 				<input class="form-control" type="password" formControlName="pwd" placeholder="Password"/>
 				<span>Password</span>
 			  </label>
-			</div>
-			<button class="btn btn-success btn-lg btn-block save-addr-btn ctrl-grp" (click)="navigateToLogin()">Login</button>
-			<button (click)="navigateTo()" class="btn btn-success btn-lg btn-block cart-btn" [disabled]="!signupFormGroup.valid">Signup</button>
+			</div>			
+			<button (click)="navigateTo()" class="btn btn-success btn-lg btn-block" [disabled]="!signupFormGroup.valid">Signup</button>
+			<button class="btn btn-success btn-lg btn-block" (click)="navigateToLogin()">Login</button>
 		</form>
 	</div>
 </div>

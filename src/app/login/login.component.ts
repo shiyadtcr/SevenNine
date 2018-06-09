@@ -3,6 +3,7 @@ import { AppService } from '../app.service';
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { LoginService } from '../shared';
+import { ProductService } from '../shared';
 declare var $: any;
 @Component({
   selector: 'app-login',
@@ -16,7 +17,8 @@ export class LoginComponent implements OnInit {
 	private appService: AppService,
 	private router: Router,
 	private loginForm: FormBuilder,
-	private loginService: LoginService
+	private loginService: LoginService,
+	private productService: ProductService
   ) {
 	this.loginFormGroup = this.loginForm.group({
       uname: ['', [Validators.required] ],
@@ -29,6 +31,9 @@ export class LoginComponent implements OnInit {
   }
   isError(field){
 	  return field.invalid && field.touched;
+  }
+  navigateToSignup(){
+	  this.router.navigate(['signup']);
   }
   navigateTo(){
     let _signinData = {
@@ -45,6 +50,7 @@ export class LoginComponent implements OnInit {
 			if(this.appService.getRedirectionUrl()){
 			  this.router.navigate([this.appService.getRedirectionUrl()]);
 			} else {
+				this.productService.setProductList([]);
 				 this.router.navigate(['/']);
 			}
 			$.notify(data.message,'success');

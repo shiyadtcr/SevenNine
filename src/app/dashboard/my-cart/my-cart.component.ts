@@ -3,7 +3,6 @@ import { DashboardService } from '../../shared';
 import { Subscription } from 'rxjs';
 import {ProductService} from '../../shared';
 import { AppService } from '../../app.service';
-declare var $: any;
 @Component({
   selector: 'app-my-cart',
   templateUrl: './my-cart.component.html',
@@ -35,15 +34,12 @@ export class MyCartComponent implements OnInit {
 				//this.productService.setProductsInCart(data);
 				this.productTotal = this.productService.getCartProductsTotal();
 				this.appService.onShowPreloader.emit(false);
-				$.notify(data.message,'success');
 			} else {
 				this.productsInCart = [];
 				this.appService.onShowPreloader.emit(false);
-				$.notify('Product adding to wishlist failed due to an error. Try after some time.','error');
 			}
 		},(data: any) => {
 			this.appService.onShowPreloader.emit(false);
-			$.notify('Product adding to wishlist failed due to an error. Try after some time.','error');
 		});	
 	  this.onRemoveFromCartSub = this.productService.onRemoveFromCart.subscribe((data) => {        
 		this.productsInCart = data;

@@ -126,3 +126,19 @@ body{
 .notifyjs-corner .notifyjs-wrapper, .notifyjs-corner .notifyjs-container{
 	margin:0 !important;
 }
+.btn-success.disabled, .btn-success:disabled{
+	background-color: #f0ad4e;
+    border-color: #f0ad4e;
+}
+.btn-success:not(:disabled):not(.disabled).active, .btn-success:not(:disabled):not(.disabled):active, .show>.btn-success.dropdown-toggle{
+	background-color: #f0ad4e;
+    border-color: #f0ad4e;
+}
+.btn-success:hover{
+	background-color: #f0ad4e;
+    border-color: #f0ad4e;
+}
+.btn-success:focus, .btn-success.focus{
+	box-shadow: 0 0 0 2px #f0ad4e;
+	-webkit-box-shadow: 0 0 0 2px #f0ad4e;
+}
