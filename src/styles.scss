@@ -109,7 +109,7 @@ body{
   border: 1px solid red;
   border-left: 0;  
 }
-.input-group-addon.error{
+.input-group-text.error{
   border:1px solid red;
 }
 
@@ -141,4 +141,16 @@ body{
 .btn-success:focus, .btn-success.focus{
 	box-shadow: 0 0 0 2px #f0ad4e;
 	-webkit-box-shadow: 0 0 0 2px #f0ad4e;
+}
+.custom-control-label::before{
+	background-color: #5f1f60;
+}
+.custom-control-label::before,.custom-control-label::after{
+	top:0.15rem;
+}
+.custom-radio .custom-control-input:checked ~ .custom-control-label::before{
+	background-color: #5f1f60;
+}
+.custom-control-input:focus ~ .custom-control-label::before{
+	box-shadow: 0 0 0 1px #fff, 0 0 0 0.2rem rgba(95, 31, 96, 0.34);
 }

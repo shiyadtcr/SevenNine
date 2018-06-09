@@ -2,21 +2,21 @@
 <form [formGroup]="addressFormGroup">
 	<h5>Contact Information</h5>
 	<div class="input-group ctrl-grp">
-	<span class="input-group-addon" [ngClass]="isError(_fname)?'error':''"><span class="star-mandatory">*</span><i class="fa fa-user"></i></span>
+	<div class="input-group-prepend"><span class="input-group-text" [ngClass]="isError(_fname)?'error':''"><span class="star-mandatory">*</span><i class="fa fa-user"></i></span></div>
 	<label class="form-group has-float-label">
 		<input class="form-control" formControlName="fname" type="text" placeholder="First Name"/>
 		<span>First Name</span>
 	  </label>
 	</div>
 	<div class="input-group ctrl-grp">
-	<span class="input-group-addon" [ngClass]="isError(_lname)?'error':''"><span class="star-mandatory">*</span><i class="fa fa-user"></i></span>
+	<div class="input-group-prepend"><span class="input-group-text" [ngClass]="isError(_lname)?'error':''"><span class="star-mandatory">*</span><i class="fa fa-user"></i></span></div>
 	<label class="form-group has-float-label">
 		<input class="form-control" type="text" formControlName="lname" placeholder="Last Name"/>
 		<span>Last Name</span>
 	  </label>
 	</div>
 	<div class="input-group ctrl-grp">
-	<span class="input-group-addon" [ngClass]="isError(_tel)?'error':''"><span class="star-mandatory">*</span><i class="fa fa-user"></i></span>
+	<div class="input-group-prepend"><span class="input-group-text" [ngClass]="isError(_tel)?'error':''"><span class="star-mandatory">*</span><i class="fa fa-user"></i></span></div>
 	<label class="form-group has-float-label">
 		<input class="form-control" type="number" formControlName="tel" placeholder="Telephone"/>
 		<span>Telephone</span>
@@ -25,21 +25,21 @@
 	<h5>Address</h5>
 	<div formGroupName="address">
 		<div class="input-group ctrl-grp">
-		<span class="input-group-addon" [ngClass]="isError(_street1)?'error':''"><span class="star-mandatory">*</span><i class="fa fa-map-marker"></i></span>
+		<div class="input-group-prepend"><span class="input-group-text" [ngClass]="isError(_street1)?'error':''"><span class="star-mandatory">*</span><i class="fa fa-map-marker"></i></span></div>
 		<label class="form-group has-float-label">
 			<input class="form-control" type="text" formControlName="street1" placeholder="Street Address"/>
 			<span>Street Address</span>
 		  </label>
 		</div>
 		<div class="input-group ctrl-grp">
-			<span class="input-group-addon" [ngClass]="isError(_street2)?'error':''"><span class="star-mandatory">*</span><i class="fa fa-map-marker"></i></span>
+			<div class="input-group-prepend"><span class="input-group-text" [ngClass]="isError(_street2)?'error':''"><span class="star-mandatory">*</span><i class="fa fa-map-marker"></i></span></div>
 			<label class="form-group has-float-label">
 				<input class="form-control" type="text" formControlName="street2" placeholder="Street Address 2"/>
 				<span>Street Address 2</span>
 			  </label>
 		</div>
 		<div class="input-group ctrl-grp">
-			<span class="input-group-addon" [ngClass]="isError(_country)?'error':''"><span class="star-mandatory">*</span><i class="fa fa-map-marker"></i></span>
+			<div class="input-group-prepend"><span class="input-group-text" [ngClass]="isError(_country)?'error':''"><span class="star-mandatory">*</span><i class="fa fa-map-marker"></i></span></div>
 			<label class="form-group has-float-label">
 				<select class="custom-select custom-select-lg mb-3 ctrl-grp" [ngClass]="isError(_country)?'error':''" formControlName="country">
 				  <option selected value=''>--Select Country--</option>
@@ -51,7 +51,7 @@
 			</label>
 		</div>
 		<div class="input-group ctrl-grp">
-			<span class="input-group-addon" [ngClass]="isError(_state)?'error':''"><span class="star-mandatory">*</span><i class="fa fa-map-marker"></i></span>
+			<div class="input-group-prepend"><span class="input-group-text" [ngClass]="isError(_state)?'error':''"><span class="star-mandatory">*</span><i class="fa fa-map-marker"></i></span></div>
 			<label class="form-group has-float-label">
 				<select class="custom-select custom-select-lg mb-3 ctrl-grp" [ngClass]="isError(_state)?'error':''" formControlName="state">
 				  <option selected value=''>--Select State--</option>
@@ -63,14 +63,14 @@
 			</label>
 		</div>
 		<div class="input-group ctrl-grp">
-		<span class="input-group-addon" [ngClass]="isError(_city)?'error':''"><span class="star-mandatory">*</span><i class="fa fa-map-marker"></i></span>
+		<div class="input-group-prepend"><span class="input-group-text" [ngClass]="isError(_city)?'error':''"><span class="star-mandatory">*</span><i class="fa fa-map-marker"></i></span></div>
 		<label class="form-group has-float-label">
 			<input class="form-control" type="text" placeholder="City" formControlName="city" />
 			<span>City</span>
 		  </label>
 		</div>
 		<div class="input-group ctrl-grp">
-		<span class="input-group-addon" [ngClass]="isError(_zip)?'error':''"><span class="star-mandatory">*</span><i class="fa fa-map-marker"></i></span>
+		<div class="input-group-prepend"><span class="input-group-text" [ngClass]="isError(_zip)?'error':''"><span class="star-mandatory">*</span><i class="fa fa-map-marker"></i></span></div>
 		<label class="form-group has-float-label">
 			<input class="form-control" type="number" placeholder="Zip/Postal Code" formControlName="zip" />
 			<span>Zip/Postal Code</span>

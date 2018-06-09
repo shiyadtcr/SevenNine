@@ -2,14 +2,14 @@
 	<div class="login-wrp">
 		<form [formGroup]="loginFormGroup">
 			<div class="input-group ctrl-grp">
-			<span class="input-group-addon" [ngClass]="isError(_uname)?'error':''"><span class="star-mandatory">*</span><i class="fa fa-user"></i></span>
+			<div class="input-group-prepend"><span class="input-group-text" [ngClass]="isError(_uname)?'error':''"><span class="star-mandatory">*</span><i class="fa fa-user"></i></span></div>
 			<label class="form-group has-float-label">
 				<input class="form-control" formControlName="uname" type="number" placeholder="Mobile Number"/>
 				<span>Username</span>
 			  </label>
 			</div>
 			<div class="input-group ctrl-grp">
-			<span class="input-group-addon" [ngClass]="isError(_pwd)?'error':''"><span class="star-mandatory">*</span><i class="fa fa-user"></i></span>
+			<div class="input-group-prepend"><span class="input-group-text" [ngClass]="isError(_pwd)?'error':''"><span class="star-mandatory">*</span><i class="fa fa-user"></i></span></div>
 			<label class="form-group has-float-label">
 				<input class="form-control" type="password" formControlName="pwd" placeholder="Password"/>
 				<span>Password</span>

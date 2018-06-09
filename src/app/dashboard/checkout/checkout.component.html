@@ -52,11 +52,10 @@
 				<h6 class="title">
 					<span>Shipping Method</span>
 				</h6>
-				<label class="custom-control custom-radio">
-				  <input id="ShippingMethod" value="Free Shipping" name="shippingmethod" formControlName="shippingmethod" type="radio" class="custom-control-input">
-				  <span class="custom-control-indicator"></span>
-				  <span class="custom-control-description">Free Shipping</span>
-				</label>
+				<div class="custom-control custom-radio">
+				  <input id="ShippingMethod" value="Free Shipping" name="shippingmethod" id="shippingmethod" formControlName="shippingmethod" type="radio" class="custom-control-input" />
+				  <label class="custom-control-label" for="shippingmethod">Free Shipping</label>
+				</div>
 			</div>
 		</div>
 		<div class="address-wrp">
@@ -68,7 +67,7 @@
 					<label for="DeliveryDate">Delivery Date</label>
 					<div class="input-group ctrl-grp">						
 						<label class="form-group has-float-label">
-							<input class="form-control" type="text" placeholder="Delivery Date"/>							
+							<input class="form-control" type="text" placeholder="Delivery Date"/>
 							<span>Delivery Date</span>
 						  </label>
 						  <span class="input-group-addon"><!-- <span class="star-mandatory">*</span> --><i class="fa fa-calendar"></i></span>
@@ -92,11 +91,10 @@
 				<h6 class="title">
 					<span>Payment Method</span>
 				</h6>
-				<label class="custom-control custom-radio">
-				  <input formControlName="paymentmethod" value="COD" id="PaymentMethod" name="paymentmethod" type="radio" class="custom-control-input">
-				  <span class="custom-control-indicator"></span>
-				  <span class="custom-control-description">COD</span>
-				</label>
+				<div class="custom-control custom-radio">
+				  <input formControlName="paymentmethod" value="COD" id="PaymentMethod" name="paymentmethod" id="paymentmethod" type="radio" class="custom-control-input" />
+				  <label class="custom-control-label" for="paymentmethod">COD</label>
+				</div>
 			</div>
 		</div>
 		<div class="address-wrp">
