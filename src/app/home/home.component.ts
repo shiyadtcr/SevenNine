@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { routerTransitionLeft } from '../router.animations';
+import { routerTransitionTop } from '../router.animations';
 import {DataService} from '../shared';
 import {ProductService} from '../shared';
 import { AppService } from '../app.service';
@@ -9,7 +9,7 @@ import { LoginService } from '../shared';
   selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss'],
-  animations: [routerTransitionLeft()]
+  animations: [routerTransitionTop()]
 })
 export class HomeComponent implements OnInit {
   carouselOne: any = {

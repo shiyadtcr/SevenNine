@@ -167,46 +167,43 @@ export class ProductService {
 	   this.appService.onShowPreloader.emit(true);
 	   return this.http.get(addtoCartUrl);
   }
-  addToCart(id,quantity){
-	let productExisting = this.productsList.filter(function(item){
-		return item.id == id;
+  addToCart(product,quantity){
+	let productExisting = this.productsInCart.filter(function(item){
+		return item.id == product.id;
 	});		
 	if(productExisting.length != 0){
 		productExisting[0].quantity += quantity;
 		productExisting[0].addedToCart = true;
-		if(this.productsInCart.filter(function(v){return v.id == id}).length == 0){
-			this.productsInCart.push(productExisting[0]);
-		}	
+		this.updateProductTotal();	
+		this.onAddToCart.emit(this.productsInCart);
+	} else {
+		product.quantity += quantity;
+		product.addedToCart = true;
+		this.productsInCart.push(product);
 		this.updateProductTotal();	
 		this.onAddToCart.emit(this.productsInCart);
 	}
-			
-	this.updateProductTotal();
   }
   addToWishlistService(id){
 	  let addtoWishlistUrl = this.appService.getBaseServiceUrl() + "wishlist/" + this.appService.getCurrentUser() + "/" + id;
 	   this.appService.onShowPreloader.emit(true);
 	   return this.http.get(addtoWishlistUrl);
   }
-  addToWishlist(id){
-	let productExisting = this.productsList.filter(function(item){
-		return item.id == id;
-	});		
-	if(productExisting.length != 0){
-		productExisting[0].isFavorate = !productExisting[0].isFavorate;
-		if(productExisting[0].isFavorate == false){
-			this.productsInWishlist = this.productsInWishlist.filter(function(v){
-				return v.id != id;
-			});
-			this.onRemoveFromWishlist.emit(this.productsInWishlist);
-		} else {
-			this.productsInWishlist.push(productExisting[0]);
-			this.onAddToWishlist.emit(this.productsInWishlist);
-		}		
+  addToWishlist(product){
+	let productExisting = this.productsInWishlist.filter(function(item){
+		return item.id == product.id;
+	});	
+	product.isFavorate = !product.isFavorate;
+	if(productExisting.length != 0){	
+		productExisting[0].isFavorate = product.isFavorate;
+		this.onAddToWishlist.emit(this.productsInWishlist);
+	} else {
+		this.productsInWishlist.push(productExisting[0]);
+		this.onAddToWishlist.emit(this.productsInWishlist);
 	}
   }
   removeCartItem(id){
-	let productExisting = this.productsList.filter(function(item){
+	let productExisting = this.productsInCart.filter(function(item){
 		return item.id == id;
 	});	
 	if(productExisting.length != 0){

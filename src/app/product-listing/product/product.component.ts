@@ -54,7 +54,7 @@ export class ProductComponent implements OnInit {
 		this.productService.addToCartService(this.product.id,this.quantity)
 		.subscribe((data: any) => {
 			if(data.cartID){
-				this.productService.addToCart(this.product.id,this.quantity); 
+				this.productService.addToCart(this.product,this.quantity); 
 				this.appService.onShowPreloader.emit(false);
 				$.notify(data.message,"success");
 			} else {
@@ -78,7 +78,7 @@ export class ProductComponent implements OnInit {
 		this.productService.addToWishlistService(this.product.id)
 		.subscribe((data: any) => {
 			if(data.wishID){
-				this.productService.addToWishlist(this.product.id);
+				this.productService.addToWishlist(this.product);
 				this.appService.onShowPreloader.emit(false);
 				$.notify(data.message,"success");
 			} else {
