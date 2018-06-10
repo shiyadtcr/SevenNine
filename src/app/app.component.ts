@@ -8,7 +8,7 @@ import { AppService } from './app.service';
 import { ChangeDetectorRef } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthGuard } from './shared';
-
+declare var $: any;
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -79,10 +79,25 @@ export class AppComponent implements OnInit, OnDestroy{
 		this._openRight = false;
 		this.router.navigate([url]);
 	}
-	removeCartItem(id){
-		this.productService.removeCartItem(id);
-		this.productsInCart = this.productService.getProductsInCart();
-		console.log("product service: ",this.productService.productsList);
+	removeCartItem(product){
+		this.productService.removeCartItemService(product.id)
+		.subscribe((data: any) => {
+			if(data){
+				this.productService.removeCartItem(product.id);
+				this.appService.onShowPreloader.emit(false);
+				$.notify(product.title + " has been successfully removed from cart.",'success');
+			} else {
+				if(data.message){
+					$.notify(data.message,'error');
+				} else {
+					$.notify('Product removing from cart failed due to an error. Try after some time.',"error");
+				}
+				this.appService.onShowPreloader.emit(false);
+			}
+		},(data: any) => {
+			this.appService.onShowPreloader.emit(false);
+			$.notify('Product removing from cart failed due to an error. Try after some time.',"error");
+		});
 	  }
 	ngOnDestroy(){
       //this.subscription.unsubscribe();
