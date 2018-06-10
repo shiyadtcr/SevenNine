@@ -172,7 +172,7 @@ app-root > .container{
     > div {
         width: 18px;
         height: 18px;
-        background-color: #000;
+        background-color: #5f1f60;
 
         border-radius: 100%;
         display: inline-block;
@@ -306,14 +306,11 @@ app-root > .container{
 }
 .remove-item{
 	font-weight: normal;
-	position: absolute;
-	top: 0.6rem;
-	right: 0rem;
-	padding: 0 4px;
-	background: red;
-	color: #fff;
-	border-radius: 3px;
-	font-size: 0.7rem;
+    position: absolute;
+    top: 16px;
+    right: 0;
+    color: red;
+    font-size: 1.2rem;
 }
 @-webkit-keyframes horizontall {
     0% {
@@ -422,6 +419,8 @@ app-root > .container{
 }
 .cart-list{
 	padding: 10px 0;
+	position:relative;
+	border-bottom: 1px solid #d6dade;
 	img{
 		float:left;
 		margin-right:10px;

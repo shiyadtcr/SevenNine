@@ -43,7 +43,7 @@
 			</mat-menu>
 		</span> 
 		<span id="headermyaccount_div"></span> 
-		<span class="nav-icon ui-link">
+		<span class="nav-icon ui-link" *ngIf="hasUserLoggedIn">
 			<span class="cart-badge" [ngClass]="{animated: notifyCartItem, normal: !notifyCartItem}" (click)="_toggleRightSidebar()">
 				<span id="cartcount_div">{{productsInCart.length}}</span>
 			</span>
@@ -53,7 +53,8 @@
 				  <div class="cart-content">
 					  <div class="cart-list" *ngFor="let product of productsInCart">
 						<img src="assets/images/logo.png" />
-						<p class="prod-title">{{product.title}}<span class="remove-item" (click)="removeCartItem(product.id)">x</span></p>
+						<p class="prod-title">{{product.title}}</p>
+						<span (click)="removeCartItem(product.id)" class="remove-item" ><i class="fa fa-times-circle"></i></span>
 						<p>{{product.quantity}} x {{product.price}} = {{product.quantity * product.price}}</p>						
 					  </div>
 					  <p>Sub Total: 0</p>

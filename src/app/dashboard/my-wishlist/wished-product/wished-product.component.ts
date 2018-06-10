@@ -27,7 +27,7 @@ export class WishedProductComponent implements OnInit {
 			if(data.cartID){
 				this.productService.addToCart(this.product,this.quantity); 
 				this.appService.onShowPreloader.emit(false);
-				$.notify(data.message,"success");
+				$.notify(this.product.title + " has been successfully added to cart.","success");
 			} else {
 				this.appService.onShowPreloader.emit(false);
 				$.notify('Product adding to cart failed due to an error. Try after some time.',"error");
@@ -41,13 +41,13 @@ export class WishedProductComponent implements OnInit {
 			}
 		});	
   }
-  removeWishlistItem(id){
+  removeWishlistItem(){
 	 this.productService.addToWishlistService(this.product.id)
 	.subscribe((data: any) => {
 		if(data.wishID){
-			this.productService.addToWishlist(this.product.id);
+			this.productService.addToWishlist(this.product);
 			this.appService.onShowPreloader.emit(false);
-			$.notify(data.message,"success");
+			$.notify(this.product.title + " has been successfully added to wish list.","success");
 		} else {
 			this.appService.onShowPreloader.emit(false);
 			if(data.message){
@@ -66,6 +66,9 @@ export class WishedProductComponent implements OnInit {
 	  
   }
   incQuantity(){
+    if(!this.product.stock){
+		this.product.stock = 10;
+	}
 	if(this.quantity < this.product.stock){
 		this.quantity++;
 	} else {

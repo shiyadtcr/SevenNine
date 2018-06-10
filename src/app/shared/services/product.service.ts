@@ -104,9 +104,15 @@ export class ProductService {
 	   return this.http.get(cartlistUrl);
    } 
 	 setProductsInCart(data){
+		 let _trigger = false;
+		 if(data.length != this.productsInCart.length){
+			_trigger = true;			
+		}
 		this.productsInCart = data;
 		this.updateProductTotal();
-		this.onAddToCart.emit(this.productsInCart);
+		if(_trigger){
+			this.onAddToCart.emit(this.productsInCart);
+		}
    } 
    resetRedirectionData(){
 		this.appService.setRedirectionUrl(null);
@@ -194,13 +200,28 @@ export class ProductService {
 		return item.id == product.id;
 	});	
 	product.isFavorate = !product.isFavorate;
-	if(productExisting.length != 0){	
+	if(this.productsList.length != 0){
+		let prod = this.productsList.filter(function(item){
+			return item.id == product.id;
+		});	
+		prod[0].isFavorate = product.isFavorate;
+		this.setProductList(this.productsList);
+	}
+	if(productExisting.length != 0){
 		productExisting[0].isFavorate = product.isFavorate;
+		this.productsInWishlist = this.productsInWishlist.filter(function(item){
+			return item.id != product.id;
+		});	
 		this.onAddToWishlist.emit(this.productsInWishlist);
 	} else {
-		this.productsInWishlist.push(productExisting[0]);
+		this.productsInWishlist.push(product);		
 		this.onAddToWishlist.emit(this.productsInWishlist);
-	}
+	}	
+  }
+  removeCartItemService(id){
+	  let removeFromCartUrl = this.appService.getBaseServiceUrl() + "remCartItem?userId=" + this.appService.getCurrentUser() + "&itemId=" + id;
+	   this.appService.onShowPreloader.emit(true);
+	   return this.http.get(removeFromCartUrl );
   }
   removeCartItem(id){
 	let productExisting = this.productsInCart.filter(function(item){

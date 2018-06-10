@@ -54,25 +54,44 @@ export class HomeComponent implements OnInit {
 		});	
 	}
   }
-  ngOnInit() {	  
-	if(this.dataService.getCategoryList().length == 0){
-		this.dataService.getNewCategoryList()
+  getProducinWishlist(){
+	if(this.loginService.getLoggedInStatus()){
+		this.productService.getProductsInWishlistService()
 		.subscribe((data: any) => {
-			data.forEach(obj => {
-				obj.imageUrl = this.appService.baseImageUrl + 'category/' + obj.imageUrl;
-			});
-			this.categoryList = data;
-			this.dataService.setCategoryList(data);
-			this.dataService.onCategoryUpdate.emit(data);
-			this.appService.onShowPreloader.emit(false);
+			if(data && data.length > 0){
+				data.forEach(obj => {
+					if(obj.imageUrl){
+						obj.imageUrl = this.appService.baseImageUrl + 'item/' + obj.imageUrl;
+					} else {
+						obj.imageUrl = this.appService.defaultImageUrl;
+					}
+				});
+				this.productService.setProductsInWishlist(data);
+				this.appService.onShowPreloader.emit(false);
+			} else {
+				this.productService.setProductsInWishlist([]);
+				this.appService.onShowPreloader.emit(false);
+			}
 		},(data: any) => {
 			this.appService.onShowPreloader.emit(false);
+		});		
+	}
+  }
+  ngOnInit() {	  
+	this.dataService.getNewCategoryList()
+	.subscribe((data: any) => {
+		data.forEach(obj => {
+			obj.imageUrl = this.appService.baseImageUrl + 'category/' + obj.imageUrl;
 		});
-		this.getProducinCart();
-	} else {
-		this.categoryList = this.dataService.getCategoryList();
-		this.getProducinCart();
-	}	
+		this.categoryList = data;
+		this.dataService.setCategoryList(data);
+		this.dataService.onCategoryUpdate.emit(data);
+		this.appService.onShowPreloader.emit(false);
+	},(data: any) => {
+		this.appService.onShowPreloader.emit(false);
+	});
+	this.getProducinCart();
+	this.getProducinWishlist();
   }
 
 }

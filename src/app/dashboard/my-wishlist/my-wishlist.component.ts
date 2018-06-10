@@ -40,7 +40,7 @@ export class MyWishlistComponent implements OnInit {
 			this.appService.onShowPreloader.emit(false);
 		});	
 	  
-	  this.onRemoveFromWishlistSub = this.productService.onRemoveFromWishlist.subscribe((data) => {        
+	  this.onRemoveFromWishlistSub = this.productService.onAddToWishlist.subscribe((data) => {        
 		this.productsInWishlist = data;
 	  });
   }

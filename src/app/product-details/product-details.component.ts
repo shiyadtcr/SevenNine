@@ -8,6 +8,7 @@ import { AppService } from '../app.service';
 import { routerTransitionTop } from '../router.animations';
 import { RatingModule } from "ngx-rating";
 declare var $: any;
+declare var navigator: any;
 @Component({
   selector: 'app-product-details',
   templateUrl: './product-details.component.html',
@@ -43,7 +44,7 @@ export class ProductDetailsComponent implements OnInit {
 								this.productService.addToCart(this.productService.getSelectedProduct().id,this.productService.getSelectedQuantity());  
 								this.productService.resetRedirectionData();
 								this.appService.onShowPreloader.emit(false);
-								$.notify(data.message,"success");
+								$.notify(this.productData.title + " has been successfully added to cart.","success");
 							} else {
 								this.appService.onShowPreloader.emit(false);
 								$.notify('Product adding to cart failed due to an error. Try after some time.',"error");
@@ -55,13 +56,13 @@ export class ProductDetailsComponent implements OnInit {
 						//alert(this.productService.getSelectedProduct().title + ' ' + this.productService.getSelectedQuantity() + ' item(s) added to the cart!');
 						break;
 					case 'wishlist':
-						this.productService.addToWishlistService(this.productService.getSelectedProduct().id)
+						this.productService.addToWishlistService(this.productService.getSelectedProduct())
 						.subscribe((data: any) => {
 							if(data.wishID){
-								this.productService.addToWishlist(this.productService.getSelectedProduct().id);
+								this.productService.addToWishlist(this.productService.getSelectedProduct());
 								this.productService.resetRedirectionData();
 								this.appService.onShowPreloader.emit(false);
-								$.notify(data.message,"success");
+								$.notify(this.productData.title + " has been successfully added to wish list.","success");
 							} else {
 								this.appService.onShowPreloader.emit(false);
 								$.notify('Product adding to wishlist failed due to an error. Try after some time.',"error");
@@ -86,8 +87,24 @@ export class ProductDetailsComponent implements OnInit {
 		this.productData.isFavorate = false;
 	  }); 
   }
-  incQuantity(){	  
-	this.quantity++;
+  alertDismissed(){
+	  
+  }
+  incQuantity(){
+    if(!this.productData.stock){
+		this.productData.stock = 10;
+	}
+	if(this.quantity < this.productData.stock){
+		this.quantity++;
+	} else {
+		//alert('Max limit reached!');
+		navigator.notification.alert(
+			'Max limit reached!',  // message
+			this.alertDismissed,         // callback
+			'SevenNine - Mobile Super Market',            // title
+			'OK'             // buttonName
+		);
+	}
   }
   decQuantity(){
 	  if(this.quantity > 1){
@@ -101,7 +118,7 @@ export class ProductDetailsComponent implements OnInit {
 			if(data.cartID){
 				this.productService.addToCart(this.productData.id,this.quantity);  
 				this.appService.onShowPreloader.emit(false);
-				$.notify(data.message,'success');
+				$.notify(this.productData.title + " has been successfully added to cart.","success");
 			} else {
 				this.appService.onShowPreloader.emit(false);
 				$.notify('Product adding to cart failed due to an error. Try after some time.','error');
@@ -121,12 +138,12 @@ export class ProductDetailsComponent implements OnInit {
   addToWishlist(){	  
 	  if(this.loginService.getLoggedInStatus() == 'true'){
 		this.productData.isFavorate = true;
-		this.productService.addToWishlistService(this.productData.id)
+		this.productService.addToWishlistService(this.productData)
 		.subscribe((data: any) => {
 			if(data.wishID){
 				this.productService.setSelectedDetailedProduct(this.productData);
-				this.productService.addToWishlist(this.productData.id);  
-				$.notify(data.message,'success');
+				this.productService.addToWishlist(this.productData);  
+				$.notify(this.productData.title + " has been successfully added to wish list.","success");
 			} else {
 				this.appService.onShowPreloader.emit(false);
 				$.notify('Product adding to wishlist failed due to an error. Try after some time.','error');

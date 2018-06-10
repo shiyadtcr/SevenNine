@@ -116,7 +116,9 @@ body{
 .notifyjs-corner{
 	margin: 0 !important;
     width: 100%;
-	top:50px !important;	
+	top:auto !important;
+	bottom: 0;
+	font-size:0.8rem;
 }
 .notifyjs-bootstrap-base{
 	border-radius:0 !important;

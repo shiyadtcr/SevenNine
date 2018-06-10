@@ -64,7 +64,7 @@ export class CheckoutComponent implements OnInit {
 			//this.productService.setProductsInCart(data);
 			this.productTotal = this.productService.getCartProductsTotal();
 			this.appService.onShowPreloader.emit(false);
-			$.notify(data.message,'success');
+			//$.notify(data.message,'success');
 		} else {
 			this.productsInCart = [];
 			this.appService.onShowPreloader.emit(false);

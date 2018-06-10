@@ -52,7 +52,7 @@ export class SignupComponent implements OnInit {
 	this.loginService.signupUser(_signupData)
 	.subscribe((data: any) => {
 		if(data.custID){
-			//this.productService.addToWishlist(this.productService.getSelectedProduct().id);
+			//this.productService.addToWishlist(this.productService.getSelectedProduct());
 			this.appService.onShowPreloader.emit(false);
 			this.appService.setCurrentUser(data.custID);
 			this.loginService.setLoggedInStatus(true);
@@ -62,7 +62,7 @@ export class SignupComponent implements OnInit {
 			} else {
 				 this.router.navigate(['/']);
 			}
-			$.notify(data.message,'success');
+			$.notify('Hi ' + data.username + ", you have been successfully signed up",'success');
 		} else {
 			this.appService.onShowPreloader.emit(false);
 			if(data.message){
