@@ -30,7 +30,7 @@ export class ProductComponent implements OnInit {
 	  
   }
   incQuantity(){
-	if(this.quantity < this.product.stockCount){
+	if(this.quantity < this.product.stock){
 		this.quantity++;
 	} else {
 		//alert('Max limit reached!');
@@ -59,7 +59,11 @@ export class ProductComponent implements OnInit {
 				$.notify(data.message,"success");
 			} else {
 				this.appService.onShowPreloader.emit(false);
-				$.notify('Product adding to cart failed due to an error. Try after some time.',"error");
+				if(data.message){
+					$.notify(data.message,'error');
+				} else {
+					$.notify('Product adding to cart failed due to an error. Try after some time.',"error");
+				}
 			}
 		},(data: any) => {
 			this.appService.onShowPreloader.emit(false);
@@ -83,9 +87,12 @@ export class ProductComponent implements OnInit {
 				$.notify(data.message,"success");
 			} else {
 				this.appService.onShowPreloader.emit(false);
-				$.notify('Product adding to wishlist failed due to an error. Try after some time.','error');
+				if(data.message){
+					$.notify(data.message,'error');
+				} else {
+					$.notify('Product adding to wishlist failed due to an error. Try after some time.','error');
+				}
 			}
-			
 		},(data: any) => {
 			this.appService.onShowPreloader.emit(false);
 			$.notify('Product adding to cart failed due to an error. Try after some time.','error');

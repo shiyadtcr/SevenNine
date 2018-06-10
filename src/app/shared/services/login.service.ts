@@ -26,7 +26,7 @@ export class LoginService {
 	  return localStorage.getItem('hasUserLoggedIn');
   }
   signupUser(d){
-	   let signupUrl = "http://13.232.42.90/service/?/Masters/signup/" + d.name + "/" + d.pwd + "/" + d.email + "/" + d.mob;
+	   let signupUrl = "http://13.232.42.90/service/?/Masters/signup?name=" + d.name + "&pwd=" + d.pwd + "&email=" + d.email + "&userId=" + d.mob;
 	   this.appService.onShowPreloader.emit(true);
 	   return this.http.get(signupUrl);
    }

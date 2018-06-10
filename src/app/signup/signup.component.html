@@ -4,7 +4,7 @@
 			<div class="input-group ctrl-grp">
 			<div class="input-group-prepend"><span class="input-group-text" [ngClass]="isError(_mob)?'error':''"><span class="star-mandatory">*</span><i class="fa fa-user"></i></span></div>
 			<label class="form-group has-float-label">
-				<input class="form-control" formControlName="mob" type="number" placeholder="Mobile Number"/>
+				<input class="form-control" formControlName="mob" type="number" minlength="10" minlength="10" placeholder="Mobile Number"/>
 				<span>Mobile</span>
 			  </label>
 			</div>

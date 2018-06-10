@@ -21,7 +21,7 @@ export class SignupComponent implements OnInit {
 	private productService: ProductService
   ) {
 	this.signupFormGroup = this.signupForm.group({
-      mob: ['', [Validators.required] ],
+      mob: ['', [Validators.required, Validators.minLength(11),Validators.maxLength(11)]],
       name: ['', [Validators.required] ],
       email: [''],
       pwd: ['', Validators.required ]
@@ -46,6 +46,9 @@ export class SignupComponent implements OnInit {
 		email:this._email.value,
 		pwd:this._pwd.value
 	  }
+	  if(_signupData.mob.length > 10){
+		  
+	  }
 	this.loginService.signupUser(_signupData)
 	.subscribe((data: any) => {
 		if(data.custID){
@@ -62,7 +65,11 @@ export class SignupComponent implements OnInit {
 			$.notify(data.message,'success');
 		} else {
 			this.appService.onShowPreloader.emit(false);
-			$.notify('User signup failed due to an error. Try after some time.','error');
+			if(data.message){
+				$.notify('User signup failed due to an error. Try after some time.','error');
+			} else {
+				$.notify(data.message,'error');
+			}
 		}
 	},(data: any) => {
 		this.appService.onShowPreloader.emit(false);

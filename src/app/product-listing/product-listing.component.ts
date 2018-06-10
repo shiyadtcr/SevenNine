@@ -73,7 +73,11 @@ export class ProductListingComponent implements OnInit {
 								$.notify(data.message,'success');
 							} else {
 								this.appService.onShowPreloader.emit(false);
-								$.notify('Product adding to wishlist failed due to an error. Try after some time.','error');
+								if(data.message){
+									$.notify(data.message,'error');
+								} else {
+									$.notify('Product adding to wishlist failed due to an error. Try after some time.','error');
+								}
 							}
 						},(data: any) => {
 							this.appService.onShowPreloader.emit(false);
@@ -97,7 +101,6 @@ export class ProductListingComponent implements OnInit {
 							this.appService.onShowPreloader.emit(false);
 							$.notify('Product adding to cart failed due to an error. Try after some time.','error');
 						});	
-						//alert(this.productService.getSelectedProduct().title + ' has been added to the wishlist!' )
 						break;
 				}
 				
