@@ -70,7 +70,12 @@
   </div>	
   <router-outlet></router-outlet>
 </div>
-
+<div class="overlay" *ngIf="showPreloader"></div>
+<div class="spinner" *ngIf="showPreloader">
+	<div class="bounce1"></div>
+	<div class="bounce2"></div>
+	<div class="bounce3"></div>
+</div>
 
 <!-- Start your project here-->
 <!-- <div style="height: 100vh">
