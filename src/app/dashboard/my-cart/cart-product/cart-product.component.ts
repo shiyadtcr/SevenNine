@@ -11,22 +11,48 @@ export class CartProductComponent implements OnInit {
   @Input() product:any = {};
   productsInWishlist:any = [];
   quantity:number=1;
+  incQuantitySpinner:boolean = false;
+  decQuantitySpinner:boolean = false;
   constructor(
 	private productService:ProductService,
 	private appService:AppService
   ) { }
   ngOnInit() {
   }
+  addToCart(){
+	  this.productService.addToCartService(this.product.id,this.product.quantity)
+		.subscribe((data: any) => {
+			if(data.cartID){
+				this.productService.addToCart(this.product,this.product.quantity); 
+				this.productService.changeQuanity(this.product.id,this.product.quantity);
+			} else {
+				$.notify('Product adding to cart failed due to an error. Try after some time.',"error");
+			}
+			this.incQuantitySpinner = false;
+			this.decQuantitySpinner = false;
+		},(data: any) => {
+			this.appService.onShowPreloader.emit(false);
+			if(data.message){
+				$.notify(data.message,'error');
+			} else {
+				$.notify('Product adding to cart failed due to an error. Try after some time.',"error");
+			}
+			this.incQuantitySpinner = false;
+			this.decQuantitySpinner = false;
+		});	
+  }
   incQuantity(){	  
 	this.product.quantity++;
-	this.productService.changeQuanity(this.product.id,this.product.quantity);
+	this.incQuantitySpinner = true;
+	this.addToCart();
   }
   decQuantity(){
 	  if(this.product.quantity > 1){
 		this.product.quantity--;
-		this.productService.changeQuanity(this.product.id,this.product.quantity);
+		this.decQuantitySpinner = true;
+		this.addToCart();
 	  }
-  }
+  }  
   removeCartItem(){
 	  this.productService.removeCartItemService(this.product.id)
 		.subscribe((data: any) => {

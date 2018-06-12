@@ -3,6 +3,7 @@ import { DashboardService } from '../../shared';
 import { Subscription } from 'rxjs';
 import {ProductService} from '../../shared';
 import { AppService } from '../../app.service';
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-my-cart',
   templateUrl: './my-cart.component.html',
@@ -15,7 +16,8 @@ export class MyCartComponent implements OnInit {
   constructor(
 	private dashboardService:DashboardService,
 	private productService:ProductService,
-	private appService:AppService
+	private appService:AppService,
+	private router: Router,
   ) { }
 
   ngOnInit() {
@@ -50,6 +52,9 @@ export class MyCartComponent implements OnInit {
 		this.productsInCart = data;
 		this.productTotal = this.productService.getCartProductsTotal();
 	  });
+  }
+  navigateHome(){
+	 this.router.navigate(['/']);
   }
   ngOnDestroy() {
     this.onRemoveFromCartSub.unsubscribe();

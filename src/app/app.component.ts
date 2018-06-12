@@ -39,6 +39,11 @@ export class AppComponent implements OnInit, OnDestroy{
 		private router:Router
 	) { }
 	ngOnInit(){
+		$.notify.defaults( {
+			autoHideDelay: 2000
+		});
+		this.getProducinCart();
+		this.getProducinWishlist();
 	  this.onShowPreloaderSub = this.appService.onShowPreloader.subscribe((isVisible) => {        
 		this.showPreloader = isVisible;
 		this.cdRef.detectChanges();
@@ -75,6 +80,48 @@ export class AppComponent implements OnInit, OnDestroy{
 	  //this.productsInWishlist = this.dataService.getProductsInWishlist();
 	 
     } 
+	getProducinCart(){
+	if(this.loginService.getLoggedInStatus()){
+		this.productService.getProductsInCartService()
+		.subscribe((data: any) => {
+			if(data && data.length > 0){
+				this.productService.setProductsInCart(data || []);
+				this.appService.onShowPreloader.emit(false);
+				//$.notify(data.message,'success');
+			} else {
+				this.productService.setProductsInCart([]);
+				this.appService.onShowPreloader.emit(false);
+				//$.notify('Product adding to wishlist failed due to an error. Try after some time.','error');
+			}
+		},(data: any) => {
+			this.appService.onShowPreloader.emit(false);
+			//$.notify('Product adding to wishlist failed due to an error. Try after some time.','error');
+		});	
+	}
+  }
+  getProducinWishlist(){
+	if(this.loginService.getLoggedInStatus()){
+		this.productService.getProductsInWishlistService()
+		.subscribe((data: any) => {
+			if(data && data.length > 0){
+				data.forEach(obj => {
+					if(obj.imageUrl){
+						obj.imageUrl = this.appService.baseImageUrl + 'item/' + obj.imageUrl;
+					} else {
+						obj.imageUrl = this.appService.defaultImageUrl;
+					}
+				});
+				this.productService.setProductsInWishlist(data);
+				this.appService.onShowPreloader.emit(false);
+			} else {
+				this.productService.setProductsInWishlist([]);
+				this.appService.onShowPreloader.emit(false);
+			}
+		},(data: any) => {
+			this.appService.onShowPreloader.emit(false);
+		});		
+	}
+  }
 	navigateTo(url){
 		this._openRight = false;
 		this.router.navigate([url]);

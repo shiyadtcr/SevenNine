@@ -6,13 +6,13 @@
 	<!-- <div *ngIf="product.stockCount && product.stockCount > 0; else noStock"> -->
 	<div>
 		<p class="wrp">		
-			<span class="decinc" [ngClass]="quantity == 1 ? 'disabled' : ''" (click)="decQuantity()">-</span>
+			<span class="decinc minus" [ngClass]="quantity == 1 ? 'disabled' : ''" (click)="decQuantity(product)"><i class="fa fa-minus-square"></i></span>
 			<input type="text" value="1" [(ngModel)]="quantity" class="quantity" />
-			<span class="decinc" (click)="incQuantity()">+</span>
+			<span class="decinc" (click)="incQuantity(product)"><i class="fa fa-plus-square"></i></span>
 		</p>
 		<p class="wrp btn-wrp">
-			<span class="heart" (click)="addToWishlist()"><i class="fa fa-heart faa-pulse" [ngClass]="{animated: product.isFavorate, normal: !product.isFavorate}"></i></span>
-			<span class="cart" (click)="addToCart()"><i class="fa fa-shopping-basket"></i></span>
+			<i [hidden]="!wishlistSpinner" class="fa fa-spinner faa-spin animated wishlist"></i><span [hidden]="wishlistSpinner" class="heart" (click)="addToWishlist()"><i class="fa fa-heart faa-pulse" [ngClass]="{animated: product.isFavorate, normal: !product.isFavorate}"></i></span>
+			<i [hidden]="!cartSpinner" class="fa fa-spinner faa-spin animated cart"></i><span [hidden]="cartSpinner" class="cart" (click)="addToCart()"><i class="fa fa-shopping-basket"></i></span>
 		</p>
 		<p class="cart-add-info">Added to cart <b>({{product.addedToCart ? product.quantity : 0}})</b></p>
 	</div>

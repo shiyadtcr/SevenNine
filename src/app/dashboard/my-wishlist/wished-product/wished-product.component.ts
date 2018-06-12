@@ -12,6 +12,7 @@ export class WishedProductComponent implements OnInit {
   @Input() product:any = {};
   productsInWishlist:any = [];
   quantity:number = 1;
+  cartSpinner:boolean = false;
   constructor(
 	private productService:ProductService,
 	private appService:AppService
@@ -22,6 +23,7 @@ export class WishedProductComponent implements OnInit {
   }
   
   addToCart(){
+	  this.cartSpinner = true;
 	  this.productService.addToCartService(this.product.id,this.quantity)
 		.subscribe((data: any) => {
 			if(data.cartID){
@@ -32,6 +34,7 @@ export class WishedProductComponent implements OnInit {
 				this.appService.onShowPreloader.emit(false);
 				$.notify('Product adding to cart failed due to an error. Try after some time.',"error");
 			}
+			this.cartSpinner = false;
 		},(data: any) => {
 			this.appService.onShowPreloader.emit(false);
 			if(data.message){
@@ -39,6 +42,7 @@ export class WishedProductComponent implements OnInit {
 			} else {
 				$.notify('Product adding to cart failed due to an error. Try after some time.',"error");
 			}
+			this.cartSpinner = false;
 		});	
   }
   removeWishlistItem(){
@@ -53,13 +57,13 @@ export class WishedProductComponent implements OnInit {
 			if(data.message){
 				$.notify(data.message,'error');
 			} else {
-				$.notify('Product removal from wishlist failed due to an error. Try after some time.','error');
+				$.notify('Product removal from wis hlist failed due to an error. Try after some time.','error');
 			}
 		}
 		
 	},(data: any) => {
 		this.appService.onShowPreloader.emit(false);
-		$.notify('Product adding to cart failed due to an error. Try after some time.','error');
+		$.notify('Product removal from wish list failed due to an error. Try after some time.','error');
 	});	
   }
   alertDismissed(){

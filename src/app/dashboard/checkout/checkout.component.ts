@@ -40,10 +40,13 @@ export class CheckoutComponent implements OnInit {
     });
   }
   get _billingaddr() { return this.checkoutFormGroup.get('billingaddr'); }
+  set _billingaddr(value:any) { this._billingaddr.value = value; }
   get _shippingaddr() { return this.checkoutFormGroup.get('shippingaddr'); }
+  set _shippingaddr(value:any) { this._shippingaddr.value = value; }
   get _shippingmethod() { return this.checkoutFormGroup.get('shippingmethod'); }
   get _deiverydate() { return this.checkoutFormGroup.get('deiverydate'); }
   get _deiverytime() { return this.checkoutFormGroup.get('deiverytime'); }
+  set _deiverytime(value:any) { this._deiverytime.value = value; }
   get _paymentmethod() { return this.checkoutFormGroup.get('paymentmethod'); }
   isError(field){
 	  return field.invalid && (field.dirty || field.touched);
@@ -56,7 +59,12 @@ export class CheckoutComponent implements OnInit {
 	this.additionalAddr = JSON.parse(JSON.stringify(this.addressList.additionalAddress));
 	this.additionalAddr.push(this.billingAddr);
 	this.additionalAddr.push(this.shippingAddr);
+	this.shippingAddr = this.additionalAddr[this.additionalAddr.length - 1];
+	this.billingAddr = this.additionalAddr[this.additionalAddr.length - 2];
 	this.selectedBillingAddr = this.addressList.additionalAddress[0];
+	this._shippingaddr.value = this.additionalAddr.length - 1;
+	this._billingaddr.value = this.additionalAddr.length - 2;
+	this._deiverytime.value = 0;
 	this.productService.getProductsInCartService()
 	.subscribe((data: any) => {
 		if(data && data.length > 0){
@@ -68,11 +76,11 @@ export class CheckoutComponent implements OnInit {
 		} else {
 			this.productsInCart = [];
 			this.appService.onShowPreloader.emit(false);
-			$.notify('Product adding to wishlist failed due to an error. Try after some time.','error');
+			$.notify('Please add products in cart to checkout.','error');
 		}
 	},(data: any) => {
 		this.appService.onShowPreloader.emit(false);
-		$.notify('Product adding to wishlist failed due to an error. Try after some time.','error');
+		$.notify('Cart update failed due to an error. Try after some time.','error');
 	});	
   }
   changeBillingAddr(event){
@@ -83,8 +91,8 @@ export class CheckoutComponent implements OnInit {
   }
   placeOrder(){
 	  let _checkoutData = {
-		  billingaddr: this.addressList.billingAddress[this._billingaddr.value],
-		  shippingaddr: this.addressList.shippingAddress[this._shippingaddr.value],
+		  billingaddr: this.addressList.additionalAddress[this._billingaddr.value],
+		  shippingaddr: this.addressList.additionalAddress[this._shippingaddr.value],
 		  shippingmethod: this._shippingmethod.value,
 		  deiverydate: this._deiverydate.value,
 		  deiverytime: this._deiverytime.value,
@@ -92,5 +100,8 @@ export class CheckoutComponent implements OnInit {
 	  }
 	  console.log('_checkoutData: ',_checkoutData);
 	  this.router.navigate(['/dashboard/checkout/1234567890']);
+  }
+  navigateHome(){
+	 this.router.navigate(['/']);
   }
 }

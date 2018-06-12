@@ -16,6 +16,8 @@ export class ProductComponent implements OnInit {
   @Input() product;
   @Input() categoryId:string = '';
   quantity:number = 1;
+  cartSpinner:boolean = false;
+  wishlistSpinner:boolean = false;
   constructor(
 	private productService: ProductService,
 	private appService:AppService,
@@ -54,23 +56,26 @@ export class ProductComponent implements OnInit {
   }
   addToCart(){
 	  if(this.loginService.getLoggedInStatus()){
+		  this.cartSpinner = true;
 		this.productService.addToCartService(this.product.id,this.quantity)
 		.subscribe((data: any) => {
 			if(data.cartID){
 				this.productService.addToCart(this.product,this.quantity); 
-				this.appService.onShowPreloader.emit(false);
+				//this.appService.onShowPreloader.emit(false);
 				$.notify(this.product.title + " has been successfully added to cart.","success");
 			} else {
-				this.appService.onShowPreloader.emit(false);
+				//this.appService.onShowPreloader.emit(false);
 				if(data.message){
 					$.notify(data.message,'error');
 				} else {
 					$.notify('Product adding to cart failed due to an error. Try after some time.',"error");
 				}
 			}
+			this.cartSpinner = false;
 		},(data: any) => {
-			this.appService.onShowPreloader.emit(false);
+			//this.appService.onShowPreloader.emit(false);
 			$.notify('Product adding to cart failed due to an error. Try after some time.',"error");
+			this.cartSpinner = false;
 		});		
 	  } else {
 		this.appService.setRedirectionUrl(this.router.url);
@@ -82,23 +87,26 @@ export class ProductComponent implements OnInit {
   }
   addToWishlist(){	  
 	  if(this.loginService.getLoggedInStatus() == 'true'){
+		this.wishlistSpinner = true;
 		this.productService.addToWishlistService(this.product.id)
 		.subscribe((data: any) => {
 			if(data.wishID){
 				this.productService.addToWishlist(this.product);
-				this.appService.onShowPreloader.emit(false);
+				//this.appService.onShowPreloader.emit(false);
 				$.notify(this.product.title + " has been successfully added to wish list.","success");
 			} else {
-				this.appService.onShowPreloader.emit(false);
+				//this.appService.onShowPreloader.emit(false);
 				if(data.message){
 					$.notify(data.message,'error');
 				} else {
 					$.notify('Product adding to wishlist failed due to an error. Try after some time.','error');
 				}
 			}
+			this.wishlistSpinner = false;
 		},(data: any) => {
-			this.appService.onShowPreloader.emit(false);
+			//this.appService.onShowPreloader.emit(false);
 			$.notify('Product adding to cart failed due to an error. Try after some time.','error');
+			this.wishlistSpinner = false;
 		});	
 	  } else {
 		this.appService.setRedirectionUrl(this.router.url);

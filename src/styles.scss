@@ -136,6 +136,9 @@ body{
 	background-color: #f0ad4e;
     border-color: #f0ad4e;
 }
+.btn-success:not(:disabled):not(.disabled).active:focus, .btn-success:not(:disabled):not(.disabled):active:focus, .show>.btn-success.dropdown-toggle:focus{
+	box-shadow:none;
+}
 .btn-success:hover{
 	background-color: #f0ad4e;
     border-color: #f0ad4e;
@@ -145,7 +148,8 @@ body{
 	-webkit-box-shadow: 0 0 0 2px #f0ad4e;
 }
 .custom-control-label::before{
-	background-color: #5f1f60;
+	background-color: #ffdd9f;
+	border: 1px solid #5f1f60;
 }
 .custom-control-label::before,.custom-control-label::after{
 	top:0.15rem;

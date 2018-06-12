@@ -170,7 +170,7 @@ export class ProductService {
   }
   addToCartService(id,quantity){
 	  let addtoCartUrl = this.appService.getBaseServiceUrl() + "cart/" + this.appService.getCurrentUser() + "/" + id + "/" + quantity;
-	   this.appService.onShowPreloader.emit(true);
+	   //this.appService.onShowPreloader.emit(true);
 	   return this.http.get(addtoCartUrl);
   }
   addToCart(product,quantity){
@@ -192,7 +192,7 @@ export class ProductService {
   }
   addToWishlistService(id){
 	  let addtoWishlistUrl = this.appService.getBaseServiceUrl() + "wishlist/" + this.appService.getCurrentUser() + "/" + id;
-	   this.appService.onShowPreloader.emit(true);
+	   //this.appService.onShowPreloader.emit(true);
 	   return this.http.get(addtoWishlistUrl);
   }
   addToWishlist(product){

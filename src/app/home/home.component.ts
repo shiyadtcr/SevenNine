@@ -35,48 +35,7 @@ export class HomeComponent implements OnInit {
   onCarouselLoad(){
 	  
   }
-  getProducinCart(){
-	if(this.loginService.getLoggedInStatus()){
-		this.productService.getProductsInCartService()
-		.subscribe((data: any) => {
-			if(data && data.length > 0){
-				this.productService.setProductsInCart(data || []);
-				this.appService.onShowPreloader.emit(false);
-				//$.notify(data.message,'success');
-			} else {
-				this.productService.setProductsInCart([]);
-				this.appService.onShowPreloader.emit(false);
-				//$.notify('Product adding to wishlist failed due to an error. Try after some time.','error');
-			}
-		},(data: any) => {
-			this.appService.onShowPreloader.emit(false);
-			//$.notify('Product adding to wishlist failed due to an error. Try after some time.','error');
-		});	
-	}
-  }
-  getProducinWishlist(){
-	if(this.loginService.getLoggedInStatus()){
-		this.productService.getProductsInWishlistService()
-		.subscribe((data: any) => {
-			if(data && data.length > 0){
-				data.forEach(obj => {
-					if(obj.imageUrl){
-						obj.imageUrl = this.appService.baseImageUrl + 'item/' + obj.imageUrl;
-					} else {
-						obj.imageUrl = this.appService.defaultImageUrl;
-					}
-				});
-				this.productService.setProductsInWishlist(data);
-				this.appService.onShowPreloader.emit(false);
-			} else {
-				this.productService.setProductsInWishlist([]);
-				this.appService.onShowPreloader.emit(false);
-			}
-		},(data: any) => {
-			this.appService.onShowPreloader.emit(false);
-		});		
-	}
-  }
+  
   ngOnInit() {	  
 	this.dataService.getNewCategoryList()
 	.subscribe((data: any) => {
@@ -89,9 +48,7 @@ export class HomeComponent implements OnInit {
 		this.appService.onShowPreloader.emit(false);
 	},(data: any) => {
 		this.appService.onShowPreloader.emit(false);
-	});
-	this.getProducinCart();
-	this.getProducinWishlist();
+	});	
   }
 
 }

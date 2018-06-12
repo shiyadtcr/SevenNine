@@ -13,7 +13,7 @@ declare var $: any;
   templateUrl: './product-listing.component.html',
   styleUrls: ['./product-listing.component.scss'],
   encapsulation: ViewEncapsulation.None,
-  animations: [routerTransitionTop()]
+  animations: [routerTransitionTop()] 
 })
 export class ProductListingComponent implements OnInit {
   categoryId:string;

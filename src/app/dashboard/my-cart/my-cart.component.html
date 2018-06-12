@@ -1,10 +1,13 @@
 <div class="row product-list-wrp" *ngIf="productsInCart.length > 0">
 	<app-cart-product class="col-12 product-wrp" [product]="product" *ngFor="let product of productsInCart"></app-cart-product>	
 </div>
-<div *ngIf="productsInCart.length == 0">Your cart is empty !!</div>
+<div *ngIf="productsInCart.length == 0">
+	<p>Your cart is empty !!</p>
+	<p>Please add items to the cart by clicking on <i class="fa fa-shopping-basket"></i> icon.</p>
+</div>
 <div class="other-wrp">
 	<div class="btn-group">
-	  <button type="button" class="btn btn-primary">Continue Shopping</button>
+	  <button type="button" class="btn btn-primary" (click)="navigateHome()">Continue Shopping</button>
 	  <!-- <button type="button" *ngIf="productsInCart.length > 0" class="btn btn-primary">Update</button> -->
 	  <button type="button" *ngIf="productsInCart.length > 0" class="btn btn-primary">Clear All</button>
 	</div>

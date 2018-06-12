@@ -1,5 +1,5 @@
-<div class="row">
-	<div class="col-12 address-list-wrp">
+<div class="row" ng-if="productsInCart.length != 0">
+	<div class="col-12 address-list-wrp" *ngIf="productsInCart.length > 0; else noItems">
 		<form [formGroup]="checkoutFormGroup">
 		<div class="address-wrp">
 			<div class="address">
@@ -54,7 +54,7 @@
 				</h6>
 				<div class="custom-control custom-radio">
 				  <input id="ShippingMethod" value="Free Shipping" name="shippingmethod" id="shippingmethod" formControlName="shippingmethod" type="radio" class="custom-control-input" />
-				  <label class="custom-control-label" for="shippingmethod">Free Shipping</label>
+				  <label [ngClass]="isError(_shippingmethod)?'error':''" class="custom-control-label" for="shippingmethod">Free Shipping</label>
 				</div>
 			</div>
 		</div>
@@ -65,22 +65,21 @@
 				</h6>
 				<div class="form-group">
 					<label for="DeliveryDate">Delivery Date</label>
-					<div class="input-group ctrl-grp">						
+					<div class="input-group ctrl-grp">	
+						<div class="input-group-prepend"><span class="input-group-text" [ngClass]="isError(_deiverydate)?'error':''"><span class="star-mandatory">*</span><i class="fa fa-user"></i></span></div>
 						<label class="form-group has-float-label">
-							<input class="form-control" type="text" placeholder="Delivery Date"/>
-							<span>Delivery Date</span>
+							<input id="DeliveryDate" class="form-control date-ctrl" formControlName="deiverydate" type="date" placeholder="Delivery Date"/>
+							<i for="DeliveryDate" class="fa fa-calendar"></i>
 						  </label>
-						  <span class="input-group-addon"><!-- <span class="star-mandatory">*</span> --><i class="fa fa-calendar"></i></span>
-						  <input class="form-control calendar-ctrl" formControlName="deiverydate" type="date" placeholder="Delivery Date"/>
 					</div>
 					<small id="dateHelp" class="form-text text-muted">Please select your convinient delivery date</small>
 				</div>
 				<div class="form-group">
 					<label for="DeliveryDate">Delivery Time</label>
 					<select formControlName="deiverytime" class="custom-select custom-select-lg">
-						<option>9.30 am to 12 pm</option>
-						<option>5.00 pm to 7.00 pm</option>
-						<option>7.30 pm to 10.00 pm</option>
+						<option [value]="0">9.30 am to 12 pm</option>
+						<option [value]="1">5.00 pm to 7.00 pm</option>
+						<option [value]="2">7.30 pm to 10.00 pm</option>
 					</select>
 					<small id="dateHelp" class="form-text text-muted">Please select your convinient delivery time</small>
 				</div>  
@@ -93,7 +92,7 @@
 				</h6>
 				<div class="custom-control custom-radio">
 				  <input formControlName="paymentmethod" value="COD" id="PaymentMethod" name="paymentmethod" id="paymentmethod" type="radio" class="custom-control-input" />
-				  <label class="custom-control-label" for="paymentmethod">COD</label>
+				  <label [ngClass]="isError(_paymentmethod)?'error':''" class="custom-control-label" for="paymentmethod">COD</label>
 				</div>
 			</div>
 		</div>
@@ -117,8 +116,18 @@
 			</div>
 		</div>
 		<div class="address-wrp">
-			<button *ngIf="productsInCart.length > 0" (click)="placeOrder()" class="btn btn-success btn-lg btn-block cart-btn">Place Order</button>
+			<button *ngIf="productsInCart.length > 0" (click)="placeOrder()" [disabled]="!checkoutFormGroup.valid" class="btn btn-success btn-lg btn-block cart-btn">Place Order</button>
 		</div>
 		</form>
 	</div>
+	<ng-template #noItems>
+		<div class="col-12">
+			<p>Please add items in cart to proceed with checkout.</p>
+			<div class="other-wrp">
+				<div class="btn-group">
+				  <button type="button" class="btn btn-primary" (click)="navigateHome()">Continue Shopping</button>
+				</div>
+			</div>
+		</div>
+	</ng-template>
 </div>
