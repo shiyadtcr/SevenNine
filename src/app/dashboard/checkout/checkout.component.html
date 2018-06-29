@@ -1,4 +1,4 @@
-<div class="row" ng-if="productsInCart.length != 0">
+<div class="row" *ngIf="additionalAddr.length != 0">
 	<div class="col-12 address-list-wrp" *ngIf="productsInCart.length > 0; else noItems">
 		<form [formGroup]="checkoutFormGroup">
 		<div class="address-wrp">
@@ -69,7 +69,7 @@
 						<div class="input-group-prepend"><span class="input-group-text" [ngClass]="isError(_deiverydate)?'error':''"><span class="star-mandatory">*</span><i class="fa fa-user"></i></span></div>
 						<label class="form-group has-float-label">
 							<input id="DeliveryDate" class="form-control date-ctrl" formControlName="deiverydate" type="date" placeholder="Delivery Date"/>
-							<i for="DeliveryDate" class="fa fa-calendar"></i>
+							<span>Delivery Date</span><i for="DeliveryDate" class="fa fa-calendar"></i>
 						  </label>
 					</div>
 					<small id="dateHelp" class="form-text text-muted">Please select your convinient delivery date</small>

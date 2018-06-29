@@ -98,6 +98,12 @@ export class ProductService {
   getProductsInCart(){
 	return this.productsInCart;
    } 
+   getSelectedDetailedProductService(id){
+	   let userId = this.appService.getCurrentUser() ? this.appService.getCurrentUser() : 0;
+	   let productDetailsUrl = this.appService.getBaseServiceUrl() + "productDet?userId=" + userId + '&itemId=' + id;
+	   this.appService.onShowPreloader.emit(true);
+	   return this.http.get(productDetailsUrl);
+   }
    getProductsInCartService(){
 	let cartlistUrl = this.appService.getBaseServiceUrl() + "cartlist/" + this.appService.getCurrentUser();
 	   this.appService.onShowPreloader.emit(true);

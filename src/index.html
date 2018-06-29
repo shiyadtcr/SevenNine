@@ -21,45 +21,5 @@
   </app-root>
 </body>
 <script type="text/javascript" charset="utf-8" src="cordova.js"></script>
-<script>
 
-var app = {
-    // Application Constructor
-    initialize: function() {
-        document.addEventListener('deviceready', this.onDeviceReady.bind(this), false);
-		document.addEventListener('backbutton', this.onBackbutton.bind(this), false);
-    },
-
-    // deviceready Event Handler
-    //
-    // Bind any cordova events here. Common events are:
-    // 'pause', 'resume', etc.
-    onDeviceReady: function() {
-		setTimeout(function() {
-			navigator.splashscreen.hide();
-		}, 1000);
-    },
-	onBackbutton: function() {
-		//alert('current url: ' + window.location.href);
-        if(window.location.href == 'file:///android_asset/www/'){
-			//alert('yes');
-			navigator.notification.confirm(
-				'Are you sure to exit now?',  // message
-				function(buttonIndex){
-					if(buttonIndex == 2){
-						navigator.app.exitApp();
-					}
-				},              // callback to invoke with index of button pressed
-				'SevenNine - Mobile Super Market',            // title
-				['No','Yes']          // buttonLabels
-			);				
-		} else {
-			//alert('no');
-			window.history.back();
-		}		
-    }
-};
-
-app.initialize();
-</script>
 </html>

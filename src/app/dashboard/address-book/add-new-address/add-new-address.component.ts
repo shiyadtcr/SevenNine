@@ -2,6 +2,7 @@ import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { DashboardService } from '../../../shared';
 import { DataService } from '../../../shared';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-add-new-address',
   templateUrl: './add-new-address.component.html',
@@ -10,10 +11,12 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 })
 export class AddNewAddressComponent implements OnInit {
   addressFormGroup:FormGroup;
+  checkoutFlag:boolean = this.dashboardService.getCheckoutFlag();
   constructor(
 	private dashboardService:DashboardService,
 	private dataService:DataService,
-	private addressForm: FormBuilder
+	private addressForm: FormBuilder,
+	private router: Router
   ) {
 	this.addressFormGroup = this.addressForm.group({
       fname: ['', Validators.required ],
@@ -63,5 +66,9 @@ export class AddNewAddressComponent implements OnInit {
 		postorzip:this._zip.value
 	  }
 	  this.dataService.saveAddress(_addr);
+  }
+  gotoCheckout(){
+	//this.dashboardService.setCheckoutFlag(false);
+	this.router.navigate(['dashboard','checkout']);
   }
 }

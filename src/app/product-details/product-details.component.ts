@@ -33,52 +33,66 @@ export class ProductDetailsComponent implements OnInit {
   ngOnInit() {
 	  this.sub = this.route.params.subscribe(params => {
         this.productId = params['productid'];
-		this.productData = this.productService.getSelectedDetailedProduct();
-		if(this.loginService.getLoggedInStatus()){
-			if(this.productService.getSelectedProduct()){
-				switch(this.productService.getRedirectionMode()){
-					case 'cart':
-						this.productService.addToCartService(this.productService.getSelectedProduct().id,this.productService.getSelectedQuantity())
-						.subscribe((data: any) => {
-							if(data.cartID){
-								this.productService.addToCart(this.productService.getSelectedProduct().id,this.productService.getSelectedQuantity());  
-								this.productService.resetRedirectionData();
-								this.appService.onShowPreloader.emit(false);
-								$.notify(this.productData.title + " has been successfully added to cart.","success");
-							} else {
-								this.appService.onShowPreloader.emit(false);
-								$.notify('Product adding to cart failed due to an error. Try after some time.',"error");
-							}
-						},(data: any) => {
-							this.appService.onShowPreloader.emit(false);
-							$.notify('Product adding to cart failed due to an error. Try after some time.',"error");
-						});	
-						//alert(this.productService.getSelectedProduct().title + ' ' + this.productService.getSelectedQuantity() + ' item(s) added to the cart!');
-						break;
-					case 'wishlist':
-						this.productService.addToWishlistService(this.productService.getSelectedProduct())
-						.subscribe((data: any) => {
-							if(data.wishID){
-								this.productService.addToWishlist(this.productService.getSelectedProduct());
-								this.productService.resetRedirectionData();
-								this.appService.onShowPreloader.emit(false);
-								$.notify(this.productData.title + " has been successfully added to wish list.","success");
-							} else {
-								this.appService.onShowPreloader.emit(false);
-								$.notify('Product adding to wishlist failed due to an error. Try after some time.',"error");
-							}
-						},(data: any) => {
-							this.appService.onShowPreloader.emit(false);
-							$.notify('Product adding to cart failed due to an error. Try after some time.',"error");
-						});	
-						//alert(this.productService.getSelectedProduct().title + ' has been added to the wishlist!' )
-						break;
-				}				
-			}	
-		} else {
-			this.productService.resetRedirectionData();
-		}
-       // In a real app: dispatch action to load the details here.
+		this.productService.getSelectedDetailedProductService(this.productId)
+		.subscribe((data: any) => {
+			if(data){
+				this.productData = data; 
+				if(this.loginService.getLoggedInStatus()){
+					if(this.productService.getSelectedProduct()){
+						switch(this.productService.getRedirectionMode()){
+							case 'cart':
+								this.productService.addToCartService(this.productService.getSelectedProduct().id,this.productService.getSelectedQuantity())
+								.subscribe((data: any) => {
+									if(data.cartID){
+										this.productService.addToCart(this.productService.getSelectedProduct().id,this.productService.getSelectedQuantity());  
+										this.productService.resetRedirectionData();
+										this.appService.onShowPreloader.emit(false);
+										$.notify(this.productData.title + " has been successfully added to cart.","success");
+									} else {
+										this.appService.onShowPreloader.emit(false);
+										$.notify('Product adding to cart failed due to an error. Try after some time.',"error");
+									}
+								},(data: any) => {
+									this.appService.onShowPreloader.emit(false);
+									$.notify('Product adding to cart failed due to an error. Try after some time.',"error");
+								});	
+								//alert(this.productService.getSelectedProduct().title + ' ' + this.productService.getSelectedQuantity() + ' item(s) added to the cart!');
+								break;
+							case 'wishlist':
+								this.productService.addToWishlistService(this.productService.getSelectedProduct())
+								.subscribe((data: any) => {
+									if(data.wishID){
+										this.productService.addToWishlist(this.productService.getSelectedProduct());
+										this.productService.resetRedirectionData();
+										this.appService.onShowPreloader.emit(false);
+										$.notify(this.productData.title + " has been successfully added to wish list.","success");
+									} else {
+										this.appService.onShowPreloader.emit(false);
+										$.notify('Product adding to wishlist failed due to an error. Try after some time.',"error");
+									}
+								},(data: any) => {
+									this.appService.onShowPreloader.emit(false);
+									$.notify('Product adding to cart failed due to an error. Try after some time.',"error");
+								});	
+								//alert(this.productService.getSelectedProduct().title + ' has been added to the wishlist!' )
+								break;
+						}				
+					} else {
+						this.appService.onShowPreloader.emit(false);
+					}
+				} else {
+					this.productService.resetRedirectionData();
+					this.appService.onShowPreloader.emit(false);
+				}
+				this.appService.onShowPreloader.emit(false);
+			} else {
+				this.appService.onShowPreloader.emit(false);
+				$.notify('Getting product details failed due to an error. Try after some time.',"error");
+			}
+		},(data: any) => {
+			this.appService.onShowPreloader.emit(false);
+			$.notify('Getting product details failed due to an error. Try after some time.',"error");
+		});	
     });
 	 this.onAddToWishlistSub = this.productService.onAddToWishlist.subscribe((data) => {
 		this.productData = this.productService.getSelectedDetailedProduct();
@@ -116,7 +130,7 @@ export class ProductDetailsComponent implements OnInit {
 		this.productService.addToCartService(this.productData.id,this.quantity)
 		.subscribe((data: any) => {
 			if(data.cartID){
-				this.productService.addToCart(this.productData.id,this.quantity);  
+				this.productService.addToCart(this.productData,this.quantity);  
 				this.appService.onShowPreloader.emit(false);
 				$.notify(this.productData.title + " has been successfully added to cart.","success");
 			} else {
@@ -138,10 +152,9 @@ export class ProductDetailsComponent implements OnInit {
   addToWishlist(){	  
 	  if(this.loginService.getLoggedInStatus() == 'true'){
 		this.productData.isFavorate = true;
-		this.productService.addToWishlistService(this.productData)
+		this.productService.addToWishlistService(this.productData.id)
 		.subscribe((data: any) => {
 			if(data.wishID){
-				this.productService.setSelectedDetailedProduct(this.productData);
 				this.productService.addToWishlist(this.productData);  
 				$.notify(this.productData.title + " has been successfully added to wish list.","success");
 			} else {

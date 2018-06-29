@@ -1,14 +1,18 @@
-import { Component, ViewEncapsulation, ViewChild, OnInit, OnDestroy } from '@angular/core';
+import { Component, ViewEncapsulation, ViewChild, OnInit, OnDestroy, NgZone  } from '@angular/core';
 import {MatMenuTrigger} from '@angular/material';
 import {DataService} from './shared';
 import {ProductService} from './shared';
-import { Subscription } from 'rxjs';
+import { Subscription, Observable } from 'rxjs';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import 'rxjs/add/observable/fromEvent';
 import { LoginService } from './shared';
 import { AppService } from './app.service';
 import { ChangeDetectorRef } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthGuard } from './shared';
 declare var $: any;
+declare var window: any;
+declare var navigator: any;
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -24,6 +28,9 @@ export class AppComponent implements OnInit, OnDestroy{
 	categoryListHeight:number = 0;
 	productTotal:number = 0;
 	notifyCartItem:boolean = false;
+	private backbutton: BehaviorSubject<boolean>;
+	private _openRight: boolean = false;
+    private _openLeft: boolean = false;
 	private onAddToCartSub: Subscription;
 	private onRemoveFromCartSub: Subscription;
 	private onShowPreloaderSub: Subscription;
@@ -36,9 +43,48 @@ export class AppComponent implements OnInit, OnDestroy{
 		private loginService:LoginService,
 		private appService:AppService,
 		private cdRef:ChangeDetectorRef,
-		private router:Router
-	) { }
-	ngOnInit(){
+		private router:Router,
+		private zone: NgZone
+	) { 
+	  this.backbutton = new BehaviorSubject<boolean>(null);
+      Observable.fromEvent(document, 'backbutton').subscribe(event => {
+         this.zone.run(() => {
+            this.onBackbutton();
+         });
+      });
+	}
+	onDeviceReady() {
+		setTimeout(function() {
+			navigator.splashscreen.hide();
+		}, 1000);
+    }
+	onBackbutton() {
+		//alert('this._openRight: ' + this._openRight + "this._openLeft: " + this._openLeft);
+		if(this._openRight){
+			this._openRight = false;
+		} else if(this._openLeft){
+			this._openLeft = false;
+		} else {
+			 if(window.location.href == 'file:///android_asset/www/'){
+				//alert('yes');
+				navigator.notification.confirm(
+					'Are you sure to exit now?',  // message
+					function(buttonIndex){
+						if(buttonIndex == 2){
+							navigator.app.exitApp();
+						}
+					},              // callback to invoke with index of button pressed
+					'SevenNine - Mobile Super Market',            // title
+					['No','Yes']          // buttonLabels
+				);				
+			} else {
+				//alert('no');
+				window.history.back();
+			}	
+		}
+    }
+	ngOnInit(){		
+		 
 		$.notify.defaults( {
 			autoHideDelay: 2000
 		});
@@ -153,16 +199,6 @@ export class AppComponent implements OnInit, OnDestroy{
 		this.onShowPreloaderSub.unsubscribe;
 		this.onCategoryUpdateSub.unsubscribe;
     }
-	
-	openMyMenu() {
-		this.trigger.openMenu();
-	  } 
-	  closeMyMenu() {
-		this.trigger.closeMenu();
-	  } 
-   private _openRight: boolean = false;
-   private _openLeft: boolean = false;
- 
   private _toggleRightSidebar() {
     this._openRight = !this._openRight;
   }

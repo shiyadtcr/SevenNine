@@ -77,5 +77,6 @@
 		  </label>
 		</div>
 	</div>
-	<button class="btn btn-success btn-lg btn-block save-addr-btn ctrl-grp" [disabled]="!addressFormGroup.valid" (click)="saveAddress()">Save Address</button>
+	<button class="btn btn-success btn-lg btn-block save-addr-btn ctrl-grp" *ngIf="!checkoutFlag" [disabled]="!addressFormGroup.valid" (click)="saveAddress()">Save Address</button>
+	<button class="btn btn-success btn-lg btn-block save-addr-btn ctrl-grp" *ngIf="checkoutFlag" [disabled]="!addressFormGroup.valid" (click)="gotoCheckout()">Checkout</button>
 </form>

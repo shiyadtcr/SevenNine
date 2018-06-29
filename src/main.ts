@@ -7,6 +7,9 @@ import { environment } from './environments/environment';
 if (environment.production) {
   enableProdMode();
 }
-
-platformBrowserDynamic().bootstrapModule(AppModule)
+let onDeviceReady = () => {
+  platformBrowserDynamic().bootstrapModule(AppModule)
   .catch(err => console.log(err));
+};
+document.addEventListener('deviceready', onDeviceReady, false);
+//onDeviceReady();

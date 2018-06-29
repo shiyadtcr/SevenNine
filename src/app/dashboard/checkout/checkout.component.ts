@@ -56,15 +56,22 @@ export class CheckoutComponent implements OnInit {
 	this.addressList = this.dataService.getAddressList();
 	this.shippingAddr = this.addressList.shippingAddress[0];
 	this.billingAddr = this.addressList.billingAddress[0];
-	this.additionalAddr = JSON.parse(JSON.stringify(this.addressList.additionalAddress));
-	this.additionalAddr.push(this.billingAddr);
-	this.additionalAddr.push(this.shippingAddr);
-	this.shippingAddr = this.additionalAddr[this.additionalAddr.length - 1];
-	this.billingAddr = this.additionalAddr[this.additionalAddr.length - 2];
-	this.selectedBillingAddr = this.addressList.additionalAddress[0];
-	this._shippingaddr.value = this.additionalAddr.length - 1;
-	this._billingaddr.value = this.additionalAddr.length - 2;
+	if(this.dashboardService.getCheckoutFlag() == true){
+		this.additionalAddr = JSON.parse(JSON.stringify(this.addressList.additionalAddress));
+		this.additionalAddr.push(this.billingAddr);
+		this.additionalAddr.push(this.shippingAddr);
+		this.shippingAddr = this.additionalAddr[this.additionalAddr.length - 1];
+		this.billingAddr = this.additionalAddr[this.additionalAddr.length - 2];
+		this.selectedBillingAddr = this.addressList.additionalAddress[0];
+		this._shippingaddr.value = this.additionalAddr.length - 1;
+		this._billingaddr.value = this.additionalAddr.length - 2;
+	}
+	
 	this._deiverytime.value = 0;
+	if(this.additionalAddr.length == 0){
+		this.dashboardService.setCheckoutFlag(true);
+		this.router.navigate(['dashboard','addnewaddress']);
+	}
 	this.productService.getProductsInCartService()
 	.subscribe((data: any) => {
 		if(data && data.length > 0){
