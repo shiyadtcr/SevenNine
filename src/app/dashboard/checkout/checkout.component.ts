@@ -56,7 +56,7 @@ export class CheckoutComponent implements OnInit {
 	this.addressList = this.dataService.getAddressList();
 	this.shippingAddr = this.addressList.shippingAddress[0];
 	this.billingAddr = this.addressList.billingAddress[0];
-	if(this.dashboardService.getCheckoutFlag() == true){
+	//if(this.dashboardService.getCheckoutFlag() == true){
 		this.additionalAddr = JSON.parse(JSON.stringify(this.addressList.additionalAddress));
 		this.additionalAddr.push(this.billingAddr);
 		this.additionalAddr.push(this.shippingAddr);
@@ -65,7 +65,7 @@ export class CheckoutComponent implements OnInit {
 		this.selectedBillingAddr = this.addressList.additionalAddress[0];
 		this._shippingaddr.value = this.additionalAddr.length - 1;
 		this._billingaddr.value = this.additionalAddr.length - 2;
-	}
+	//}
 	
 	this._deiverytime.value = 0;
 	if(this.additionalAddr.length == 0){

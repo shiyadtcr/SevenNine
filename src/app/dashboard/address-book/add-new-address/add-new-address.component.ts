@@ -68,7 +68,7 @@ export class AddNewAddressComponent implements OnInit {
 	  this.dataService.saveAddress(_addr);
   }
   gotoCheckout(){
-	//this.dashboardService.setCheckoutFlag(false);
-	this.router.navigate(['dashboard','checkout']);
+	  this.dashboardService.setCheckoutFlag(false);
+	    this.router.navigate(['dashboard','checkout']);
   }
 }
