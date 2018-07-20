@@ -7,13 +7,7 @@ import { AppService } from '../../app.service';
 export class DataService{
   httpOptions = {
 	  headers: new HttpHeaders({
-		'Content-Type':  'application/json',
-		'Client-Service': 'frontend-client',
-		'Auth-Key': 'simplerestapi',
-		'Access-Control-Allow-Headers': 'Content-Type',
-		'Access-Control-Allow-Methods': 'GET',
-		'Access-Control-Allow-Origin': '*',
-		'Access-Control-Allow-Credentials': 'true'
+		'Content-Type':  'application/x-www-form-urlencoded; charset=utf8'
 	  })
 	};
   orderHistory:any = [{
@@ -96,9 +90,44 @@ export class DataService{
 	private http: HttpClient,
 	private appService: AppService
   ) { }
-  saveAddress(address){
-	this.addressList.additionalAddress.push(address);  
+  saveAddress(address){		
+    let saveAddrUrl = this.appService.getBaseServiceUrl() + 'setAddress';
+		var saveAddrPromise = this.http.post(saveAddrUrl,address,this.httpOptions);
+		this.appService.onShowPreloader.emit(true);
+			return saveAddrPromise;
   }
+	getCountryList(){ 
+    let countryListUrl = this.appService.getBaseServiceUrl() + "country";
+	var countryListPromise = this.http.get(countryListUrl);
+	this.appService.onShowPreloader.emit(true);
+    return countryListPromise;
+   } 
+	 getList(type,param){ 
+		 let paramVal = type == 'state' ? 'country' : type == 'city' ? 'state' : type == 'area' ? 'city' : '';
+    let listUrl = this.appService.getBaseServiceUrl() + type + "?" + paramVal + "=" + param;
+	var listPromise = this.http.get(listUrl);
+	this.appService.onShowPreloader.emit(true);
+    return listPromise;
+   } 
+	 getShippingMethods(){ 
+		 let listUrl = this.appService.getBaseServiceUrl() + 'shippingMethod';
+		var listPromise = this.http.get(listUrl);
+		this.appService.onShowPreloader.emit(true);
+			return listPromise;
+   } 
+	 getDeliveryTimes(){ 
+		 let listUrl = this.appService.getBaseServiceUrl() + 'deliveryTime';
+		var listPromise = this.http.get(listUrl);
+		this.appService.onShowPreloader.emit(true);
+			return listPromise;
+   } 
+	 getPaymentMethods(){ 
+		 let listUrl = this.appService.getBaseServiceUrl() + 'paymentMethod';
+		var listPromise = this.http.get(listUrl);
+		this.appService.onShowPreloader.emit(true);
+			return listPromise;
+   } 
+	 
   getNewCategoryList(){ 
     let categoyUrl = this.appService.getBaseServiceUrl() + "categories";
 	var categoryPromise = this.http.get(categoyUrl);
@@ -121,7 +150,10 @@ export class DataService{
    
   
    getAddressList(){ 
-		return this.addressList;
+		let addressListUrl = this.appService.getBaseServiceUrl() + "getAddress?custId=" + this.appService.getCurrentUser();
+		var addressListPromise = this.http.get(addressListUrl);
+		this.appService.onShowPreloader.emit(true);
+			return addressListPromise;
    } 
    getOrderHistory(){ 
 		return this.orderHistory;

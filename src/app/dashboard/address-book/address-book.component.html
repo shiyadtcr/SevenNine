@@ -1,25 +1,29 @@
-<div class="address-wrp">
+<div class="address-wrp" *ngIf="addressList.length > 0">
 	<button class="btn btn-success btn-lg btn-block add-addr-btn"><a [routerLink]="['../addnewaddress']">Add new address</a></button>
-	<h5 class="nbb">Default Addresses</h5>
-	<h5 class="nbb">Default Billing Address</h5>
-	<ul class="address" *ngFor="let billingAddress of addressList.billingAddress">
-		<li>{{billingAddress.streetAddr}}</li>
-		<li>{{billingAddress.streetAddr2}}</li>
-		<li>{{billingAddress.country}}, {{billingAddress.state}}</li>
-		<li>{{billingAddress.city}}, {{billingAddress.postorzip}}</li>
+	<h5 class="nbb">Current Addresses</h5>
+	<!--<h5 class="nbb">Default Billing Address</h5>-->
+	<ul class="address">
+		<li>{{defaultAddress.address}}</li>
+		<li>{{defaultAddress.wardNumber}}, {{defaultAddress.landMark}}</li>
+		<li>{{defaultAddress.country}}, {{defaultAddress.state}}</li>
+		<li>{{defaultAddress.city}}, {{defaultAddress.area}}</li>
+		<li>{{defaultAddress.pincode}}</li>
+		<li>Mob: {{defaultAddress.mobile}}</li>
 	</ul>
-	<h5 class="nbb">Default Shipping Address</h5>
+	<!--<h5 class="nbb">Default Shipping Address</h5>
 	<ul class="address" *ngFor="let shippingAddress of addressList.shippingAddress">
 		<li>{{shippingAddress.streetAddr}}</li>
 		<li>{{shippingAddress.streetAddr2}}</li>
 		<li>{{shippingAddress.country}}, {{shippingAddress.state}}</li>
 		<li>{{shippingAddress.city}}, {{shippingAddress.postorzip}}</li>
-	</ul>
+	</ul>-->
 	<h5 class="nbb">Additional Addresses</h5>
-	<ul class="address" *ngFor="let additionalAddress of addressList.additionalAddress">
-		<li>{{additionalAddress.streetAddr}}</li>
-		<li>{{additionalAddress.streetAddr2}}</li>
-		<li>{{additionalAddress.country}}, {{additionalAddress.state}}</li>
-		<li>{{additionalAddress.city}}, {{additionalAddress.postorzip}}</li>
+	<ul class="address" *ngFor="let address of addressList">
+		<li>{{address.address}}</li>
+		<li>{{address.wardNumber}}, {{address.landMark}}</li>
+		<li>{{address.country}}, {{address.state}}</li>
+		<li>{{address.city}}, {{address.area}}</li>
+		<li>{{address.pincode}}</li>
+		<li>Mob: {{address.mobile}}</li>
 	</ul>
 </div>

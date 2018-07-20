@@ -25,7 +25,7 @@
      </div>	 
 	<div class="top-navbar-right"> 
 		<span class="nav-icon">
-			<i class="fa fa-user-circle-o" (click)="openMyMenu()" [matMenuTriggerFor]="menu"></i>			
+			<i class="fa fa-user-circle-o" [matMenuTriggerFor]="menu"></i>			
 			<mat-menu #menu="matMenu" class="profile-menu" xPosition="after" [overlapTrigger]="false">
 				<ng-template matMenuContent>
 					<a *ngIf="IsLoggedIn" [routerLink]="['/dashboard','myaccount']" mat-menu-item><i class="fa fa-user"></i>Account</a>

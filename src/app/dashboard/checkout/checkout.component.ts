@@ -14,14 +14,40 @@ declare var $: any;
 export class CheckoutComponent implements OnInit {
   deliveryDate:string = '';
   productsInCart:any = [];
-  shippingAddr:any = {};
   addressList:any = [];
-  additionalAddr:any = [];
-  discount:number = 0;
-  billingAddr:any = {};
-  selectedBillingAddr:any = {};
+  defaultAddress:any = {};
   checkoutFormGroup:FormGroup;
   productTotal:number = 0;
+  discount:number = 0;
+  deliveryTimes:any = [{
+	  id:0,
+	  title:"9.30 am to 12 pm"
+  },{
+	  id:1,
+	  title:"5.00 pm to 7.00 pm"
+  },{
+	  id:2,
+	  title:"7.30 pm to 10.00 pm"
+  }];
+  shippingMethods:any = [{
+	  id:0,
+	  title:"Free Shipping"
+  },{
+	  id:1,
+	  title:"Free Shipping"
+  },{
+	  id:2,
+	  title:"Free Shipping"
+  },{
+	  id:3,
+	  title:"Free Shipping"
+  }];
+  paymentMethods:any = [{
+	  id:0,
+	  title:"COD"
+  }];
+
+	
   constructor(
 	private dashboardService:DashboardService,
 	private productService:ProductService,
@@ -31,82 +57,125 @@ export class CheckoutComponent implements OnInit {
 	private router: Router
   ) { 
 	this.checkoutFormGroup = this.checkoutForm.group({
-      billingaddr: ['', Validators.required ],
-      shippingaddr: ['', Validators.required ],
+      address: ['', Validators.required ],
       shippingmethod: ['', Validators.required ],
-      deiverydate: ['', Validators.required ],
-      deiverytime: ['', Validators.required ],
+      deliverydate: [''],
+      deliverytime: ['', Validators.required ],
       paymentmethod: ['', Validators.required ]
     });
   }
-  get _billingaddr() { return this.checkoutFormGroup.get('billingaddr'); }
-  set _billingaddr(value:any) { this._billingaddr.value = value; }
-  get _shippingaddr() { return this.checkoutFormGroup.get('shippingaddr'); }
-  set _shippingaddr(value:any) { this._shippingaddr.value = value; }
+  get _address() { return this.checkoutFormGroup.get('address'); }
+  set _address(value:any) { this._address.value = value; }
   get _shippingmethod() { return this.checkoutFormGroup.get('shippingmethod'); }
-  get _deiverydate() { return this.checkoutFormGroup.get('deiverydate'); }
-  get _deiverytime() { return this.checkoutFormGroup.get('deiverytime'); }
-  set _deiverytime(value:any) { this._deiverytime.value = value; }
+  get _deliverydate() { return this.checkoutFormGroup.get('deliverydate'); }
+  get _deliverytime() { return this.checkoutFormGroup.get('deliverytime'); }
+  set _deliverytime(value:any) { this._deliverytime.value = value; }
   get _paymentmethod() { return this.checkoutFormGroup.get('paymentmethod'); }
   isError(field){
 	  return field.invalid && (field.dirty || field.touched);
   }
   ngOnInit() {
 	this.dashboardService.pageTitle = "Checkout";
-	this.addressList = this.dataService.getAddressList();
-	this.shippingAddr = this.addressList.shippingAddress[0];
-	this.billingAddr = this.addressList.billingAddress[0];
-	//if(this.dashboardService.getCheckoutFlag() == true){
-		this.additionalAddr = JSON.parse(JSON.stringify(this.addressList.additionalAddress));
-		this.additionalAddr.push(this.billingAddr);
-		this.additionalAddr.push(this.shippingAddr);
-		this.shippingAddr = this.additionalAddr[this.additionalAddr.length - 1];
-		this.billingAddr = this.additionalAddr[this.additionalAddr.length - 2];
-		this.selectedBillingAddr = this.addressList.additionalAddress[0];
-		this._shippingaddr.value = this.additionalAddr.length - 1;
-		this._billingaddr.value = this.additionalAddr.length - 2;
-	//}
-	
-	this._deiverytime.value = 0;
-	if(this.additionalAddr.length == 0){
-		this.dashboardService.setCheckoutFlag(true);
-		this.router.navigate(['dashboard','addnewaddress']);
-	}
-	this.productService.getProductsInCartService()
-	.subscribe((data: any) => {
-		if(data && data.length > 0){
-			this.productsInCart = data;
-			//this.productService.setProductsInCart(data);
-			this.productTotal = this.productService.getCartProductsTotal();
-			this.appService.onShowPreloader.emit(false);
-			//$.notify(data.message,'success');
+	this.dataService.getAddressList()
+	.subscribe((data:any) => {
+		if(data){
+			if(data.length == 0){
+				this.router.navigate(['dashboard','addressbook']);
+			} else {
+				this.addressList = data;
+				this.defaultAddress = this.addressList.filter((val,ind) => { return val.status == 1})[0];
+				this._address.value = 1;
+				this.dataService.getShippingMethods()
+				.subscribe((data:any) => {
+					if(data){
+						this.shippingMethods = data;			
+					} else {
+						$.notify('Error on getting shipping methods. Try after some time.',"error");
+					}
+					this.appService.onShowPreloader.emit(false);
+				},(data:any) => {
+					this.appService.onShowPreloader.emit(false);
+					$.notify('Error on getting shipping methods. Try after some time.',"error");
+				});
+				this.dataService.getDeliveryTimes()
+				.subscribe((data:any) => {
+					if(data){
+						this.deliveryTimes = data;
+					} else {
+						$.notify('Error on getting delivery times. Try after some time.',"error");
+					}
+					this.appService.onShowPreloader.emit(false);
+				},(data:any) => {
+					this.appService.onShowPreloader.emit(false);
+					$.notify('Error on getting delivery times. Try after some time.',"error");
+				});
+				this.dataService.getPaymentMethods()
+				.subscribe((data:any) => {
+					if(data){
+						this.paymentMethods = data;	
+					} else {
+						$.notify('Error on getting payment methods. Try after some time.',"error");
+					}
+					this.appService.onShowPreloader.emit(false);
+				},(data:any) => {
+					this.appService.onShowPreloader.emit(false);
+					$.notify('Error on getting payment methods. Try after some time.',"error");
+				});
+				this._deliverytime.value = 0;	
+				this.productService.getProductsInCartService()
+				.subscribe((data: any) => {
+					if(data && data.length > 0){
+						this.productsInCart = data;
+						//this.productService.setProductsInCart(data);
+						this.productTotal = this.productService.getCartProductsTotal();
+						this.appService.onShowPreloader.emit(false);
+						//$.notify(data.message,'success');
+					} else {
+						this.productsInCart = [];
+						this.appService.onShowPreloader.emit(false);
+						$.notify('Please add products in cart to checkout.','error');
+					}
+				},(data: any) => {
+					this.appService.onShowPreloader.emit(false);
+					$.notify('Cart update failed due to an error. Try after some time.','error');
+				});	
+			}
 		} else {
-			this.productsInCart = [];
-			this.appService.onShowPreloader.emit(false);
-			$.notify('Please add products in cart to checkout.','error');
+			$.notify('Getting address list failed due to an error. Try after some time.',"error");
 		}
-	},(data: any) => {
 		this.appService.onShowPreloader.emit(false);
-		$.notify('Cart update failed due to an error. Try after some time.','error');
-	});	
+	},(data:any) => {
+			this.appService.onShowPreloader.emit(false);
+			$.notify('Getting address list failed due to an error. Try after some time.',"error");
+	});
   }
-  changeBillingAddr(event){
-	this.billingAddr = this.additionalAddr[event.target.value];
-  }
-  changeShippingAddr(event){
-	this.shippingAddr = this.additionalAddr[event.target.value];
+  changeAddress(event){
+		this.defaultAddress = this.addressList.filter((v) => { return v.status = event.target.value; })[0];
   }
   placeOrder(){
 	  let _checkoutData = {
-		  billingaddr: this.addressList.additionalAddress[this._billingaddr.value],
-		  shippingaddr: this.addressList.additionalAddress[this._shippingaddr.value],
-		  shippingmethod: this._shippingmethod.value,
-		  deiverydate: this._deiverydate.value,
-		  deiverytime: this._deiverytime.value,
-		  paymentmethod: this._paymentmethod.value
+		  addressId: this._address.value,
+		  shippingMethod: this._shippingmethod.value,
+		  deliveryDate: this._deliverydate.value,
+		  deliveryTime: this._deliverytime.value,
+		  paymentMethod: this._paymentmethod.value,
+		  custId:this.appService.getCurrentUser()
 	  }
-	  console.log('_checkoutData: ',_checkoutData);
-	  this.router.navigate(['/dashboard/checkout/1234567890']);
+	  this.productService.placeOrder(_checkoutData)
+		.subscribe((data: any) => {
+			if(data){
+				let _url = '/dashboard/checkout/' + data;
+				this.router.navigate([_url]);
+			} else {
+				$.notify('Unable to place order due to an error. Please try later','error');
+			}
+			this.appService.onShowPreloader.emit(false);
+		},(data: any) => {
+			this.appService.onShowPreloader.emit(false);
+			$.notify('Unable to place order due to an error. Please try later','error');
+		});	
+	  //console.log('_checkoutData: ',_checkoutData);
+	  
   }
   navigateHome(){
 	 this.router.navigate(['/']);

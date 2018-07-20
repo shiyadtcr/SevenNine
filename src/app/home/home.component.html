@@ -22,7 +22,8 @@
 	<div class="row product-row" [@routerTransitionTop]>
 		<div class="col-6 product-wrp" *ngFor="let caregory of categoryList">
 			<a [routerLink]="['/products',caregory.id]">
-		  <img class="img-fluid" [defaultImage]="appService.defaultImageUrl" [lazyLoad]="caregory.imageUrl" /> 
+		  <!--<img class="img-fluid" [defaultImage]="appService.defaultImageUrl" [lazyLoad]="caregory.imageUrl" />--> 
+      <img class="img-fluid" [src]="caregory.imageUrl" /> 
 		  <p class="product-title">{{caregory.title}}</p>
 			</a>
 		</div>

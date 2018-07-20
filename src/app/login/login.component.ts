@@ -64,7 +64,7 @@ export class LoginComponent implements OnInit {
 		}
 	},(data: any) => {
 		this.appService.onShowPreloader.emit(false);
-		$.notify('User signup failed due to an error. Try after some time.','error');
+		$.notify('User signin failed due to an error. Try after some time.','error');
 	});	
 	
   }

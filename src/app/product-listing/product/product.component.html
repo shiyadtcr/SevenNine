@@ -1,9 +1,9 @@
 <div class="product">
-	<a [routerLink]="['/products',product.categoryId,product.id]"><img [defaultImage]="appService.defaultImageUrl"  class="img-fluid" [lazyLoad]="product.imageUrl" /></a>
+	<a [routerLink]="['/products',product.categoryId,product.id]"><!--<img [defaultImage]="appService.defaultImageUrl"  class="img-fluid" [lazyLoad]="product.imageUrl" />--><img class="img-fluid" [src]="product.imageUrl" /></a>
 	<p class="title">{{product.title}}</p>
 	<p class="price">Rs. {{product.price}}</p>
 	
-	<!-- <div *ngIf="product.stockCount && product.stockCount > 0; else noStock"> -->
+	<div *ngIf="product.stock && product.stock > 0; else noStock">
 	<div>
 		<p class="wrp">		
 			<span class="decinc minus" [ngClass]="quantity == 1 ? 'disabled' : ''" (click)="decQuantity(product)"><i class="fa fa-minus-square"></i></span>
@@ -16,9 +16,10 @@
 		</p>
 		<p class="cart-add-info">Added to cart <b>({{product.addedToCart ? product.quantity : 0}})</b></p>
 	</div>
-	<!-- <ng-template #noStock>
+	</div>
+	<ng-template #noStock>
 		<p class="btn-wrp nostock-wrp">
 			Out of stock
 		</p>
-	</ng-template> -->
+	</ng-template>
 </div>

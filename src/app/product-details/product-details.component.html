@@ -2,16 +2,18 @@
 <div class="container">	
 	<div class="row product-list-wrp"  [@routerTransitionTop]>
 		<div class="product col-12">
-			<img class="img-fluid large-img" src="assets/images/logo.png" />
+			<!--<img [defaultImage]="appService.defaultImageUrl"  class="img-fluid" [lazyLoad]="productData.imageUrl" />-->
+			<img class="img-fluid" [src]="productData.imageUrl" />
 			<p class="overview-title">Quick Overview</p>
 			<p class="title">{{productData.title}}</p>
 			<p class="price">Rs. {{productData.price}}</p>
 			<p class="wrp">
-				<span class="heart" (click)="addToWishlist()"><i class="fa fa-heart faa-pulse" [ngClass]="{animated: productData.isFavorate, normal: !productData.isFavorate}"></i></span>				
-				<span class="decinc" [ngClass]="productData.quantity == 1 ? 'disabled' : ''" (click)="decQuantity(productData)">-</span>
+				<i [hidden]="!wishlistSpinner" class="fa fa-spinner faa-spin animated wishlist"></i><span [hidden]="wishlistSpinner" class="heart" (click)="addToWishlist()"><i class="fa fa-heart faa-pulse" [ngClass]="{animated: productData.isFavorate, normal: !productData.isFavorate}"></i></span>
+				<span class="decinc minus" [ngClass]="quantity == 1 ? 'disabled' : ''" (click)="decQuantity(productData)"><i class="fa fa-minus-square"></i></span>
 				<input type="text" value="1" [(ngModel)]="quantity" class="quantity" />
-				<span class="decinc" (click)="incQuantity(productData)">+</span>
-				<span class="cart" (click)="addToCart()"><i class="fa fa-shopping-basket"></i></span>
+				<span class="decinc" (click)="incQuantity(productData)"><i class="fa fa-plus-square"></i></span>
+				
+				<i [hidden]="!cartSpinner" class="fa fa-spinner faa-spin animated cart"></i><span [hidden]="cartSpinner" class="cart" (click)="addToCart()"><i class="fa fa-shopping-basket"></i></span>
 			</p>
 			<div class="detail-block">
 				<p class="details-title">Product Details</p>
@@ -25,7 +27,7 @@
 				  <label for="comment">Comment:</label>
 				  <textarea [(ngModel)]="productData.comment" placeholder="Enter comment" class="form-control" rows="3" id="comment"></textarea>
 				</div>
-				<button class="btn btn-success save-rating-btn">Save Rating</button>
+				<button class="btn btn-success save-rating-btn" (click)="saveRating()">Save Rating</button>
 			</div>
 			<div class="detail-block">
 				<p class="details-title">Reviews</p>

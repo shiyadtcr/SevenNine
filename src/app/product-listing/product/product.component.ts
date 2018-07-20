@@ -31,10 +31,7 @@ export class ProductComponent implements OnInit {
   alertDismissed(){
 	  
   }
-  incQuantity(){
-	if(!this.product.stock){
-		this.product.stock = 10;
-	}
+  incQuantity(){	
 	if(this.quantity < this.product.stock){
 		this.quantity++;
 	} else {
@@ -62,19 +59,19 @@ export class ProductComponent implements OnInit {
 			if(data.cartID){
 				this.productService.addToCart(this.product,this.quantity); 
 				//this.appService.onShowPreloader.emit(false);
-				$.notify(this.product.title + " has been successfully added to cart.","success");
+				$.notify(this.product.title + " has been successfully updated in cart.","success");
 			} else {
 				//this.appService.onShowPreloader.emit(false);
 				if(data.message){
 					$.notify(data.message,'error');
 				} else {
-					$.notify('Product adding to cart failed due to an error. Try after some time.',"error");
+					$.notify('Product add/remove to cart failed due to an error. Try after some time.',"error");
 				}
 			}
 			this.cartSpinner = false;
 		},(data: any) => {
 			//this.appService.onShowPreloader.emit(false);
-			$.notify('Product adding to cart failed due to an error. Try after some time.',"error");
+			$.notify('Product add/remove to cart failed due to an error. Try after some time.',"error");
 			this.cartSpinner = false;
 		});		
 	  } else {
@@ -93,19 +90,19 @@ export class ProductComponent implements OnInit {
 			if(data.wishID){
 				this.productService.addToWishlist(this.product);
 				//this.appService.onShowPreloader.emit(false);
-				$.notify(this.product.title + " has been successfully added to wish list.","success");
+				$.notify(this.product.title + " has been successfully updated in wish list.","success");
 			} else {
 				//this.appService.onShowPreloader.emit(false);
 				if(data.message){
 					$.notify(data.message,'error');
 				} else {
-					$.notify('Product adding to wishlist failed due to an error. Try after some time.','error');
+					$.notify('Product add/remove to wishlist failed due to an error. Try after some time.','error');
 				}
 			}
 			this.wishlistSpinner = false;
 		},(data: any) => {
 			//this.appService.onShowPreloader.emit(false);
-			$.notify('Product adding to cart failed due to an error. Try after some time.','error');
+			$.notify('Product add/remove to cart failed due to an error. Try after some time.','error');
 			this.wishlistSpinner = false;
 		});	
 	  } else {

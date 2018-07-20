@@ -1,6 +1,6 @@
 import { Injectable, EventEmitter  } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-
+import { HttpHeaders } from '@angular/common/http';
 import { AppService } from '../../app.service';
 import { LoginService } from './login.service';
 
@@ -19,6 +19,11 @@ export class ProductService {
   productsInWishlist:any = [];
   selectedCategory:string = '';
   selectedProduct:any;
+	httpOptions = {
+	  headers: new HttpHeaders({
+		'Content-Type':  'application/x-www-form-urlencoded; charset=utf8'
+	  })
+	};
   selectedDetailedProduct:any = {
 		id : 1,
 		categoryId:1,
@@ -228,6 +233,16 @@ export class ProductService {
 	  let removeFromCartUrl = this.appService.getBaseServiceUrl() + "remCartItem?userId=" + this.appService.getCurrentUser() + "&itemId=" + id;
 	   this.appService.onShowPreloader.emit(true);
 	   return this.http.get(removeFromCartUrl );
+  }
+	saveRating(data){
+	  let saveRatingUrl = this.appService.getBaseServiceUrl() + "setRating";
+	   this.appService.onShowPreloader.emit(true);
+	   return this.http.post(saveRatingUrl,data,this.httpOptions);
+  }
+	placeOrder(data){
+	  let placeOrderUrl = this.appService.getBaseServiceUrl() + "placeOrder";
+	   this.appService.onShowPreloader.emit(true);
+	   return this.http.post(placeOrderUrl,data,this.httpOptions);
   }
   removeCartItem(id){
 	let productExisting = this.productsInCart.filter(function(item){

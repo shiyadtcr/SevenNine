@@ -1,60 +1,44 @@
-<div class="row" *ngIf="additionalAddr.length != 0">
+<div class="row" *ngIf="addressList.length != 0">
 	<div class="col-12 address-list-wrp" *ngIf="productsInCart.length > 0; else noItems">
 		<form [formGroup]="checkoutFormGroup">
 		<div class="address-wrp">
 			<div class="address">
 				<h6 class="title">
-					<span>Billing Address</span>
-				</h6>
-				<p>{{billingAddr.streetAddr}}</p>
-				<ul>
-					<li>{{billingAddr.streetAddr2}}</li>
-					<li>{{billingAddr.city}}, {{billingAddr.state}}</li>
-					<li>{{billingAddr.country}}</li>
-					<li>Phone No: {{billingAddr.telephone}}</li>
-				</ul>
-				<!-- <h6 class="change-addr">Change Address</h6> -->
-			</div>
-			<div class="change-addr">
-				<h6 class="title">
-					<span>Change Billing Address</span>
-				</h6>
-				<select (change)="changeBillingAddr($event)" formControlName="billingaddr" class="custom-select custom-select-lg">
-					<option [value]="i" *ngFor="let addr of additionalAddr;let i = index;">{{addr.streetAddr}} - {{addr.streetAddr2}} - {{addr.city}} - {{addr.state}} - {{addr.country}} - {{addr.postorzip}}</option>
-				</select>
-			</div>
-		</div>
-		<div class="address-wrp">
-			<div class="address">
-				<h6 class="title">
 					<span>Shipping Address</span>
 				</h6>
-				<p>{{shippingAddr.streetAddr}}</p>
 				<ul>
-					<li>{{shippingAddr.streetAddr2}}</li>
-					<li>{{shippingAddr.city}}, {{shippingAddr.state}}</li>
-					<li>{{shippingAddr.country}}</li>
-					<li>Phone No: {{shippingAddr.telephone}}</li>
+					<li>{{defaultAddress.address}}</li>
+					<li>{{defaultAddress.wardNumber}}, {{defaultAddress.landMark}}</li>
+					<li>{{defaultAddress.country}}, {{defaultAddress.state}}</li>
+					<li>{{defaultAddress.city}}, {{defaultAddress.area}}</li>
+					<li>{{defaultAddress.pincode}}</li>
+					<li>Mob: {{defaultAddress.mobile}}</li>
 				</ul>
 				<!-- <h6 class="change-addr">Change Address</h6> -->
 			</div>
 			<div class="change-addr">
 				<h6 class="title">
-					<span>Change Shipping Address</span>
+					<span>Change Address</span>
 				</h6>
-				<select (change)="changeShippingAddr($event)" formControlName="shippingaddr" class="custom-select custom-select-lg">
-					<option [value]="i" *ngFor="let addr of additionalAddr;let i = index;">{{addr.streetAddr}} - {{addr.streetAddr2}} - {{addr.city}} - {{addr.state}} - {{addr.country}} - {{addr.postorzip}}</option>
-				</select>
+				<div class="input-group ctrl-grp">					
+					<label class="form-group has-float-label">
+						<select (change)="changeAddress($event)" formControlName="address" class="custom-select custom-select-lg">
+							<option [value]="addr.status" *ngFor="let addr of addressList;">{{addr.address}} - {{addr.wardNumber}} - {{addr.area}} - {{addr.city}} - {{addr.state}} - {{addr.country}} - {{addr.pincode}}</option>
+						</select>
+						<span>Change Address</span>
+					</label>
+				</div>
+				
 			</div>
-		</div>
+		</div>		
 		<div class="address-wrp">
 			<div class="address">
 				<h6 class="title">
 					<span>Shipping Method</span>
 				</h6>
-				<div class="custom-control custom-radio">
-				  <input id="ShippingMethod" value="Free Shipping" name="shippingmethod" id="shippingmethod" formControlName="shippingmethod" type="radio" class="custom-control-input" />
-				  <label [ngClass]="isError(_shippingmethod)?'error':''" class="custom-control-label" for="shippingmethod">Free Shipping</label>
+				<div *ngFor="let method of shippingMethods" class="custom-control custom-radio">
+				  <input [value]="method.id" name="shippingmethod" attr.id="shippingmethod{{method.id}}" formControlName="shippingmethod" type="radio" class="custom-control-input" />
+				  <label [ngClass]="isError(_shippingmethod)?'error':''" class="custom-control-label" attr.for="shippingmethod{{method.id}}">{{method.title}}</label>
 				</div>
 			</div>
 		</div>
@@ -66,9 +50,9 @@
 				<div class="form-group">
 					<label for="DeliveryDate">Delivery Date</label>
 					<div class="input-group ctrl-grp">	
-						<div class="input-group-prepend"><span class="input-group-text" [ngClass]="isError(_deiverydate)?'error':''"><span class="star-mandatory">*</span><i class="fa fa-user"></i></span></div>
+						<div class="input-group-prepend"><span class="input-group-text" [ngClass]="isError(_deliverydate)?'error':''"><span class="star-mandatory">*</span><i class="fa fa-user"></i></span></div>
 						<label class="form-group has-float-label">
-							<input id="DeliveryDate" class="form-control date-ctrl" formControlName="deiverydate" type="date" placeholder="Delivery Date"/>
+							<input id="DeliveryDate" class="form-control date-ctrl" formControlName="deliverydate" type="date" placeholder="Delivery Date"/>
 							<span>Delivery Date</span><i for="DeliveryDate" class="fa fa-calendar"></i>
 						  </label>
 					</div>
@@ -76,10 +60,8 @@
 				</div>
 				<div class="form-group">
 					<label for="DeliveryDate">Delivery Time</label>
-					<select formControlName="deiverytime" class="custom-select custom-select-lg">
-						<option [value]="0">9.30 am to 12 pm</option>
-						<option [value]="1">5.00 pm to 7.00 pm</option>
-						<option [value]="2">7.30 pm to 10.00 pm</option>
+					<select formControlName="deliverytime" class="custom-select custom-select-lg">
+						<option [value]="time.id" *ngFor="let time of deliveryTimes;">{{time.title}}</option>
 					</select>
 					<small id="dateHelp" class="form-text text-muted">Please select your convinient delivery time</small>
 				</div>  
@@ -90,9 +72,9 @@
 				<h6 class="title">
 					<span>Payment Method</span>
 				</h6>
-				<div class="custom-control custom-radio">
-				  <input formControlName="paymentmethod" value="COD" id="PaymentMethod" name="paymentmethod" id="paymentmethod" type="radio" class="custom-control-input" />
-				  <label [ngClass]="isError(_paymentmethod)?'error':''" class="custom-control-label" for="paymentmethod">COD</label>
+				<div *ngFor="let method of paymentMethods" class="custom-control custom-radio">
+				  <input formControlName="paymentmethod" [value]="method.id" name="paymentmethod" attr.id="paymentmethod{{method.id}}" type="radio" class="custom-control-input" />
+				  <label [ngClass]="isError(_paymentmethod)?'error':''" class="custom-control-label" attr.for="paymentmethod{{method.id}}">COD</label>
 				</div>
 			</div>
 		</div>
