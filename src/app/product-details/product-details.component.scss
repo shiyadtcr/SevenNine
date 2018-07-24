@@ -1,8 +1,3 @@
-h6{
-	background:#5f1f60;
-	padding:0.5rem 1rem;		
-	color:#fff;
-}
 .container{
 	padding:0;
 }
@@ -123,4 +118,11 @@ h6{
 }
 .wrp:last-child{
 	margin-bottom:0;
+}
+.nostock-wrp{
+	margin-bottom: 47px;
+    margin-top: 46px;
+    font-size: 1em;
+    color: red;
+	font-weight:bold;
 }

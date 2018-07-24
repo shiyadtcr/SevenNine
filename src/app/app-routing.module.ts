@@ -15,6 +15,10 @@ import { MyCartComponent } from './dashboard/my-cart/my-cart.component';
 import { CheckoutComponent } from './dashboard/checkout/checkout.component';
 import { PlaceOrderComponent } from './dashboard/checkout/place-order.component';
 import { OrderHistoryComponent } from './dashboard/order-history/order-history.component';
+import { TermsAndConditionsComponent } from './terms-and-conditions/terms-and-conditions.component';
+import { PrivacyPolicyComponent } from './privacy-policy/privacy-policy.component';
+import { AboutusComponent } from './aboutus/aboutus.component';
+import { ContactusComponent } from './contactus/contactus.component';
 import { AuthGuard } from './shared';
 
 const routes: Routes = [
@@ -23,6 +27,10 @@ const routes: Routes = [
   { path: 'products/:id/:productid', component: ProductDetailsComponent },
   { path: 'login', component: LoginComponent },
   { path: 'signup', component: SignupComponent },
+	{ path: 'termsandconditions', component: TermsAndConditionsComponent },
+	{ path: 'privacypolicy', component: PrivacyPolicyComponent },
+	{ path: 'aboutus', component: AboutusComponent },
+	{ path: 'contactus', component: ContactusComponent },
   { 
 	path: 'dashboard', 
 	component: DashboardComponent,

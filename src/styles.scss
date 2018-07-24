@@ -9,12 +9,22 @@ body{
     font-size: 15px;
     color: rgba(0,0,0,.87);
 }
-
+h6{
+	background:#5f1f60;
+	padding:0.5rem 1rem;		
+	color:#fff;
+}
 /* carousel */
 .banner{
 	height:260px;
 	margin-bottom:10px;
 	overflow:hidden;
+}
+.squeezebox sb-item:first-child .sb-item{
+	border-top:0;
+}
+.squeezebox sb-item:last-child .sb-item{
+	border-bottom:0;
 }
 .ngxcarousel{
 	.ngxcarousel-inner{

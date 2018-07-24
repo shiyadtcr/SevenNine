@@ -7,7 +7,7 @@
 			<p class="overview-title">Quick Overview</p>
 			<p class="title">{{productData.title}}</p>
 			<p class="price">Rs. {{productData.price}}</p>
-			<p class="wrp">
+			<p class="wrp" *ngIf="productData.stock && productData.stock > 0; else noStock">
 				<i [hidden]="!wishlistSpinner" class="fa fa-spinner faa-spin animated wishlist"></i><span [hidden]="wishlistSpinner" class="heart" (click)="addToWishlist()"><i class="fa fa-heart faa-pulse" [ngClass]="{animated: productData.isFavorate, normal: !productData.isFavorate}"></i></span>
 				<span class="decinc minus" [ngClass]="quantity == 1 ? 'disabled' : ''" (click)="decQuantity(productData)"><i class="fa fa-minus-square"></i></span>
 				<input type="text" value="1" [(ngModel)]="quantity" class="quantity" />
@@ -15,6 +15,11 @@
 				
 				<i [hidden]="!cartSpinner" class="fa fa-spinner faa-spin animated cart"></i><span [hidden]="cartSpinner" class="cart" (click)="addToCart()"><i class="fa fa-shopping-basket"></i></span>
 			</p>
+			<ng-template #noStock>
+				<p class="btn-wrp nostock-wrp">
+					Out of stock
+				</p>
+			</ng-template>
 			<div class="detail-block">
 				<p class="details-title">Product Details</p>
 				

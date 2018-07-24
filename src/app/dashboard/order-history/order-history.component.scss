@@ -16,3 +16,24 @@
     font-weight: bold;
     font-size: 0.8rem;
 }	
+.product{
+	text-align:left;
+	position:relative;
+	margin-bottom:15px;
+	img{
+		float:left;
+		margin-right:1rem;
+	}	
+	.subtotal{
+		color:red;
+		font-size:1rem;
+		margin-bottom:0;
+	}
+	.title{
+		width:73%;
+		margin-top: 5px;
+	}
+}
+.grand-total{
+	width:45%;
+}

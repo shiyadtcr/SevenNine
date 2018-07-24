@@ -1,6 +1,6 @@
 import { Injectable, EventEmitter } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-
+import { HttpHeaders } from '@angular/common/http';
 import { AppService } from '../../app.service';
 @Injectable()
 export class LoginService {
@@ -8,6 +8,11 @@ export class LoginService {
   onSuccessLogin : EventEmitter<any> = new EventEmitter<any>();  
   onSuccessLogout : EventEmitter<any> = new EventEmitter<any>();  
   onSuccessSignup : EventEmitter<any> = new EventEmitter<any>();  
+  httpOptions = {
+	  headers: new HttpHeaders({
+		'Content-Type':  'application/x-www-form-urlencoded; charset=utf8'
+	  })
+	};
   constructor(
 	private http: HttpClient,
 	private appService: AppService
@@ -26,9 +31,9 @@ export class LoginService {
 	  return localStorage.getItem('hasUserLoggedIn');
   }
   signupUser(d){
-	   let signupUrl = "http://13.232.42.90/service/?/Masters/signup?name=" + d.name + "&pwd=" + d.pwd + "&email=" + d.email + "&userId=" + d.mob;
+	   let signupUrl = "http://13.232.42.90/service/?/Masters/signup";
 	   this.appService.onShowPreloader.emit(true);
-	   return this.http.get(signupUrl);
+	   return this.http.post(signupUrl,d,this.httpOptions);
    }
    signinUser(d){
 	   let signinUrl = "http://13.232.42.90/service/?/Masters/signin/" + d.uname + "/" + d.pwd;

@@ -102,6 +102,13 @@ export class CheckoutComponent implements OnInit {
 				.subscribe((data: any) => {
 					if(data && data.length > 0){
 						this.productsInCart = data;
+						this.productsInCart.forEach((v,i) => {
+							if(this.productsInCart[i].imageUrl){
+								this.productsInCart[i].imageUrl = this.appService.baseImageUrl + 'item/' + this.productsInCart[i].imageUrl;
+							} else {
+								this.productsInCart[i].imageUrl = this.appService.defaultImageUrl;
+							}
+						});
 						//this.productService.setProductsInCart(data);
 						this.productTotal = this.productService.getCartProductsTotal();
 						this.appService.onShowPreloader.emit(false);
