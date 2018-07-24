@@ -49,7 +49,7 @@ export class ProductDetailsComponent implements OnInit {
 						switch(this.productService.getRedirectionMode()){
 							case 'cart':
 								this.cartSpinner = true;
-								this.productService.addToCartService(this.productService.getSelectedProduct().id,this.productService.getSelectedQuantity())
+								this.productService.addToCartService(this.productService.getSelectedProduct().id,this.productService.getSelectedQuantity(),false)
 								.subscribe((data: any) => {
 									if(data.cartID){
 										this.productService.addToCart(this.productService.getSelectedProduct().id,this.productService.getSelectedQuantity());  
@@ -118,10 +118,7 @@ export class ProductDetailsComponent implements OnInit {
 	  
   }
   incQuantity(){
-    if(!this.productData.stock){
-		this.productData.stock = 10;
-	}
-	if(this.quantity < this.productData.stock){
+   if((this.quantity + this.productData.quantity) < this.productData.stock){
 		this.quantity++;
 	} else {
 		//alert('Max limit reached!');
@@ -141,7 +138,7 @@ export class ProductDetailsComponent implements OnInit {
   addToCart(){
 	  if(this.loginService.getLoggedInStatus()){	
 			this.cartSpinner = true;
-		this.productService.addToCartService(this.productData.id,this.quantity)
+		this.productService.addToCartService(this.productData.id,this.quantity,false)
 		.subscribe((data: any) => {
 			if(data.cartID){
 				this.productService.addToCart(this.productData,this.quantity);  
@@ -200,14 +197,29 @@ export class ProductDetailsComponent implements OnInit {
 		this.productService.saveRating(postData)
 		.subscribe((data: any) => {
 			if(data){
-				$.notify('Thank you for rating the product.','success');				
-			} else {				
-				$.notify('Please add products in cart to checkout.','error');
+				$.notify('Thank you for rating the product.','success');	
+				this.productService.getSelectedDetailedProductService(this.productId)
+				.subscribe((data: any) => {
+					if(data){
+						if(data.imageUrl){
+							data.imageUrl = this.appService.baseImageUrl + 'item/' + data.imageUrl;
+						} else {
+							data.imageUrl = this.appService.defaultImageUrl;
+						}
+						this.productData = data; 
+					} 
+					this.appService.onShowPreloader.emit(false);
+				},(data: any) => {
+					this.appService.onShowPreloader.emit(false);
+					$.notify('Getting product details failed due to an error. Try after some time.',"error");
+				});	
+			} else {
+				this.appService.onShowPreloader.emit(false);
+				$.notify('Uanable to rate product due to an error. Try after some time.','error');
 			}
-			this.appService.onShowPreloader.emit(false);
 		},(data: any) => {
 			this.appService.onShowPreloader.emit(false);
-			$.notify('Cart update failed due to an error. Try after some time.','error');
+			$.notify('Uanable to rate product due to an error. Try after some time.','error');
 		});	
 
 	}

@@ -24,6 +24,7 @@ export class ProductListingComponent implements OnInit {
   private sub: any;
   private onRemoveFromCartSub: Subscription;
   private onAddToWishlistSub: Subscription;
+  private onAddToCartSub: Subscription;
   private onRemoveFromWishlistSub: Subscription;
   constructor(
 	private route: ActivatedRoute,
@@ -38,13 +39,6 @@ export class ProductListingComponent implements OnInit {
 		this.categoryData = this.dataService.getCategoryById(this.categoryId);
 		this.productService.getNewProductsByCategory(this.categoryId)
 		.subscribe((data: any) => {
-			data.forEach(obj => {
-				if(obj.imageUrl){
-					obj.imageUrl = this.appService.baseImageUrl + 'item/' + obj.imageUrl;
-				} else {
-					obj.imageUrl = this.appService.defaultImageUrl;
-				}
-			});
 			this.productsList = data;
 			this.productService.setProductList(data);
 			this.appService.onShowPreloader.emit(false);
@@ -79,10 +73,10 @@ export class ProductListingComponent implements OnInit {
 						.subscribe((data: any) => {
 							if(data && data.length > 0){
 								this.productService.setProductsInCart(data || []);
-								this.productService.addToCartService(selectedProd.id,this.productService.getSelectedQuantity())
+								this.productService.addToCartService(selectedProd.id,this.productService.getSelectedQuantity(),false)
 								.subscribe((data1: any) => {
 									if(data1.cartID){
-										this.productService.addToCart(selectedProd.id,this.productService.getSelectedQuantity());
+										this.productService.addToCart(selectedProd.id,this.productService.getSelectedQuantity()	);
 										this.productService.resetRedirectionData();
 										this.appService.onShowPreloader.emit(false);
 										$.notify(data1.message,'success');
@@ -157,6 +151,16 @@ export class ProductListingComponent implements OnInit {
 		}
 		
     });
+	this.onAddToCartSub = this.productService.onAddToCart.subscribe((data) => {   
+		console.log(data);
+		this.productsList.forEach((v,i) => {
+			let product = data.filter((item) => {return v.id == item.id});
+			if(product.length > 0){
+				this.productsList[i] = product[0];
+			}
+         });
+		 
+	  });
 	this.onAddToWishlistSub = this.productService.onAddToWishlist.subscribe((data) => {        
 		this.productsList = this.productService.getProductsList();
 	  });
@@ -164,13 +168,19 @@ export class ProductListingComponent implements OnInit {
 		this.productsList = this.productService.getProductsList();
 	  });
 	this.onRemoveFromCartSub = this.productService.onRemoveFromCart.subscribe((data) => {        
-		this.productsList = this.productService.getProductsList();
+		this.productsList.forEach((v,i) => {
+			let product = data.filter((item) => {return v.id == item.id});
+			if(product.length > 0){
+				this.productsList[i] = product[0];
+			}
+         });
 	  });
 	  
 
   }
   ngOnDestroy() {
     this.sub.unsubscribe();
+	this.onAddToCartSub.unsubscribe;
 	this.onAddToWishlistSub.unsubscribe;
 	this.onRemoveFromWishlistSub.unsubscribe;
 	this.onRemoveFromCartSub.unsubscribe;

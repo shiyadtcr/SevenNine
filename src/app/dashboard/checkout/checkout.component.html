@@ -1,4 +1,4 @@
-<div class="row" *ngIf="addressList.length != 0">
+<div class="row" *ngIf="addressList.length > 0">
 	<div class="col-12 address-list-wrp" *ngIf="productsInCart.length > 0; else noItems">
 		<form [formGroup]="checkoutFormGroup">
 		<div class="address-wrp">

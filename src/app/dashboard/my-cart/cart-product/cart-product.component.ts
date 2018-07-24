@@ -2,6 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import {ProductService} from '../../../shared';
 import {AppService} from '../../../app.service';
 declare var $: any;
+declare var navigator: any;
 @Component({
   selector: 'app-cart-product',
   templateUrl: './cart-product.component.html',
@@ -20,7 +21,7 @@ export class CartProductComponent implements OnInit {
   ngOnInit() {
   }
   addToCart(){
-	  this.productService.addToCartService(this.product.id,this.product.quantity)
+	  this.productService.addToCartService(this.product.id,this.product.quantity,true)
 		.subscribe((data: any) => {
 			if(data.cartID){
 				this.productService.addToCart(this.product,this.product.quantity); 
@@ -41,10 +42,23 @@ export class CartProductComponent implements OnInit {
 			this.decQuantitySpinner = false;
 		});	
   }
-  incQuantity(){	  
-	this.product.quantity++;
-	this.incQuantitySpinner = true;
-	this.addToCart();
+	alertDismissed(){
+	  
+  }
+  incQuantity(){	
+		if((this.quantity + this.product.quantity) < this.product.stock){
+			this.product.quantity++;
+			this.incQuantitySpinner = true;
+			this.addToCart();
+		} else {
+			//alert('Max limit reached!');
+			navigator.notification.alert(
+				'Max limit reached!',  // message
+				this.alertDismissed,         // callback
+				'SevenNine - Mobile Super Market',            // title
+				'OK'             // buttonName
+			);
+		}  	
   }
   decQuantity(){
 	  if(this.product.quantity > 1){

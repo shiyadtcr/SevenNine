@@ -97,8 +97,15 @@ export class ProductService {
    getProductsList(){ 
 	  return this.productsList;
    }
-   setProductList(data){ 
+   setProductList(data){ 		 
 		this.productsList = data;
+		this.productsList.forEach((v,i) => {
+			if(this.productsList[i].imageUrl){
+					this.productsList[i].imageUrl = this.appService.baseImageUrl + 'item/' + this.productsList[i].imageUrl;
+				} else {
+					this.productsList[i].imageUrl = this.appService.defaultImageUrl;
+				}
+			});
    }
   getProductsInCart(){
 	return this.productsInCart;
@@ -179,8 +186,18 @@ export class ProductService {
   getSelectedCategory(){
 	  return this.selectedCategory;
   }
-  addToCartService(id,quantity){
-	  let addtoCartUrl = this.appService.getBaseServiceUrl() + "cart/" + this.appService.getCurrentUser() + "/" + id + "/" + quantity;
+  addToCartService(id,quantity,fromCart){
+		let productExisting = this.productsList.filter(function(item){
+			return item.id == id;
+		});		
+		if(productExisting.length != 0){
+			if(!fromCart){
+				productExisting[0].quantity += quantity;
+			} else {
+				productExisting[0].quantity = quantity;
+			}
+		}
+	  let addtoCartUrl = this.appService.getBaseServiceUrl() + "cart/" + this.appService.getCurrentUser() + "/" + id + "/" + productExisting[0].quantity;
 	   //this.appService.onShowPreloader.emit(true);
 	   return this.http.get(addtoCartUrl);
   }
@@ -189,12 +206,11 @@ export class ProductService {
 		return item.id == product.id;
 	});		
 	if(productExisting.length != 0){
-		productExisting[0].quantity += quantity;
-		productExisting[0].addedToCart = true;
+		
 		this.updateProductTotal();	
 		this.onAddToCart.emit(this.productsInCart);
 	} else {
-		product.quantity += quantity;
+		
 		product.addedToCart = true;
 		this.productsInCart.push(product);
 		this.updateProductTotal();	
@@ -207,7 +223,7 @@ export class ProductService {
 	   return this.http.get(addtoWishlistUrl);
   }
   addToWishlist(product){
-	let productExisting = this.productsInWishlist.filter(function(item){
+	let productExisting = this.productsList.filter(function(item){
 		return item.id == product.id;
 	});	
 	product.isFavorate = !product.isFavorate;

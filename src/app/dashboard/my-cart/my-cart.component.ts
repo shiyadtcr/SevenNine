@@ -17,7 +17,7 @@ export class MyCartComponent implements OnInit {
 	private dashboardService:DashboardService,
 	private productService:ProductService,
 	private appService:AppService,
-	private router: Router,
+	private router: Router
   ) { }
 
   ngOnInit() {
@@ -25,13 +25,6 @@ export class MyCartComponent implements OnInit {
 	  this.productService.getProductsInCartService()
 		.subscribe((data: any) => {
 			if(data && data.length > 0){
-				data.forEach(obj => {
-					if(obj.imageUrl){
-						obj.imageUrl = this.appService.baseImageUrl + 'item/' + obj.imageUrl;
-					} else {
-						obj.imageUrl = this.appService.defaultImageUrl;
-					}
-				});
 				this.productsInCart = data;
 				//this.productService.setProductsInCart(data);
 				this.productTotal = this.productService.getCartProductsTotal();

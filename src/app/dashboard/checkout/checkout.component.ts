@@ -19,33 +19,9 @@ export class CheckoutComponent implements OnInit {
   checkoutFormGroup:FormGroup;
   productTotal:number = 0;
   discount:number = 0;
-  deliveryTimes:any = [{
-	  id:0,
-	  title:"9.30 am to 12 pm"
-  },{
-	  id:1,
-	  title:"5.00 pm to 7.00 pm"
-  },{
-	  id:2,
-	  title:"7.30 pm to 10.00 pm"
-  }];
-  shippingMethods:any = [{
-	  id:0,
-	  title:"Free Shipping"
-  },{
-	  id:1,
-	  title:"Free Shipping"
-  },{
-	  id:2,
-	  title:"Free Shipping"
-  },{
-	  id:3,
-	  title:"Free Shipping"
-  }];
-  paymentMethods:any = [{
-	  id:0,
-	  title:"COD"
-  }];
+  deliveryTimes:any = [];
+  shippingMethods:any = [];
+  paymentMethods:any = [];
 
 	
   constructor(
@@ -121,7 +97,7 @@ export class CheckoutComponent implements OnInit {
 					this.appService.onShowPreloader.emit(false);
 					$.notify('Error on getting payment methods. Try after some time.',"error");
 				});
-				this._deliverytime.value = 0;	
+				this._deliverytime.value = 1;	
 				this.productService.getProductsInCartService()
 				.subscribe((data: any) => {
 					if(data && data.length > 0){

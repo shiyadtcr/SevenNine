@@ -22,13 +22,6 @@ export class MyWishlistComponent implements OnInit {
 	  this.productService.getProductsInWishlistService()
 		.subscribe((data: any) => {
 			if(data && data.length > 0){
-				data.forEach(obj => {
-					if(obj.imageUrl){
-						obj.imageUrl = this.appService.baseImageUrl + 'item/' + obj.imageUrl;
-					} else {
-						obj.imageUrl = this.appService.defaultImageUrl;
-					}
-				});
 				this.productsInWishlist = data;
 				//this.productService.setProductsInWishlist(data);
 				this.appService.onShowPreloader.emit(false);

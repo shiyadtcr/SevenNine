@@ -24,7 +24,7 @@ export class WishedProductComponent implements OnInit {
   
   addToCart(){
 	  this.cartSpinner = true;
-	  this.productService.addToCartService(this.product.id,this.quantity)
+	  this.productService.addToCartService(this.product.id,this.quantity,false)
 		.subscribe((data: any) => {
 			if(data.cartID){
 				this.productService.addToCart(this.product,this.quantity); 
@@ -69,11 +69,8 @@ export class WishedProductComponent implements OnInit {
   alertDismissed(){
 	  
   }
-  incQuantity(){
-    if(!this.product.stock){
-		this.product.stock = 10;
-	}
-	if(this.quantity < this.product.stock){
+  incQuantity(){    
+	if((this.quantity + this.product.quantity) < this.product.stock){
 		this.quantity++;
 	} else {
 		//alert('Max limit reached!');

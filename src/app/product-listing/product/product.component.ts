@@ -32,7 +32,7 @@ export class ProductComponent implements OnInit {
 	  
   }
   incQuantity(){	
-	if(this.quantity < this.product.stock){
+	if((this.quantity + this.product.quantity) < this.product.stock){
 		this.quantity++;
 	} else {
 		//alert('Max limit reached!');
@@ -54,7 +54,7 @@ export class ProductComponent implements OnInit {
   addToCart(){
 	  if(this.loginService.getLoggedInStatus()){
 		  this.cartSpinner = true;
-		this.productService.addToCartService(this.product.id,this.quantity)
+		this.productService.addToCartService(this.product.id,this.quantity,false)
 		.subscribe((data: any) => {
 			if(data.cartID){
 				this.productService.addToCart(this.product,this.quantity); 
