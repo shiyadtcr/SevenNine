@@ -38,10 +38,7 @@ import { AddNewAddressComponent } from './dashboard/address-book/add-new-address
 import { WishedProductComponent } from './dashboard/my-wishlist/wished-product/wished-product.component';
 import { CartProductComponent } from './dashboard/my-cart/cart-product/cart-product.component';
 import { PlaceOrderComponent } from './dashboard/checkout/place-order.component';
-import { TermsAndConditionsComponent } from './terms-and-conditions/terms-and-conditions.component';
-import { PrivacyPolicyComponent } from './privacy-policy/privacy-policy.component';
-import { AboutusComponent } from './aboutus/aboutus.component';
-import { ContactusComponent } from './contactus/contactus.component';
+import { InnerPageComponent } from './inner-page/inner-page.component';
 
 
 
@@ -66,10 +63,7 @@ import { ContactusComponent } from './contactus/contactus.component';
 	WishedProductComponent,
 	CartProductComponent,
 	PlaceOrderComponent,
-	TermsAndConditionsComponent,
-	PrivacyPolicyComponent,
-	AboutusComponent,
-	ContactusComponent
+	InnerPageComponent
   ],
   imports: [
     BrowserModule,

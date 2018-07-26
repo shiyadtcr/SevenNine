@@ -53,7 +53,12 @@ export class LoginComponent implements OnInit {
 			} else {
 				 this.router.navigate(['/']);
 			}
-			$.notify("Hi " + data.username + ", you have successfully logged in.",'success');
+			if(data.message){
+				$.notify(data.message,'error');				
+			} else {
+					$.notify("Hi " + data.username + ", you have successfully logged in.",'success');
+			}	
+		
 		} else {
 			this.appService.onShowPreloader.emit(false);
 			if(data.message){

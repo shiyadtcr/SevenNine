@@ -62,13 +62,17 @@ export class SignupComponent implements OnInit {
 			} else {
 				 this.router.navigate(['/']);
 			}
-			$.notify('Hi ' + data.username + ", you have been successfully signed up",'success');
+			if(data.message){
+				$.notify(data.message,'error');				
+			} else {
+				$.notify('Hi ' + data.username + ", you have been successfully signed up",'success');
+			}			
 		} else {
 			this.appService.onShowPreloader.emit(false);
 			if(data.message){
-				$.notify('User signup failed due to an error. Try after some time.','error');
+				$.notify(data.message,'error');				
 			} else {
-				$.notify(data.message,'error');
+				$.notify('User signup failed due to an error. Try after some time.','error');
 			}
 		}
 	},(data: any) => {

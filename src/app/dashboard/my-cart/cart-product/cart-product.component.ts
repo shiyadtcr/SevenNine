@@ -46,14 +46,14 @@ export class CartProductComponent implements OnInit {
 	  
   }
   incQuantity(){	
-		if((this.quantity + this.product.quantity) < this.product.stock){
+		if(this.product.quantity < this.product.stock){
 			this.product.quantity++;
 			this.incQuantitySpinner = true;
 			this.addToCart();
 		} else {
 			//alert('Max limit reached!');
 			navigator.notification.alert(
-				'Max limit reached!',  // message
+				'Stock not available!',  // message
 				this.alertDismissed,         // callback
 				'SevenNine - Mobile Super Market',            // title
 				'OK'             // buttonName

@@ -26,7 +26,7 @@ export class AddressBookComponent implements OnInit {
       if(data){
         console.log(data);
         if(data.length == 0){
-          this.router.navigate(['dashboard','addressbook']);
+          this.addNewAddr();
         } else {
           this.addressList = data;
           this.defaultAddress = this.addressList.filter((val,ind) => { return val.status == 1})[0];

@@ -37,9 +37,10 @@
 					<span>Shipping Method</span>
 				</h6>
 				<div *ngFor="let method of shippingMethods" class="custom-control custom-radio">
-				  <input [value]="method.id" name="shippingmethod" attr.id="shippingmethod{{method.id}}" formControlName="shippingmethod" type="radio" class="custom-control-input" />
+				  <input (change)="getSelectedShippingMethod(method.id)" [value]="method.id" name="shippingmethod" attr.id="shippingmethod{{method.id}}" formControlName="shippingmethod" type="radio" class="custom-control-input" />
 				  <label [ngClass]="isError(_shippingmethod)?'error':''" class="custom-control-label" attr.for="shippingmethod{{method.id}}">{{method.title}}</label>
 				</div>
+				<div *ngIf="this.shippingFee != 0"><p>Shipping Charge: <strong>{{shippingFee}}</strong></p></div>
 			</div>
 		</div>
 		<div class="address-wrp">

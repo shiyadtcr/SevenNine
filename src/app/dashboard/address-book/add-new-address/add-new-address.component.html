@@ -42,7 +42,7 @@
 			<div class="input-group-prepend"><span class="input-group-text" [ngClass]="isError(_country)?'error':''"><span class="star-mandatory">*</span><i class="fa fa-map-marker"></i></span></div>
 			<label class="form-group has-float-label">
 				<select class="custom-select custom-select-lg mb-3 ctrl-grp" [ngClass]="isError(_country)?'error':''" formControlName="country" (change)="onCountrySelect($event)">
-				  <!--<option selected value='0'>--Select Country--</option>-->
+				  <option selected value=''>--Select Country--</option>
 				  <option [value]="country.country_id" *ngFor="let country of countryList;">{{country.country_name}}</option>
 				</select>
 				<span>Country</span>
@@ -52,7 +52,7 @@
 			<div class="input-group-prepend"><span class="input-group-text" [ngClass]="isError(_state)?'error':''"><span class="star-mandatory">*</span><i class="fa fa-map-marker"></i></span></div>
 			<label class="form-group has-float-label">
 				<select class="custom-select custom-select-lg mb-3 ctrl-grp" [ngClass]="isError(_state)?'error':''" formControlName="state" (change)="onStateSelect($event)">
-				  <!--<option selected value=''>--Select State--</option>-->
+				  <option selected value=''>--Select State--</option>
 				  <option [value]="state.state_id" *ngFor="let state of stateList;">{{state.state_name}}</option>
 				</select>
 				<span>State</span>
@@ -62,7 +62,7 @@
 			<div class="input-group-prepend"><span class="input-group-text" [ngClass]="isError(_city)?'error':''"><span class="star-mandatory">*</span><i class="fa fa-map-marker"></i></span></div>
 			<label class="form-group has-float-label">
 				<select class="custom-select custom-select-lg mb-3 ctrl-grp" [ngClass]="isError(_city)?'error':''" formControlName="city" (change)="onCitySelect($event)">
-				  <!--<option selected value=''>--Select City--</option>-->
+				  <option selected value=''>--Select City--</option>
 				  <option [value]="city.city_id" *ngFor="let city of cityList;">{{city.city_name}}</option>
 				</select>
 				<span>City</span>
@@ -72,7 +72,7 @@
 			<div class="input-group-prepend"><span class="input-group-text" [ngClass]="isError(_area)?'error':''"><span class="star-mandatory">*</span><i class="fa fa-map-marker"></i></span></div>
 			<label class="form-group has-float-label">
 				<select class="custom-select custom-select-lg mb-3 ctrl-grp" [ngClass]="isError(_area)?'error':''" formControlName="area" (change)="onAreaSelect($event)">
-				  <!--<option selected value=''>--Select Area--</option>-->
+				  <option selected value=''>--Select Area--</option>
 				  <option [value]="area.area_id" *ngFor="let area of areaList;">{{area.area_name}}</option>
 				</select>
 				<span>Area</span>

@@ -10,6 +10,7 @@ export class DataService{
 		'Content-Type':  'application/x-www-form-urlencoded; charset=utf8'
 	  })
 	};
+	menuData:any = [];
   orderHistory:any = [
 		{
 			orderNo:9,
@@ -152,6 +153,18 @@ export class DataService{
 		var addressListPromise = this.http.get(addressListUrl);
 		this.appService.onShowPreloader.emit(true);
 			return addressListPromise;
+   } 
+	 getMenuItemsService(){ 
+		let menuItemUrl = this.appService.getBaseServiceUrl() + "articles";
+		var menuItemPromise = this.http.get(menuItemUrl);
+		this.appService.onShowPreloader.emit(true);
+			return menuItemPromise;
+   } 
+	 setMenuData(data){ 
+		this.menuData = data;
+   } 
+	 getMenuData(){ 
+		return this.menuData;
    } 
    getOrderHistory(){ 
 		return this.orderHistory;

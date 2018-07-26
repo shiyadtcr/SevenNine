@@ -11,10 +11,8 @@
 						<li *ngFor="let category of categoryList"><a (click)="_toggleLeftSidebar()" [routerLink]="['/products',category.id]" >{{category.title}}</a></li>
 					</ul>
 				</li>
-				<li><a (click)="_toggleLeftSidebar()" [routerLink]="['/termsandconditions']"><i class="fa fa-edit"></i>Terms & Conditions</a></li>
-				<li><a (click)="_toggleLeftSidebar()" [routerLink]="['/privacypolicy']"><i class="fa fa-lock"></i>Privacy Policy</a></li>
-				<li><a (click)="_toggleLeftSidebar()" [routerLink]="['/aboutus']"><i class="fa fa-user"></i>About Us</a></li>
-				<li><a (click)="_toggleLeftSidebar()" [routerLink]="['/contactus']"><i class="fa fa-envelope"></i>Contact Us</a></li>
+
+				<li *ngFor="let menu of menuData"><a (click)="_toggleLeftSidebar()" [routerLink]="['/innerpage',menu.id]"><i class="fa"  [ngClass]="{'fa-edit': menu.id==1, 'fa-lock': menu.id==2, 'fa-user': menu.id==3, 'fa-envelope': menu.id==4}"></i>{{menu.title}}</a></li>				
 			  </ul>
 		</app-sidebar>
 		  

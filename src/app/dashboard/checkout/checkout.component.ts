@@ -22,6 +22,7 @@ export class CheckoutComponent implements OnInit {
   deliveryTimes:any = [];
   shippingMethods:any = [];
   paymentMethods:any = [];
+  shippingFee:any = 0;
 
 	
   constructor(
@@ -49,6 +50,18 @@ export class CheckoutComponent implements OnInit {
   get _paymentmethod() { return this.checkoutFormGroup.get('paymentmethod'); }
   isError(field){
 	  return field.invalid && (field.dirty || field.touched);
+  }
+  getSelectedShippingMethod(id){
+	  if(this.shippingMethods.length > 0){
+		  let _item = this.shippingMethods.filter((v) => {return v.id == id});
+		  if(_item.length != 0){
+			  if(id == 2){
+				  this.shippingFee = _item[0].id;
+			  } else {
+				  this.shippingFee = 0;
+			  }
+		  }
+	  }
   }
   ngOnInit() {
 	this.dashboardService.pageTitle = "Checkout";

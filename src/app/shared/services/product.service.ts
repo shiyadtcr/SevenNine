@@ -100,11 +100,13 @@ export class ProductService {
    setProductList(data){ 		 
 		this.productsList = data;
 		this.productsList.forEach((v,i) => {
-			if(this.productsList[i].imageUrl){
+			if(this.productsList[i].imageUrl.indexOf('/') == -1){
+				if(this.productsList[i].imageUrl){
 					this.productsList[i].imageUrl = this.appService.baseImageUrl + 'item/' + this.productsList[i].imageUrl;
 				} else {
 					this.productsList[i].imageUrl = this.appService.defaultImageUrl;
 				}
+			}			
 			});
    }
   getProductsInCart(){
@@ -187,7 +189,7 @@ export class ProductService {
 	  return this.selectedCategory;
   }
   addToCartService(id,quantity,fromCart){
-		let productExisting = this.productsList.filter(function(item){
+		let productExisting = this.productsInCart.filter(function(item){
 			return item.id == id;
 		});		
 		if(productExisting.length != 0){

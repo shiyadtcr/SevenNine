@@ -15,10 +15,7 @@ import { MyCartComponent } from './dashboard/my-cart/my-cart.component';
 import { CheckoutComponent } from './dashboard/checkout/checkout.component';
 import { PlaceOrderComponent } from './dashboard/checkout/place-order.component';
 import { OrderHistoryComponent } from './dashboard/order-history/order-history.component';
-import { TermsAndConditionsComponent } from './terms-and-conditions/terms-and-conditions.component';
-import { PrivacyPolicyComponent } from './privacy-policy/privacy-policy.component';
-import { AboutusComponent } from './aboutus/aboutus.component';
-import { ContactusComponent } from './contactus/contactus.component';
+import { InnerPageComponent } from './inner-page/inner-page.component';
 import { AuthGuard } from './shared';
 
 const routes: Routes = [
@@ -27,24 +24,21 @@ const routes: Routes = [
   { path: 'products/:id/:productid', component: ProductDetailsComponent },
   { path: 'login', component: LoginComponent },
   { path: 'signup', component: SignupComponent },
-	{ path: 'termsandconditions', component: TermsAndConditionsComponent },
-	{ path: 'privacypolicy', component: PrivacyPolicyComponent },
-	{ path: 'aboutus', component: AboutusComponent },
-	{ path: 'contactus', component: ContactusComponent },
+	{ path: 'innerpage/:id', component: InnerPageComponent },
   { 
-	path: 'dashboard', 
-	component: DashboardComponent,
-	canActivate: [AuthGuard],
-    children:[		
-		{ path: '', component: DashboardHomeComponent},
-		{ path: 'myaccount', component: MyAccountComponent},
-		{ path: 'addressbook', component: AddressBookComponent},
-		{ path:'addnewaddress',component:AddNewAddressComponent},
-		{ path: 'mywishlist', component: MyWishlistComponent},
-		{ path: 'mycart', component: MyCartComponent},		
-		{ path: 'checkout', component: CheckoutComponent},
-		{ path: 'checkout/:orderid', component: PlaceOrderComponent},
-		{ path: 'orderhistory', component: OrderHistoryComponent}		
+		path: 'dashboard', 
+		component: DashboardComponent,
+		canActivate: [AuthGuard],
+			children:[		
+			{ path: '', component: DashboardHomeComponent},
+			{ path: 'myaccount', component: MyAccountComponent},
+			{ path: 'addressbook', component: AddressBookComponent},
+			{ path:'addnewaddress',component:AddNewAddressComponent},
+			{ path: 'mywishlist', component: MyWishlistComponent},
+			{ path: 'mycart', component: MyCartComponent},		
+			{ path: 'checkout', component: CheckoutComponent},
+			{ path: 'checkout/:orderid', component: PlaceOrderComponent},
+			{ path: 'orderhistory', component: OrderHistoryComponent}		
 	]
   },
   { path: '**', redirectTo: '' }

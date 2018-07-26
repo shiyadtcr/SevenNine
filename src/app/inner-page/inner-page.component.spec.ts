@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ContactusComponent } from './contactus.component';
+import { InnerPageComponent } from './inner-page.component';
 
-describe('ContactusComponent', () => {
-  let component: ContactusComponent;
-  let fixture: ComponentFixture<ContactusComponent>;
+describe('InnerPageComponent', () => {
+  let component: InnerPageComponent;
+  let fixture: ComponentFixture<InnerPageComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ContactusComponent ]
+      declarations: [ InnerPageComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ContactusComponent);
+    fixture = TestBed.createComponent(InnerPageComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

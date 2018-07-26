@@ -37,6 +37,7 @@ export class AppComponent implements OnInit, OnDestroy{
 	private onCategoryUpdateSub: Subscription;
 	private onSuccessLoginSub: Subscription;
 	hasUserLoggedIn:any = this.loginService.getLoggedInStatus();
+	menuData:any = [];
 	constructor(
 		private dataService:DataService,
 		private productService:ProductService,
@@ -122,6 +123,19 @@ export class AppComponent implements OnInit, OnDestroy{
 				this.productService.setProductsInWishlist([]);
 			}
 	  });
+		this.dataService.getMenuItemsService()
+		.subscribe((data: any) => {
+			if(data && data.length > 0){
+				this.menuData = data;		
+				this.dataService.setMenuData(data);		
+			} else {				
+				$.notify('Menu list update failed. Try after some time.','error');
+			}
+			this.appService.onShowPreloader.emit(false);
+		},(data: any) => {
+			this.appService.onShowPreloader.emit(false);
+			$.notify('Menu list update failed. Try after some time.','error');
+		});	
 	  //this.productsInCart = this.dataService.getProductsInCart();
 	  //this.productsInWishlist = this.dataService.getProductsInWishlist();
 	 
@@ -131,6 +145,13 @@ export class AppComponent implements OnInit, OnDestroy{
 		this.productService.getProductsInCartService()
 		.subscribe((data: any) => {
 			if(data && data.length > 0){
+				data.forEach(obj => {
+					if(obj.imageUrl){
+						obj.imageUrl = this.appService.baseImageUrl + 'item/' + obj.imageUrl;
+					} else {
+						obj.imageUrl = this.appService.defaultImageUrl;
+					}
+				});
 				this.productService.setProductsInCart(data || []);
 				this.appService.onShowPreloader.emit(false);
 				//$.notify(data.message,'success');

@@ -75,7 +75,7 @@ export class WishedProductComponent implements OnInit {
 	} else {
 		//alert('Max limit reached!');
 		navigator.notification.alert(
-			'Max limit reached!',  // message
+			'Stock not available!',  // message
 			this.alertDismissed,         // callback
 			'SevenNine - Mobile Super Market',            // title
 			'OK'             // buttonName

@@ -37,7 +37,7 @@ export class ProductComponent implements OnInit {
 	} else {
 		//alert('Max limit reached!');
 		navigator.notification.alert(
-			'Max limit reached!',  // message
+			'Stock limit reached!',  // message
 			this.alertDismissed,         // callback
 			'SevenNine - Mobile Super Market',            // title
 			'OK'             // buttonName
