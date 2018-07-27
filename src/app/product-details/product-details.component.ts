@@ -52,7 +52,7 @@ export class ProductDetailsComponent implements OnInit {
 								this.productService.addToCartService(this.productService.getSelectedProduct().id,this.productService.getSelectedQuantity(),false)
 								.subscribe((data: any) => {
 									if(data.cartID){
-										this.productService.addToCart(this.productService.getSelectedProduct().id,this.productService.getSelectedQuantity());  
+										this.productService.addToCart(this.productService.getSelectedProduct().id,this.productService.getSelectedQuantity(),false);  
 										this.productService.resetRedirectionData();
 										//this.appService.onShowPreloader.emit(false);										
 										$.notify(this.productData.title + " has been successfully added to cart.","success");
@@ -141,7 +141,7 @@ export class ProductDetailsComponent implements OnInit {
 		this.productService.addToCartService(this.productData.id,this.quantity,false)
 		.subscribe((data: any) => {
 			if(data.cartID){
-				this.productService.addToCart(this.productData,this.quantity);  
+				this.productService.addToCart(this.productData,this.quantity,false);  
 				//this.appService.onShowPreloader.emit(false);
 				$.notify(this.productData.title + " has been successfully updated in cart.","success");
 			} else {

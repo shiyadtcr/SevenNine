@@ -12,6 +12,7 @@ import { Router } from '@angular/router';
 export class MyCartComponent implements OnInit {
   productsInCart:any = {};
   private onRemoveFromCartSub: Subscription;
+	private onAddToCartSub: Subscription;
   productTotal:number = 0;
   constructor(
 	private dashboardService:DashboardService,
@@ -43,7 +44,7 @@ export class MyCartComponent implements OnInit {
 		},(data: any) => {
 			this.appService.onShowPreloader.emit(false);
 		});	
-	  this.onRemoveFromCartSub = this.productService.onRemoveFromCart.subscribe((data) => {        
+	  this.onAddToCartSub = this.productService.onAddToCart.subscribe((data) => {        
 		this.productsInCart = data;
 		this.productTotal = this.productService.getCartProductsTotal();
 	  });

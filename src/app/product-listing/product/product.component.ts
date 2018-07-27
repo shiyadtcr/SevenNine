@@ -37,7 +37,7 @@ export class ProductComponent implements OnInit {
 	} else {
 		//alert('Max limit reached!');
 		navigator.notification.alert(
-			'Stock limit reached!',  // message
+			'Stock not available!',  // message
 			this.alertDismissed,         // callback
 			'SevenNine - Mobile Super Market',            // title
 			'OK'             // buttonName
@@ -57,7 +57,7 @@ export class ProductComponent implements OnInit {
 		this.productService.addToCartService(this.product.id,this.quantity,false)
 		.subscribe((data: any) => {
 			if(data.cartID){
-				this.productService.addToCart(this.product,this.quantity); 
+				this.productService.addToCart(this.product,this.quantity,false); 
 				//this.appService.onShowPreloader.emit(false);
 				$.notify(this.product.title + " has been successfully updated in cart.","success");
 			} else {

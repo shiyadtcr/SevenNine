@@ -17,13 +17,15 @@
 		<li>{{shippingAddress.country}}, {{shippingAddress.state}}</li>
 		<li>{{shippingAddress.city}}, {{shippingAddress.postorzip}}</li>
 	</ul>-->
-	<h5 class="nbb">Additional Addresses</h5>
-	<ul class="address" *ngFor="let address of addressList">
-		<li>{{address.address}}</li>
-		<li>{{address.wardNumber}}, {{address.landMark}}</li>
-		<li>{{address.country}}, {{address.state}}</li>
-		<li>{{address.city}}, {{address.area}}</li>
-		<li>{{address.pincode}}</li>
-		<li>Mob: {{address.mobile}}</li>
-	</ul>
+	<div *ngIf="addressList.length > 1">
+		<h5 class="nbb">Additional Addresses</h5>
+		<ul class="address" *ngFor="let address of addressList">
+			<li>{{address.address}}</li>
+			<li>{{address.wardNumber}}, {{address.landMark}}</li>
+			<li>{{address.country}}, {{address.state}}</li>
+			<li>{{address.city}}, {{address.area}}</li>
+			<li>{{address.pincode}}</li>
+			<li>Mob: {{address.mobile}}</li>
+		</ul>
+	</div>
 </div>

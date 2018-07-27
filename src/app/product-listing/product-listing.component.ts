@@ -76,7 +76,7 @@ export class ProductListingComponent implements OnInit {
 								this.productService.addToCartService(selectedProd.id,this.productService.getSelectedQuantity(),false)
 								.subscribe((data1: any) => {
 									if(data1.cartID){
-										this.productService.addToCart(selectedProd.id,this.productService.getSelectedQuantity()	);
+										this.productService.addToCart(selectedProd.id,this.productService.getSelectedQuantity(),false);
 										this.productService.resetRedirectionData();
 										this.appService.onShowPreloader.emit(false);
 										$.notify(data1.message,'success');

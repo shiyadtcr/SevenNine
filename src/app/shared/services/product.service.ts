@@ -189,8 +189,25 @@ export class ProductService {
 	  return this.selectedCategory;
   }
   addToCartService(id,quantity,fromCart){
+		let productExisting = [];
+		if(!fromCart){
+			productExisting = this.productsList.filter(function(item){
+				return item.id == id;
+			});	
+			productExisting[0].quantity += quantity;
+		} else {
+			productExisting = this.productsInCart.filter(function(item){
+				return item.id == id;
+			});	
+			productExisting[0].quantity = quantity;
+		}
+	  let addtoCartUrl = this.appService.getBaseServiceUrl() + "cart/" + this.appService.getCurrentUser() + "/" + id + "/" + productExisting[0].quantity;
+	   //this.appService.onShowPreloader.emit(true);
+	   return this.http.get(addtoCartUrl);
+  }
+  addToCart(product,quantity,fromCart){
 		let productExisting = this.productsInCart.filter(function(item){
-			return item.id == id;
+			return item.id == product.id;
 		});		
 		if(productExisting.length != 0){
 			if(!fromCart){
@@ -198,26 +215,19 @@ export class ProductService {
 			} else {
 				productExisting[0].quantity = quantity;
 			}
+			this.updateProductTotal();	
+			this.onAddToCart.emit(this.productsInCart);
+		} else {
+			product.addedToCart = true;
+			if(!fromCart){
+				product.quantity += quantity;
+			} else {
+				product.quantity = quantity;
+			}
+			this.productsInCart.push(product);
+			this.updateProductTotal();	
+			this.onAddToCart.emit(this.productsInCart);
 		}
-	  let addtoCartUrl = this.appService.getBaseServiceUrl() + "cart/" + this.appService.getCurrentUser() + "/" + id + "/" + productExisting[0].quantity;
-	   //this.appService.onShowPreloader.emit(true);
-	   return this.http.get(addtoCartUrl);
-  }
-  addToCart(product,quantity){
-	let productExisting = this.productsInCart.filter(function(item){
-		return item.id == product.id;
-	});		
-	if(productExisting.length != 0){
-		
-		this.updateProductTotal();	
-		this.onAddToCart.emit(this.productsInCart);
-	} else {
-		
-		product.addedToCart = true;
-		this.productsInCart.push(product);
-		this.updateProductTotal();	
-		this.onAddToCart.emit(this.productsInCart);
-	}
   }
   addToWishlistService(id){
 	  let addtoWishlistUrl = this.appService.getBaseServiceUrl() + "wishlist/" + this.appService.getCurrentUser() + "/" + id;

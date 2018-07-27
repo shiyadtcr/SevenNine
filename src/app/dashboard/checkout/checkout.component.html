@@ -23,7 +23,7 @@
 				<div class="input-group ctrl-grp">					
 					<label class="form-group has-float-label">
 						<select (change)="changeAddress($event)" formControlName="address" class="custom-select custom-select-lg">
-							<option [value]="addr.status" *ngFor="let addr of addressList;">{{addr.address}} - {{addr.wardNumber}} - {{addr.area}} - {{addr.city}} - {{addr.state}} - {{addr.country}} - {{addr.pincode}}</option>
+							<option [value]="addr.status" *ngFor="let addr of addressList;">{{addr.address}} - {{addr.wardNumber ? addr.wardNumber + '- ' : ''}}{{addr.area}} - {{addr.city}} - {{addr.state}} - {{addr.country}} - {{addr.pincode}}</option>
 						</select>
 						<span>Change Address</span>
 					</label>
@@ -40,7 +40,7 @@
 				  <input (change)="getSelectedShippingMethod(method.id)" [value]="method.id" name="shippingmethod" attr.id="shippingmethod{{method.id}}" formControlName="shippingmethod" type="radio" class="custom-control-input" />
 				  <label [ngClass]="isError(_shippingmethod)?'error':''" class="custom-control-label" attr.for="shippingmethod{{method.id}}">{{method.title}}</label>
 				</div>
-				<div *ngIf="this.shippingFee != 0"><p>Shipping Charge: <strong>{{shippingFee}}</strong></p></div>
+				<div class="shipping-charge"><p>Shipping Charge: <strong>{{shippingFee}}</strong></p></div>
 			</div>
 		</div>
 		<div class="address-wrp">

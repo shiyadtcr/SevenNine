@@ -54,8 +54,7 @@
 						<p class="prod-title">{{product.title}}</p>
 						<span (click)="removeCartItem(product)" class="remove-item" ><i class="fa fa-times-circle"></i></span>
 						<p>{{product.quantity}} x {{product.price}} = {{product.quantity * product.price}}</p>						
-					  </div>
-					  <p>Sub Total: 0</p>
+					  </div>					  
 					  <p class="total">Total: {{productTotal}}</p>
 					  <button *ngIf="productsInCart.length > 0" (click)="navigateTo('dashboard/mycart')" class="btn btn-success btn-lg btn-block cart-btn">Go to Cart</button>
 					  <button *ngIf="productsInCart.length > 0" (click)="navigateTo('dashboard/checkout')" class="btn btn-success btn-lg btn-block cart-btn">Checkout</button>

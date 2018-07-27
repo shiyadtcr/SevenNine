@@ -24,7 +24,7 @@ export class CartProductComponent implements OnInit {
 	  this.productService.addToCartService(this.product.id,this.product.quantity,true)
 		.subscribe((data: any) => {
 			if(data.cartID){
-				this.productService.addToCart(this.product,this.product.quantity); 
+				this.productService.addToCart(this.product,this.product.quantity,true); 
 				this.productService.changeQuanity(this.product.id,this.product.quantity);
 			} else {
 				$.notify('Product adding to cart failed due to an error. Try after some time.',"error");

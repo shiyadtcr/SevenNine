@@ -27,7 +27,7 @@ export class WishedProductComponent implements OnInit {
 	  this.productService.addToCartService(this.product.id,this.quantity,false)
 		.subscribe((data: any) => {
 			if(data.cartID){
-				this.productService.addToCart(this.product,this.quantity); 
+				this.productService.addToCart(this.product,this.quantity,false); 
 				this.appService.onShowPreloader.emit(false);
 				$.notify(this.product.title + " has been successfully added to cart.","success");
 			} else {

@@ -44,6 +44,7 @@ export class CheckoutComponent implements OnInit {
   get _address() { return this.checkoutFormGroup.get('address'); }
   set _address(value:any) { this._address.value = value; }
   get _shippingmethod() { return this.checkoutFormGroup.get('shippingmethod'); }
+  set _shippingmethod(value:any) { this._shippingmethod.value = value; }
   get _deliverydate() { return this.checkoutFormGroup.get('deliverydate'); }
   get _deliverytime() { return this.checkoutFormGroup.get('deliverytime'); }
   set _deliverytime(value:any) { this._deliverytime.value = value; }
@@ -55,11 +56,7 @@ export class CheckoutComponent implements OnInit {
 	  if(this.shippingMethods.length > 0){
 		  let _item = this.shippingMethods.filter((v) => {return v.id == id});
 		  if(_item.length != 0){
-			  if(id == 2){
-				  this.shippingFee = _item[0].id;
-			  } else {
-				  this.shippingFee = 0;
-			  }
+			this.shippingFee = _item[0].shippingCharge;
 		  }
 	  }
   }
@@ -78,6 +75,7 @@ export class CheckoutComponent implements OnInit {
 				.subscribe((data:any) => {
 					if(data){
 						this.shippingMethods = data;			
+						//this._shippingmethod.value = this.shippingMethods[0].id;
 					} else {
 						$.notify('Error on getting shipping methods. Try after some time.',"error");
 					}

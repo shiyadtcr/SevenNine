@@ -109,7 +109,7 @@ export class DataService{
     return listPromise;
    } 
 	 getShippingMethods(){ 
-		 let listUrl = this.appService.getBaseServiceUrl() + 'shippingMethod';
+		 let listUrl = this.appService.getBaseServiceUrl() + "shippingMethod?custId=" + this.appService.getCurrentUser();
 		var listPromise = this.http.get(listUrl);
 		this.appService.onShowPreloader.emit(true);
 			return listPromise;
@@ -147,7 +147,11 @@ export class DataService{
    }
 
    
-  
+  	getData(url){
+			var pageDataPromise = this.http.get(url);
+			this.appService.onShowPreloader.emit(true);
+				return pageDataPromise;
+		}
    getAddressList(){ 
 		let addressListUrl = this.appService.getBaseServiceUrl() + "getAddress?custId=" + this.appService.getCurrentUser();
 		var addressListPromise = this.http.get(addressListUrl);
