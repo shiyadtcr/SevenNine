@@ -27,7 +27,8 @@ export class WishedProductComponent implements OnInit {
 	  this.productService.addToCartService(this.product.id,this.quantity,false)
 		.subscribe((data: any) => {
 			if(data.cartID){
-				this.productService.addToCart(this.product,this.quantity,false); 
+				//this.productService.addToCartFromWislist(this.product,this.quantity); 
+				this.productService.onAddToCart.emit();
 				this.appService.onShowPreloader.emit(false);
 				$.notify(this.product.title + " has been successfully added to cart.","success");
 			} else {
@@ -49,7 +50,8 @@ export class WishedProductComponent implements OnInit {
 	 this.productService.addToWishlistService(this.product.id)
 	.subscribe((data: any) => {
 		if(data.wishID){
-			this.productService.addToWishlist(this.product);
+			//this.productService.addToWishlist(this.product);
+			this.productService.onAddToWishlist.emit();
 			this.appService.onShowPreloader.emit(false);
 			$.notify(this.product.title + " has been successfully added to wish list.","success");
 		} else {

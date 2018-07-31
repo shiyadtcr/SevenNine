@@ -63,7 +63,7 @@ export class SignupComponent implements OnInit {
 				 this.router.navigate(['/']);
 			}
 			if(data.message){
-				$.notify(data.message,'error');				
+				$.notify(data.message,'success');				
 			} else {
 				$.notify('Hi ' + data.username + ", you have been successfully signed up",'success');
 			}			

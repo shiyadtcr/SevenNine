@@ -120,7 +120,7 @@ export class ProductService {
    }
    getProductsInCartService(){
 	let cartlistUrl = this.appService.getBaseServiceUrl() + "cartlist/" + this.appService.getCurrentUser();
-	   this.appService.onShowPreloader.emit(true);
+	   //this.appService.onShowPreloader.emit(true);
 	   return this.http.get(cartlistUrl);
    } 
 	 setProductsInCart(data){
@@ -167,21 +167,11 @@ export class ProductService {
 	   return this.productTotal;
    }
   updateProductTotal(){
-	this.productTotal = 0;
-	this.productsInCart.forEach((val) => {
-		this.productTotal += (val.price * val.quantity);
-	});  
-  }  
-  changeQuanity(id,quantity){
-	let productExisting = this.productsInCart.filter(function(item){
-		return item.id == id;
-	});		
-	if(productExisting.length != 0){
-		productExisting[0].quantity = quantity;
-	}	
-	this.updateProductTotal();
-	this.onChangeQuantity.emit(this.productsInCart);
-  }
+		this.productTotal = 0;
+		this.productsInCart.forEach((val) => {
+			this.productTotal += (val.price * val.quantity);
+		});  
+  } 
   setSelectedCategory(cat){
 	  this.selectedCategory = cat;
   }
@@ -189,73 +179,14 @@ export class ProductService {
 	  return this.selectedCategory;
   }
   addToCartService(id,quantity,fromCart){
-		let productExisting = [];
-		if(!fromCart){
-			productExisting = this.productsList.filter(function(item){
-				return item.id == id;
-			});	
-			productExisting[0].quantity += quantity;
-		} else {
-			productExisting = this.productsInCart.filter(function(item){
-				return item.id == id;
-			});	
-			productExisting[0].quantity = quantity;
-		}
-	  let addtoCartUrl = this.appService.getBaseServiceUrl() + "cart/" + this.appService.getCurrentUser() + "/" + id + "/" + productExisting[0].quantity;
+	  let addtoCartUrl = this.appService.getBaseServiceUrl() + "cart/" + this.appService.getCurrentUser() + "/" + id + "/" + quantity + "/" + fromCart;
 	   //this.appService.onShowPreloader.emit(true);
 	   return this.http.get(addtoCartUrl);
-  }
-  addToCart(product,quantity,fromCart){
-		let productExisting = this.productsInCart.filter(function(item){
-			return item.id == product.id;
-		});		
-		if(productExisting.length != 0){
-			if(!fromCart){
-				productExisting[0].quantity += quantity;
-			} else {
-				productExisting[0].quantity = quantity;
-			}
-			this.updateProductTotal();	
-			this.onAddToCart.emit(this.productsInCart);
-		} else {
-			product.addedToCart = true;
-			if(!fromCart){
-				product.quantity += quantity;
-			} else {
-				product.quantity = quantity;
-			}
-			this.productsInCart.push(product);
-			this.updateProductTotal();	
-			this.onAddToCart.emit(this.productsInCart);
-		}
-  }
+  }  
   addToWishlistService(id){
 	  let addtoWishlistUrl = this.appService.getBaseServiceUrl() + "wishlist/" + this.appService.getCurrentUser() + "/" + id;
 	   //this.appService.onShowPreloader.emit(true);
 	   return this.http.get(addtoWishlistUrl);
-  }
-  addToWishlist(product){
-	let productExisting = this.productsList.filter(function(item){
-		return item.id == product.id;
-	});	
-	product.isFavorate = !product.isFavorate;
-	if(this.productsList.length != 0){
-		let prod = this.productsList.filter(function(item){
-			return item.id == product.id;
-		});	
-		prod[0].isFavorate = product.isFavorate;
-		this.setProductList(this.productsList);
-	}
-	if(productExisting.length != 0){
-		productExisting[0].isFavorate = product.isFavorate;
-		this.productsInWishlist = this.productsInWishlist.filter(function(item){
-			return item.id != product.id;
-		});	
-		this.onAddToWishlist.emit(this.productsInWishlist);
-	} else {
-		this.productsInWishlist.push(product);		
-		this.onAddToWishlist.emit(this.productsInWishlist);
-	}	
   }
   removeCartItemService(id){
 	  let removeFromCartUrl = this.appService.getBaseServiceUrl() + "remCartItem?userId=" + this.appService.getCurrentUser() + "&itemId=" + id;
@@ -272,18 +203,4 @@ export class ProductService {
 	   this.appService.onShowPreloader.emit(true);
 	   return this.http.post(placeOrderUrl,data,this.httpOptions);
   }
-  removeCartItem(id){
-	let productExisting = this.productsInCart.filter(function(item){
-		return item.id == id;
-	});	
-	if(productExisting.length != 0){
-		productExisting[0].quantity = 0;
-	}
-	this.productsInCart = this.productsInCart.filter(function(item){
-		return item.id != id;
-	});
-	this.updateProductTotal();
-	this.onRemoveFromCart.emit(this.productsInCart); 
-  }
-  
 }

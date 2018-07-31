@@ -7,6 +7,8 @@ import {DataService} from '../shared';
 import { CategoryFilterPipe } from '../shared';
 import { routerTransitionTop } from '../router.animations';
 import { AppService } from '../app.service';
+import { Router } from '@angular/router';
+
 declare var $: any;
 @Component({
   selector: 'app-product-listing',
@@ -31,20 +33,14 @@ export class ProductListingComponent implements OnInit {
 	private productService:ProductService,
 	private dataService:DataService,
 	private appService:AppService,
-	private loginService:LoginService
+	private loginService:LoginService,
+	private router : Router
   ) { }
   ngOnInit() {
 	this.sub = this.route.params.subscribe(params => {
         this.categoryId = params['id'];
 		this.categoryData = this.dataService.getCategoryById(this.categoryId);
-		this.productService.getNewProductsByCategory(this.categoryId)
-		.subscribe((data: any) => {
-			this.productsList = data;
-			this.productService.setProductList(data);
-			this.appService.onShowPreloader.emit(false);
-		},(data: any) => {
-			this.appService.onShowPreloader.emit(false);
-		});
+		this.getProductsList();
 		if(this.productService.getRedirectionMode() == "wishlist"){
 			if(this.loginService.getLoggedInStatus()){
 				this.productService.getProductsInCartService()
@@ -76,7 +72,8 @@ export class ProductListingComponent implements OnInit {
 								this.productService.addToCartService(selectedProd.id,this.productService.getSelectedQuantity(),false)
 								.subscribe((data1: any) => {
 									if(data1.cartID){
-										this.productService.addToCart(selectedProd.id,this.productService.getSelectedQuantity(),false);
+										//this.productService.addToCart(selectedProd.id,this.productService.getSelectedQuantity(),false);
+										this.productService.onAddToCart.emit();
 										this.productService.resetRedirectionData();
 										this.appService.onShowPreloader.emit(false);
 										$.notify(data1.message,'success');
@@ -121,7 +118,8 @@ export class ProductListingComponent implements OnInit {
 									this.productService.addToWishlistService(selectedProd.id)
 									.subscribe((data1: any) => {
 										if(data1.wishID){
-											this.productService.addToWishlist(selectedProd);
+											//this.productService.addToWishlist(selectedProd);
+											this.productService.onAddToWishlist.emit();
 											this.productService.resetRedirectionData();
 											this.appService.onShowPreloader.emit(false);
 											$.notify(data1.message,'success');
@@ -151,33 +149,39 @@ export class ProductListingComponent implements OnInit {
 		}
 		
     });
-	this.onAddToCartSub = this.productService.onAddToCart.subscribe((data) => {   
-		console.log(data);
-		this.productsList.forEach((v,i) => {
-			let product = data.filter((item) => {return v.id == item.id});
-			if(product.length > 0){
-				this.productsList[i] = product[0];
-			}
-         });
-		 
+	this.onAddToCartSub = this.productService.onAddToCart.subscribe(() => {   	
+		if(this.router.url.indexOf('/products/') != -1){
+			this.getProductsList();
+		}
 	  });
 	this.onAddToWishlistSub = this.productService.onAddToWishlist.subscribe((data) => {        
-		this.productsList = this.productService.getProductsList();
+		if(this.router.url.indexOf('/products/') != -1){
+			this.getProductsList();
+		}
 	  });
 	  this.onRemoveFromWishlistSub = this.productService.onRemoveFromWishlist.subscribe((data) => {        
-		this.productsList = this.productService.getProductsList();
+		if(this.router.url.indexOf('/products/') != -1){
+			this.getProductsList();
+		}
 	  });
 	this.onRemoveFromCartSub = this.productService.onRemoveFromCart.subscribe((data) => {        
-		this.productsList.forEach((v,i) => {
-			let product = data.filter((item) => {return v.id == item.id});
-			if(product.length > 0){
-				this.productsList[i] = product[0];
-			}
-         });
+		if(this.router.url.indexOf('/products/') != -1){
+			this.getProductsList();
+		}
 	  });
 	  
 
   }
+  getProductsList(){
+		this.productService.getNewProductsByCategory(this.categoryId)
+		.subscribe((data: any) => {
+			this.productsList = data;
+			this.productService.setProductList(data);
+			this.appService.onShowPreloader.emit(false);
+		},(data: any) => {
+			this.appService.onShowPreloader.emit(false);
+		});
+	}
   ngOnDestroy() {
     this.sub.unsubscribe();
 	this.onAddToCartSub.unsubscribe;

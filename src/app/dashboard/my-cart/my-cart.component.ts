@@ -12,7 +12,6 @@ import { Router } from '@angular/router';
 export class MyCartComponent implements OnInit {
   productsInCart:any = {};
   private onRemoveFromCartSub: Subscription;
-	private onAddToCartSub: Subscription;
   productTotal:number = 0;
   constructor(
 	private dashboardService:DashboardService,
@@ -23,7 +22,14 @@ export class MyCartComponent implements OnInit {
 
   ngOnInit() {
 	  this.dashboardService.pageTitle = 'My Cart'
-	  this.productService.getProductsInCartService()
+	  this.getCartList();
+	  this.onRemoveFromCartSub = this.productService.onRemoveFromCart.subscribe((data) => {        
+			this.getCartList();
+	  });
+  }
+	getCartList(){
+		this.appService.onShowPreloader.emit(true);
+		this.productService.getProductsInCartService()
 		.subscribe((data: any) => {
 			if(data && data.length > 0){
 				this.productsInCart = data;
@@ -44,16 +50,7 @@ export class MyCartComponent implements OnInit {
 		},(data: any) => {
 			this.appService.onShowPreloader.emit(false);
 		});	
-	  this.onAddToCartSub = this.productService.onAddToCart.subscribe((data) => {        
-		this.productsInCart = data;
-		this.productTotal = this.productService.getCartProductsTotal();
-	  });
-   
-	  this.onRemoveFromCartSub = this.productService.onRemoveFromCart.subscribe((data) => {        
-		this.productsInCart = data;
-		this.productTotal = this.productService.getCartProductsTotal();
-	  });
-  }
+	}
   navigateHome(){
 	 this.router.navigate(['/']);
   }

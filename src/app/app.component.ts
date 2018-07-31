@@ -90,7 +90,7 @@ export class AppComponent implements OnInit, OnDestroy{
 			autoHideDelay: 2000
 		});
 		this.getProducinCart();
-		this.getProducinWishlist();
+		//this.getProducinWishlist();
 	  this.onShowPreloaderSub = this.appService.onShowPreloader.subscribe((isVisible) => {        
 		this.showPreloader = isVisible;
 		this.cdRef.detectChanges();
@@ -98,17 +98,12 @@ export class AppComponent implements OnInit, OnDestroy{
 	  this.onCategoryUpdateSub = this.dataService.onCategoryUpdate.subscribe((data) => {        
 		this.categoryList = data;
 	  });
-	  this.onAddToCartSub = this.productService.onAddToCart.subscribe((data) => {        
-			this.productsInCart = data;
-			this.notifyCartItem = true;
-			setTimeout(()=>{
-				this.notifyCartItem = false;
-			},1000);
-			this.productTotal = this.productService.getCartProductsTotal();
+		
+	  this.onAddToCartSub = this.productService.onAddToCart.subscribe(() => {        			
+				this.getProducinCart();
 	  });
 	  this.onRemoveFromCartSub = this.productService.onRemoveFromCart.subscribe((data) => {        
-		this.productsInCart = data;
-		this.productTotal = this.productService.getCartProductsTotal();
+			this.getProducinCart();
 	  });
 	  this.onSuccessLoginSub = this.loginService.onSuccessLogin.subscribe((data) => {        
 			if(data == 'true'){
@@ -141,30 +136,36 @@ export class AppComponent implements OnInit, OnDestroy{
 	 
     } 
 	getProducinCart(){
-	if(this.loginService.getLoggedInStatus()){
-		this.productService.getProductsInCartService()
-		.subscribe((data: any) => {
-			if(data && data.length > 0){
-				data.forEach(obj => {
-					if(obj.imageUrl){
-						obj.imageUrl = this.appService.baseImageUrl + 'item/' + obj.imageUrl;
-					} else {
-						obj.imageUrl = this.appService.defaultImageUrl;
-					}
-				});
-				this.productService.setProductsInCart(data || []);
-				this.appService.onShowPreloader.emit(false);
-				//$.notify(data.message,'success');
-			} else {
-				this.productService.setProductsInCart([]);
+		if(this.loginService.getLoggedInStatus()){
+			this.productService.getProductsInCartService()
+			.subscribe((data: any) => {
+				if(data && data.length > 0){
+					data.forEach(obj => {
+						if(obj.imageUrl){
+							obj.imageUrl = this.appService.baseImageUrl + 'item/' + obj.imageUrl;
+						} else {
+							obj.imageUrl = this.appService.defaultImageUrl;
+						}
+					});
+					this.productService.setProductsInCart(data || []);
+					this.productsInCart = data;
+					this.notifyCartItem = true;
+					setTimeout(()=>{
+						this.notifyCartItem = false;
+					},1000);
+					this.productTotal = this.productService.getCartProductsTotal();
+					//this.appService.onShowPreloader.emit(false);
+					//$.notify(data.message,'success');
+				} else {
+					this.productService.setProductsInCart([]);
+					this.appService.onShowPreloader.emit(false);
+					//$.notify('Product adding to wishlist failed due to an error. Try after some time.','error');
+				}
+			},(data: any) => {
 				this.appService.onShowPreloader.emit(false);
 				//$.notify('Product adding to wishlist failed due to an error. Try after some time.','error');
-			}
-		},(data: any) => {
-			this.appService.onShowPreloader.emit(false);
-			//$.notify('Product adding to wishlist failed due to an error. Try after some time.','error');
-		});	
-	}
+			});	
+		}
   }
   getProducinWishlist(){
 	if(this.loginService.getLoggedInStatus()){
@@ -197,7 +198,7 @@ export class AppComponent implements OnInit, OnDestroy{
 		this.productService.removeCartItemService(product.id)
 		.subscribe((data: any) => {
 			if(data){
-				this.productService.removeCartItem(product.id);
+				//this.productService.removeCartItem(product.id);
 				this.appService.onShowPreloader.emit(false);
 				$.notify(product.title + " has been successfully removed from cart.",'success');
 			} else {

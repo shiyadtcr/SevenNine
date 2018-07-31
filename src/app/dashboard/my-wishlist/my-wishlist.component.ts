@@ -19,31 +19,34 @@ export class MyWishlistComponent implements OnInit {
 
   ngOnInit() {
 	  this.dashboardService.pageTitle = "My Wishlist";
-	  this.productService.getProductsInWishlistService()
-		.subscribe((data: any) => {
-			if(data && data.length > 0){
-				this.productsInWishlist = data;
-				this.productsInWishlist.forEach((v,i) => {
-					if(this.productsInWishlist[i].imageUrl){
-						this.productsInWishlist[i].imageUrl = this.appService.baseImageUrl + 'item/' + this.productsInWishlist[i].imageUrl;
-					} else {
-						this.productsInWishlist[i].imageUrl = this.appService.defaultImageUrl;
-					}
-				});
-				//this.productService.setProductsInWishlist(data);
-				this.appService.onShowPreloader.emit(false);
-			} else {
-				this.productsInWishlist = [];
-				this.appService.onShowPreloader.emit(false);
-			}
-		},(data: any) => {
-			this.appService.onShowPreloader.emit(false);
-		});	
+	 	this.getWishlist();
 	  
-	  this.onRemoveFromWishlistSub = this.productService.onAddToWishlist.subscribe((data) => {        
-		this.productsInWishlist = data;
-	  });
+			this.onRemoveFromWishlistSub = this.productService.onAddToWishlist.subscribe((data) => {        
+				this.getWishlist();
+			});
   }
+	getWishlist(){
+		  this.productService.getProductsInWishlistService()
+			.subscribe((data: any) => {
+				if(data && data.length > 0){
+					this.productsInWishlist = data;
+					this.productsInWishlist.forEach((v,i) => {
+						if(this.productsInWishlist[i].imageUrl){
+							this.productsInWishlist[i].imageUrl = this.appService.baseImageUrl + 'item/' + this.productsInWishlist[i].imageUrl;
+						} else {
+							this.productsInWishlist[i].imageUrl = this.appService.defaultImageUrl;
+						}
+					});
+					//this.productService.setProductsInWishlist(data);
+					this.appService.onShowPreloader.emit(false);
+				} else {
+					this.productsInWishlist = [];
+					this.appService.onShowPreloader.emit(false);
+				}
+			},(data: any) => {
+				this.appService.onShowPreloader.emit(false);
+			});	
+	 }
   ngOnDestroy() {
     this.onRemoveFromWishlistSub.unsubscribe();
   }

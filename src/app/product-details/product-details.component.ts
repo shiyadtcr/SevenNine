@@ -52,7 +52,8 @@ export class ProductDetailsComponent implements OnInit {
 								this.productService.addToCartService(this.productService.getSelectedProduct().id,this.productService.getSelectedQuantity(),false)
 								.subscribe((data: any) => {
 									if(data.cartID){
-										this.productService.addToCart(this.productService.getSelectedProduct().id,this.productService.getSelectedQuantity(),false);  
+										//this.productService.addToCart(this.productService.getSelectedProduct().id,this.productService.getSelectedQuantity(),false);  
+										this.productService.onAddToCart.emit();
 										this.productService.resetRedirectionData();
 										//this.appService.onShowPreloader.emit(false);										
 										$.notify(this.productData.title + " has been successfully added to cart.","success");
@@ -73,7 +74,8 @@ export class ProductDetailsComponent implements OnInit {
 								this.productService.addToWishlistService(this.productService.getSelectedProduct())
 								.subscribe((data: any) => {
 									if(data.wishID){
-										this.productService.addToWishlist(this.productService.getSelectedProduct());
+										//this.productService.addToWishlist(this.productService.getSelectedProduct());
+										this.productService.onAddToWishlist.emit();
 										this.productService.resetRedirectionData();
 										//this.appService.onShowPreloader.emit(false);
 										$.notify(this.productData.title + " has been successfully added to wish list.","success");
@@ -141,7 +143,8 @@ export class ProductDetailsComponent implements OnInit {
 		this.productService.addToCartService(this.productData.id,this.quantity,false)
 		.subscribe((data: any) => {
 			if(data.cartID){
-				this.productService.addToCart(this.productData,this.quantity,false);  
+				//this.productService.addToCart(this.productData,this.quantity,false);  
+				this.productService.onAddToCart.emit();
 				//this.appService.onShowPreloader.emit(false);
 				$.notify(this.productData.title + " has been successfully updated in cart.","success");
 			} else {
@@ -169,6 +172,7 @@ export class ProductDetailsComponent implements OnInit {
 		.subscribe((data: any) => {
 			if(data.wishID){
 				//this.productService.addToWishlist(this.productData);  
+				this.productService.onAddToWishlist.emit();
 				$.notify(this.productData.title + " has been successfully updated in wish list.","success");
 			} else {
 				//this.appService.onShowPreloader.emit(false);

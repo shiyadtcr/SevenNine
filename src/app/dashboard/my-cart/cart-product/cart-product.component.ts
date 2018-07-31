@@ -24,8 +24,9 @@ export class CartProductComponent implements OnInit {
 	  this.productService.addToCartService(this.product.id,this.product.quantity,true)
 		.subscribe((data: any) => {
 			if(data.cartID){
-				this.productService.addToCart(this.product,this.product.quantity,true); 
-				this.productService.changeQuanity(this.product.id,this.product.quantity);
+				this.productService.onAddToCart.emit();
+				//this.productService.addToCart(this.product,this.product.quantity,true); 
+				//this.productService.changeQuanity(this.product.id,this.product.quantity);
 			} else {
 				$.notify('Product adding to cart failed due to an error. Try after some time.',"error");
 			}
@@ -71,7 +72,8 @@ export class CartProductComponent implements OnInit {
 	  this.productService.removeCartItemService(this.product.id)
 		.subscribe((data: any) => {
 			if(data){
-				this.productService.removeCartItem(this.product.id);
+				//this.productService.removeCartItem(this.product.id);
+				this.productService.onRemoveFromCart.emit(); 
 				this.appService.onShowPreloader.emit(false);
 				$.notify(this.product.title + " has been successfully removed from cart.",'success');
 			} else {

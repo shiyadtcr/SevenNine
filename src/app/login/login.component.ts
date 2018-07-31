@@ -48,16 +48,28 @@ export class LoginComponent implements OnInit {
 			this.appService.setCurrentUser(data.custID);
 			this.loginService.setLoggedInStatus(true);
 			this.productService.setProductList([]);
-			if(this.appService.getRedirectionUrl()){
-			  this.router.navigate([this.appService.getRedirectionUrl()]);
-			} else {
-				 this.router.navigate(['/']);
-			}
-			if(data.message){
-				$.notify(data.message,'error');				
-			} else {
-					$.notify("Hi " + data.username + ", you have successfully logged in.",'success');
-			}	
+			this.productService.getProductsInCartService()
+			.subscribe((data: any) => {
+				if(data && data.length > 0){
+					this.productService.onAddToCart.emit();
+					this.appService.onShowPreloader.emit(false);
+					if(this.appService.getRedirectionUrl()){
+						this.router.navigate([this.appService.getRedirectionUrl()]);
+					} else {
+						this.router.navigate(['/']);
+					}
+					if(data.message){
+						$.notify(data.message,'success');				
+					} else {
+							//$.notify("Hi " + data.username + ", you have successfully logged in.",'success');
+					}	
+				} else {
+					this.appService.onShowPreloader.emit(false);
+				}
+			},(data: any) => {
+				this.appService.onShowPreloader.emit(false);
+			});	
+			
 		
 		} else {
 			this.appService.onShowPreloader.emit(false);

@@ -46,6 +46,7 @@ export class CheckoutComponent implements OnInit {
   get _shippingmethod() { return this.checkoutFormGroup.get('shippingmethod'); }
   set _shippingmethod(value:any) { this._shippingmethod.value = value; }
   get _deliverydate() { return this.checkoutFormGroup.get('deliverydate'); }
+  set _deliverydate(value:any) { this._deliverydate.value = value; }
   get _deliverytime() { return this.checkoutFormGroup.get('deliverytime'); }
   set _deliverytime(value:any) { this._deliverytime.value = value; }
   get _paymentmethod() { return this.checkoutFormGroup.get('paymentmethod'); }
@@ -56,12 +57,12 @@ export class CheckoutComponent implements OnInit {
 	  if(this.shippingMethods.length > 0){
 		  let _item = this.shippingMethods.filter((v) => {return v.id == id});
 		  if(_item.length != 0){
-			this.shippingFee = _item[0].shippingCharge;
+			this.shippingFee = _item[0].shipCost;
 		  }
 	  }
   }
   ngOnInit() {
-	this.dashboardService.pageTitle = "Checkout";
+	this.dashboardService.pageTitle = "Checkout";	
 	this.dataService.getAddressList()
 	.subscribe((data:any) => {
 		if(data){
@@ -79,7 +80,7 @@ export class CheckoutComponent implements OnInit {
 					} else {
 						$.notify('Error on getting shipping methods. Try after some time.',"error");
 					}
-					this.appService.onShowPreloader.emit(false);
+					//this.appService.onShowPreloader.emit(false);
 				},(data:any) => {
 					this.appService.onShowPreloader.emit(false);
 					$.notify('Error on getting shipping methods. Try after some time.',"error");
@@ -91,7 +92,7 @@ export class CheckoutComponent implements OnInit {
 					} else {
 						$.notify('Error on getting delivery times. Try after some time.',"error");
 					}
-					this.appService.onShowPreloader.emit(false);
+					//this.appService.onShowPreloader.emit(false);
 				},(data:any) => {
 					this.appService.onShowPreloader.emit(false);
 					$.notify('Error on getting delivery times. Try after some time.',"error");
@@ -103,7 +104,7 @@ export class CheckoutComponent implements OnInit {
 					} else {
 						$.notify('Error on getting payment methods. Try after some time.',"error");
 					}
-					this.appService.onShowPreloader.emit(false);
+					//this.appService.onShowPreloader.emit(false);
 				},(data:any) => {
 					this.appService.onShowPreloader.emit(false);
 					$.notify('Error on getting payment methods. Try after some time.',"error");
@@ -137,7 +138,7 @@ export class CheckoutComponent implements OnInit {
 		} else {
 			$.notify('Getting address list failed due to an error. Try after some time.',"error");
 		}
-		this.appService.onShowPreloader.emit(false);
+		//this.appService.onShowPreloader.emit(false);
 	},(data:any) => {
 			this.appService.onShowPreloader.emit(false);
 			$.notify('Getting address list failed due to an error. Try after some time.',"error");
