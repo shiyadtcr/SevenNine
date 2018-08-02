@@ -10,7 +10,7 @@ import {AppService} from '../app.service';
 export class InnerPageComponent implements OnInit {
   private sub:any;
   private menuId:any;
-  private pageData:any = {};
+  pageData:any = {};
   menu:any = [];
   constructor(
     private route: ActivatedRoute,

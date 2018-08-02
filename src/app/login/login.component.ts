@@ -61,7 +61,7 @@ export class LoginComponent implements OnInit {
 					if(data.message){
 						$.notify(data.message,'success');				
 					} else {
-							//$.notify("Hi " + data.username + ", you have successfully logged in.",'success');
+							//	$.notify("Hi " + data.username + ", you have successfully logged in.",'success');
 					}	
 				} else {
 					this.appService.onShowPreloader.emit(false);

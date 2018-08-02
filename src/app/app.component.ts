@@ -29,8 +29,8 @@ export class AppComponent implements OnInit, OnDestroy{
 	productTotal:number = 0;
 	notifyCartItem:boolean = false;
 	private backbutton: BehaviorSubject<boolean>;
-	private _openRight: boolean = false;
-    private _openLeft: boolean = false;
+	_openRight: boolean = false;
+  _openLeft: boolean = false;
 	private onAddToCartSub: Subscription;
 	private onRemoveFromCartSub: Subscription;
 	private onShowPreloaderSub: Subscription;
@@ -221,10 +221,10 @@ export class AppComponent implements OnInit, OnDestroy{
 		this.onShowPreloaderSub.unsubscribe;
 		this.onCategoryUpdateSub.unsubscribe;
     }
-  private _toggleRightSidebar() {
+  _toggleRightSidebar() {
     this._openRight = !this._openRight;
   }
-  private _toggleLeftSidebar() {
+  _toggleLeftSidebar() {
     this._openLeft = !this._openLeft;
   }
   toggleMenu(){

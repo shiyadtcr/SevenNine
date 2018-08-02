@@ -4,7 +4,6 @@ import { Subscription } from 'rxjs';
 import {ProductService} from '../shared';
 import {LoginService} from '../shared';
 import {DataService} from '../shared';
-import { CategoryFilterPipe } from '../shared';
 import { routerTransitionTop } from '../router.animations';
 import { AppService } from '../app.service';
 import { Router } from '@angular/router';

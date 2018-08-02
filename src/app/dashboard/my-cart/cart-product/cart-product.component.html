@@ -2,9 +2,9 @@
 	<a [routerLink]="['/products',product.categoryId,product.id]"><img class="img-fluid" [src]="product.imageUrl" /></a>
 	<p class="title" >{{product.title}} <br /> <span class="price">Rs. {{product.price}}</span></p>
 	<p class="wrp">
-		<i [hidden]="!decQuantitySpinner" class="fa fa-spinner faa-spin animated"></i><span [hidden]="decQuantitySpinner" class="decinc minus" [ngClass]="product.quantity == 1 ? 'disabled' : ''" (click)="decQuantity(product)"><i class="fa fa-minus-square"></i></span>
+		<i [hidden]="!decQuantitySpinner" class="fa fa-spinner faa-spin animated"></i><span [hidden]="decQuantitySpinner" class="decinc minus" [ngClass]="product.quantity == 1 ? 'disabled' : ''" (click)="decQuantity()"><i class="fa fa-minus-square"></i></span>
 		<input type="text" value="1" [(ngModel)]="product.quantity" class="quantity" />
-		<i [hidden]="!incQuantitySpinner" class="fa fa-spinner faa-spin animated"></i><span [hidden]="incQuantitySpinner" class="decinc" (click)="incQuantity(product)"><i class="fa fa-plus-square"></i></span>
+		<i [hidden]="!incQuantitySpinner" class="fa fa-spinner faa-spin animated"></i><span [hidden]="incQuantitySpinner" class="decinc" (click)="incQuantity()"><i class="fa fa-plus-square"></i></span>
 	</p>	
 	<p class="subtotal">Sub Total: Rs. {{product.price * product.quantity}}</p>
 	<span class="remove-item" (click)="removeCartItem()"><i class="fa fa-times-circle"></i></span>

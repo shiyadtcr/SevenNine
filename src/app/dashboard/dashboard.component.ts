@@ -6,12 +6,14 @@ import { DashboardService } from '../shared';
   styleUrls: ['./dashboard.component.scss']
 })
 export class DashboardComponent implements OnInit {  
+  pageTitle:string = '';
   constructor(
 	private dashboardService:DashboardService
   ) { }
 
   ngOnInit() {
-	  this.dashboardService.pageTitle = "Dashboard";
+    this.dashboardService.pageTitle = "Dashboard";
+	  this.pageTitle = this.dashboardService.pageTitle;
   }
 
 }

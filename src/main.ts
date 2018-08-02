@@ -11,5 +11,5 @@ let onDeviceReady = () => {
   platformBrowserDynamic().bootstrapModule(AppModule)
   .catch(err => console.log(err));
 };
-document.addEventListener('deviceready', onDeviceReady, false);
-//onDeviceReady();
+//document.addEventListener('deviceready', onDeviceReady, false);
+onDeviceReady();
