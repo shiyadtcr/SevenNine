@@ -10,9 +10,7 @@
 	margin-bottom:0;
 }
 .ord-status{
-	line-height: 2.8rem;
     text-align: right;
-	color: green;
     font-weight: bold;
     font-size: 0.8rem;
 }	
@@ -34,6 +32,22 @@
 		margin-top: 5px;
 	}
 }
-.grand-total{
-	width:45%;
+.grand-total-wrp{
+	background: #607D8B;
+    padding: 0.5rem;
+    color: white;
+    font-size: 1rem;
+	.grand-total{
+		margin:0;
+	}
+}
+
+.product-list-wrp {
+	.product-wrp{
+		margin-top: 0.3rem;
+	}
+}
+.row.title{
+	background: #e0e0e0;
+    padding: 0.5rem;
 }

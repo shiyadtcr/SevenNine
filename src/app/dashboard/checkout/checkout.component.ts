@@ -151,10 +151,11 @@ export class CheckoutComponent implements OnInit {
 	  let _checkoutData = {
 		  addressId: this._address.value,
 		  shippingMethod: this._shippingmethod.value,
-		  deliveryDate: this._deliverydate.value,
+		  deliveryDate: "2018-08-03",//this._deliverydate.value,
 		  deliveryTime: this._deliverytime.value,
 		  paymentMethod: this._paymentmethod.value,
-		  custId:this.appService.getCurrentUser()
+		  custId:this.appService.getCurrentUser(),
+		  orderAmt:this.productTotal
 	  }
 	  this.productService.placeOrder(_checkoutData)
 		.subscribe((data: any) => {

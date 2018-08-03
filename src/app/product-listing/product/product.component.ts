@@ -53,28 +53,39 @@ export class ProductComponent implements OnInit {
   }
   addToCart(){
 	  if(this.loginService.getLoggedInStatus()){
-		  this.cartSpinner = true;
-			this.productService.addToCartService(this.product.id,this.quantity,false)
-			.subscribe((data: any) => {
-				if(data.cartID){
-					//this.productService.addToCart(this.product,this.quantity,false); 
-					//this.appService.onShowPreloader.emit(false);
-					this.productService.onAddToCart.emit();
-					$.notify(this.product.title + " has been successfully updated in cart.","success");
-				} else {
-					//this.appService.onShowPreloader.emit(false);
-					if(data.message){
-						$.notify(data.message,'error');
-					} else {
+				if((this.quantity + this.product.quantity) < this.product.stock){
+					this.cartSpinner = true;
+					this.productService.addToCartService(this.product.id,this.quantity,false)
+					.subscribe((data: any) => {
+						if(data.cartID){
+							//this.productService.addToCart(this.product,this.quantity,false); 
+							//this.appService.onShowPreloader.emit(false);
+							this.productService.onAddToCart.emit();
+							$.notify(this.product.title + " has been successfully updated in cart.","success");
+						} else {
+							//this.appService.onShowPreloader.emit(false);
+							if(data.message){
+								$.notify(data.message,'error');
+							} else {
+								$.notify('Product add/remove to cart failed due to an error. Try after some time.',"error");
+							}
+						}
+						this.cartSpinner = false;
+					},(data: any) => {
+						//this.appService.onShowPreloader.emit(false);
 						$.notify('Product add/remove to cart failed due to an error. Try after some time.',"error");
-					}
+						this.cartSpinner = false;
+					});	
+				} else {
+					//alert('Max limit reached!');
+					navigator.notification.alert(
+						'Stock not available!',  // message
+						this.alertDismissed,         // callback
+						'SevenNine - Mobile Super Market',            // title
+						'OK'             // buttonName
+					);
 				}
-				this.cartSpinner = false;
-			},(data: any) => {
-				//this.appService.onShowPreloader.emit(false);
-				$.notify('Product add/remove to cart failed due to an error. Try after some time.',"error");
-				this.cartSpinner = false;
-			});		
+		  	
 	  } else {
 			this.appService.setRedirectionUrl(this.router.url);
 			this.productService.setSelectedProduct(this.product);

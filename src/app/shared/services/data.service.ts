@@ -171,6 +171,9 @@ export class DataService{
 		return this.menuData;
    } 
    getOrderHistory(){ 
-		return this.orderHistory;
+		let orderHistoryUrl = this.appService.getBaseServiceUrl() + "orderHistory?custId=" + this.appService.getCurrentUser();
+		var orderHistoryPromise = this.http.get(orderHistoryUrl);
+		this.appService.onShowPreloader.emit(true);
+			return orderHistoryPromise;
    } 
 }

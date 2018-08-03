@@ -26,6 +26,9 @@ h6{
 .squeezebox sb-item:last-child .sb-item{
 	border-bottom:0;
 }
+.squeezebox .sb-item .sb-item-head a .toggle-icon{
+	display:none;
+}
 .ngxcarousel{
 	.ngxcarousel-inner{
 		.ngxcarousel-items{

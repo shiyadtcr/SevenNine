@@ -11,7 +11,7 @@ import { ProductService} from './shared';
 import { LoginService} from './shared';
 import { AppService } from './app.service';
 import { AuthGuard} from './shared';
-import {SqueezeBoxModule} from 'squeezebox';
+import {SqueezeBoxModule} from 'squeezebox/dist';
 import { HttpClientModule } from '@angular/common/http';
 import {RatingModule} from "ngx-rating";
 import { LazyLoadImageModule } from 'ng-lazyload-image';

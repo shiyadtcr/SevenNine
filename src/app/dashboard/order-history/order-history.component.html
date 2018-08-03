@@ -1,6 +1,6 @@
 <squeezebox>
     <sb-item  *ngFor="let order of orderHistory">
-        <sb-item-head><div class="row title"><div class="col-8"> <p class="ord-title">Order # <span>{{order.orderNo}}</span> {{order.totalAmount}}</p><p class="order-desc">Ordered at {{order.time}}</div><div class="ord-status col-4">Pending</div></div></sb-item-head>
+        <sb-item-head><div class="row title"><div class="col-8"> <p class="ord-title">Order # <span>{{order.orderNo}}</span> {{order.totalAmount}}</p><p class="order-desc">Ordered at {{order.time}}</div><div class="ord-status col-4" [ngStyle]="{'color':order.status == 1 ? 'green' : order.status == 2 ? 'grey' : order.status == 3 ? 'red' : order.status == 4 ? 'grey' : 'black'}">{{order.status == 1 ? 'Delivered' : order.status == 2 ? 'Pending' : order.status == 3 ? 'Rejected' : order.status == 4 ? 'Returned' : ''}}</div></div></sb-item-head>
         <sb-item-body>
             <div class="row product-list-wrp">
                 <div class="product-wrp col-12">
@@ -11,7 +11,7 @@
                     </div>
                 </div>	
             </div>
-            <p class="grand-total">Grand Total: <span class="float-right">{{order.totalAmount}}</span></p>
+            <div class="grand-total-wrp"><p class="grand-total">Grand Total: <span class="float-right">{{order.totalAmount}}</span></p></div>
 		</sb-item-body>
     </sb-item>
 </squeezebox>

@@ -23,28 +23,38 @@ export class WishedProductComponent implements OnInit {
   }
   
   addToCart(){
-	  this.cartSpinner = true;
-	  this.productService.addToCartService(this.product.id,this.quantity,false)
-		.subscribe((data: any) => {
-			if(data.cartID){
-				//this.productService.addToCartFromWislist(this.product,this.quantity); 
-				this.productService.onAddToCart.emit();
-				this.appService.onShowPreloader.emit(false);
-				$.notify(this.product.title + " has been successfully added to cart.","success");
+			if((this.quantity + this.product.quantity) < this.product.stock){
+				this.cartSpinner = true;
+				this.productService.addToCartService(this.product.id,this.quantity,false)
+				.subscribe((data: any) => {
+					if(data.cartID){
+						//this.productService.addToCartFromWislist(this.product,this.quantity); 
+						this.productService.onAddToCart.emit();
+						this.appService.onShowPreloader.emit(false);
+						$.notify(this.product.title + " has been successfully added to cart.","success");
+					} else {
+						this.appService.onShowPreloader.emit(false);
+						$.notify('Product adding to cart failed due to an error. Try after some time.',"error");
+					}
+					this.cartSpinner = false;
+				},(data: any) => {
+					this.appService.onShowPreloader.emit(false);
+					if(data.message){
+						$.notify(data.message,'error');
+					} else {
+						$.notify('Product adding to cart failed due to an error. Try after some time.',"error");
+					}
+					this.cartSpinner = false;
+				});
 			} else {
-				this.appService.onShowPreloader.emit(false);
-				$.notify('Product adding to cart failed due to an error. Try after some time.',"error");
-			}
-			this.cartSpinner = false;
-		},(data: any) => {
-			this.appService.onShowPreloader.emit(false);
-			if(data.message){
-				$.notify(data.message,'error');
-			} else {
-				$.notify('Product adding to cart failed due to an error. Try after some time.',"error");
-			}
-			this.cartSpinner = false;
-		});	
+				//alert('Max limit reached!');
+				navigator.notification.alert(
+					'Stock not available!',  // message
+					this.alertDismissed,         // callback
+					'SevenNine - Mobile Super Market',            // title
+					'OK'             // buttonName
+				);
+			}	  	
   }
   removeWishlistItem(){
 	 this.productService.addToWishlistService(this.product.id)
