@@ -3,6 +3,7 @@ import { DashboardService } from '../../shared';
 import {ProductService} from '../../shared';
 import {DataService} from '../../shared';
 import {AppService} from '../../app.service';
+import { Subscription } from 'rxjs';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 declare var $: any;
@@ -17,6 +18,7 @@ export class CheckoutComponent implements OnInit {
   addressList:any = [];
   defaultAddress:any = {};
   checkoutFormGroup:FormGroup;
+  private onRemoveFromCartSub: Subscription;
   productTotal:number = 0;
   discount:number = 0;
   deliveryTimes:any = [];
@@ -61,8 +63,37 @@ export class CheckoutComponent implements OnInit {
 		  }
 	  }
   }
+  getCartList(){
+	this.productService.getProductsInCartService()
+	.subscribe((data: any) => {
+		if(data && data.length > 0){
+			this.productsInCart = data;
+			this.productsInCart.forEach((v,i) => {
+				if(this.productsInCart[i].imageUrl){
+					this.productsInCart[i].imageUrl = this.appService.baseImageUrl + 'item/' + this.productsInCart[i].imageUrl;
+				} else {
+					this.productsInCart[i].imageUrl = this.appService.defaultImageUrl;
+				}
+			});
+			//this.productService.setProductsInCart(data);
+			this.productTotal = this.productService.getCartProductsTotal();
+			this.appService.onShowPreloader.emit(false);
+			//$.notify(data.message,'success');
+		} else {
+			this.productsInCart = [];
+			this.appService.onShowPreloader.emit(false);
+			//$.notify('Please add products in cart to checkout.','error');
+		}
+	},(data: any) => {
+		this.appService.onShowPreloader.emit(false);
+		$.notify('Cart update failed due to an error. Try after some time.','error');
+	});	
+	}
   ngOnInit() {
 	this.dashboardService.pageTitle = "Checkout";	
+	this.onRemoveFromCartSub = this.productService.onRemoveFromCart.subscribe((data) => {        
+		this.getCartList();
+	});
 	this.dataService.getAddressList()
 	.subscribe((data:any) => {
 		if(data){
@@ -110,30 +141,7 @@ export class CheckoutComponent implements OnInit {
 					$.notify('Error on getting payment methods. Try after some time.',"error");
 				});
 				this._deliverytime.value = 1;	
-				this.productService.getProductsInCartService()
-				.subscribe((data: any) => {
-					if(data && data.length > 0){
-						this.productsInCart = data;
-						this.productsInCart.forEach((v,i) => {
-							if(this.productsInCart[i].imageUrl){
-								this.productsInCart[i].imageUrl = this.appService.baseImageUrl + 'item/' + this.productsInCart[i].imageUrl;
-							} else {
-								this.productsInCart[i].imageUrl = this.appService.defaultImageUrl;
-							}
-						});
-						//this.productService.setProductsInCart(data);
-						this.productTotal = this.productService.getCartProductsTotal();
-						this.appService.onShowPreloader.emit(false);
-						//$.notify(data.message,'success');
-					} else {
-						this.productsInCart = [];
-						this.appService.onShowPreloader.emit(false);
-						$.notify('Please add products in cart to checkout.','error');
-					}
-				},(data: any) => {
-					this.appService.onShowPreloader.emit(false);
-					$.notify('Cart update failed due to an error. Try after some time.','error');
-				});	
+				this.getCartList();
 			}
 		} else {
 			$.notify('Getting address list failed due to an error. Try after some time.',"error");
@@ -155,11 +163,12 @@ export class CheckoutComponent implements OnInit {
 		  deliveryTime: this._deliverytime.value,
 		  paymentMethod: this._paymentmethod.value,
 		  custId:this.appService.getCurrentUser(),
-		  orderAmt:this.productTotal
+		  orderAmt:(this.productTotal + this.shippingFee) - this.discount
 	  }
 	  this.productService.placeOrder(_checkoutData)
 		.subscribe((data: any) => {
 			if(data){
+				this.productService.onAddToCart.emit();
 				let _url = '/dashboard/checkout/' + data;
 				this.router.navigate([_url]);
 			} else {
@@ -175,5 +184,8 @@ export class CheckoutComponent implements OnInit {
   }
   navigateHome(){
 	 this.router.navigate(['/']);
+  }
+  ngOnDestroy() {
+    this.onRemoveFromCartSub.unsubscribe();
   }
 }

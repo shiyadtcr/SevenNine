@@ -20,8 +20,7 @@ export class OrderHistoryComponent implements OnInit {
 		.subscribe((data: any) => {
 			if(data){
 				this.orderHistory = data;
-        this.orderHistory.forEach((val,ind) => {
-          val.status = 3;
+        this.orderHistory.forEach((val,ind) => {          
           val.products.forEach((v,i) => {
             if(val.products[i].imageUrl){
               val.products[i].imageUrl = this.appService.baseImageUrl + 'item/' + val.products[i].imageUrl;

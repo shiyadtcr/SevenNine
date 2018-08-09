@@ -50,7 +50,7 @@
 				  <h3>Your Cart</h3>
 				  <div class="cart-content">
 					  <div class="cart-list" *ngFor="let product of productsInCart">
-						<img src="assets/images/logo.png" />
+						<a [routerLink]="['/products',product.categoryId,product.id]"><img class="img-fluid" [src]="product.imageUrl" /></a>
 						<p class="prod-title">{{product.title}}</p>
 						<span (click)="removeCartItem(product)" class="remove-item" ><i class="fa fa-times-circle"></i></span>
 						<p>{{product.quantity}} x {{product.price}} = {{product.quantity * product.price}}</p>						

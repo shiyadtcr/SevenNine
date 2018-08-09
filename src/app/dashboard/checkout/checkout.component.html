@@ -91,10 +91,11 @@
 					<p>{{product.quantity}} x {{product.price}} = {{product.quantity * product.price}}</p>						
 				  </div>
 			  </div>
-				<div class="other-wrp">					
-					<div class="row"><p class="col-8 text-right">Sub Total:</p><p class="col-4">{{productTotal}}</p></div>
-					<div class="row"><p class="col-8 text-right">Discount (0 points used):</p><p class="col-4">-{{discount}}.00</p></div>
-					<div class="row title"><p class="col-8 text-right font-weight-bold">Total:</p><p class="col-4 font-weight-bold">{{productTotal - discount}}</p></div>
+				<div class="other-wrp">
+					<div class="row"><p class="col-8 text-right">Sub Total:</p><p class="col-4">{{productTotal}}</p></div>					
+					<div class="row"><p class="col-8 text-right">Shipping Charge:</p><p class="col-4">{{shippingFee}}</p></div>
+					<div class="row"><p class="col-8 text-right">Discount (0 points used):</p><p class="col-4">-{{discount}}</p></div>
+					<div class="row title"><p class="col-8 text-right font-weight-bold">Total:</p><p class="col-4 font-weight-bold">{{(productTotal + shippingFee) - discount}}</p></div>
 				</div>
 			</div>
 		</div>

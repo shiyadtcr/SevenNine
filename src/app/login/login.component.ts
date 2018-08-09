@@ -50,7 +50,7 @@ export class LoginComponent implements OnInit {
 			this.productService.setProductList([]);
 			this.productService.getProductsInCartService()
 			.subscribe((data: any) => {
-				if(data && data.length > 0){
+				if(data){
 					this.productService.onAddToCart.emit();
 					this.appService.onShowPreloader.emit(false);
 					if(this.appService.getRedirectionUrl()){
@@ -65,6 +65,11 @@ export class LoginComponent implements OnInit {
 					}	
 				} else {
 					this.appService.onShowPreloader.emit(false);
+					if(data.message){
+						$.notify(data.message,'success');				
+					} else {
+						$.notify('Cart update failed due to an error. Try after some time.','error');
+					}	
 				}
 			},(data: any) => {
 				this.appService.onShowPreloader.emit(false);

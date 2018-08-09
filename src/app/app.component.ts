@@ -157,10 +157,16 @@ export class AppComponent implements OnInit, OnDestroy{
 					//this.appService.onShowPreloader.emit(false);
 					//$.notify(data.message,'success');
 				} else {
-					this.productService.setProductsInCart([]);
-					this.appService.onShowPreloader.emit(false);
+					this.productsInCart = [];				
+					this.productService.setProductsInCart([]);		
+					this.productTotal = this.productService.getCartProductsTotal();
+					this.notifyCartItem = true;
+					setTimeout(()=>{
+						this.notifyCartItem = false;
+					},1000);			
 					//$.notify('Product adding to wishlist failed due to an error. Try after some time.','error');
 				}
+				this.appService.onShowPreloader.emit(false);
 			},(data: any) => {
 				this.appService.onShowPreloader.emit(false);
 				//$.notify('Product adding to wishlist failed due to an error. Try after some time.','error');
@@ -199,6 +205,8 @@ export class AppComponent implements OnInit, OnDestroy{
 		.subscribe((data: any) => {
 			if(data){
 				//this.productService.removeCartItem(product.id);
+				this.productService.onRemoveFromCart.emit(); 
+				this.getProducinCart();
 				this.appService.onShowPreloader.emit(false);
 				$.notify(product.title + " has been successfully removed from cart.",'success');
 			} else {
